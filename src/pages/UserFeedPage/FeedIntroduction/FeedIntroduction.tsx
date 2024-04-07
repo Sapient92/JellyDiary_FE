@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   FeedIntroductionContainer,
   FeedIntroductionContent,
@@ -11,7 +10,7 @@ import {
 import profileImg from "../../../assets/testImage/Image.png";
 import Button from "../../../components/Button/Button.tsx";
 
-const FeedIntroduction: FC = () => {
+const FeedIntroduction = ({ setToggleFollowerModal }) => {
   return (
     <FeedIntroductionContainer>
       <FeedIntroductionContent>
@@ -28,7 +27,7 @@ const FeedIntroduction: FC = () => {
           </UserNicknameContainer>
           <UserDetailStateContainer>
             <p>{"1,258"}게시물</p>
-            <p> {"4M"}팔로워</p>
+            <p onClick={() => setToggleFollowerModal(true)}> {"4M"}팔로워</p>
             <p>{"1,250"}팔로우</p>
           </UserDetailStateContainer>
           <UserDescContainer>

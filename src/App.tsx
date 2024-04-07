@@ -7,7 +7,7 @@ function App() {
     <>
       <Routes>
         <Route path={"/"} element={<Layout />}>
-          <Route path={"/feed"} element={<UserFeedPage />} />
+          <Route path={"/userfeed"} element={<UserFeedPage />} />
         </Route>
       </Routes>
     </>
