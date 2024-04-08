@@ -9,7 +9,7 @@ import HeaderRightButton from "./headerRightButton/HeaderRightButton.tsx";
 const Header = () => {
   return (
     <HeaderContainer>
-      <LogoContainer>
+      <LogoContainer to={"/"}>
         <button>로고</button>
       </LogoContainer>
       <RightButtonContainer>

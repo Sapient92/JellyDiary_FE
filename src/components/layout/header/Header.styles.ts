@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { MdAccountCircle } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.header`
   width: 100%;
@@ -15,10 +16,11 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const LogoContainer = styled.div`
+export const LogoContainer = styled(Link)`
   padding-left: 104px;
   display: flex;
   align-items: center;
+  text-decoration: none;
 
   button {
     width: 100px;
