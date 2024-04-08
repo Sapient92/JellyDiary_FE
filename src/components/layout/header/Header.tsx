@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <LogoContainer>
-        <button>로고이미지?</button>
+        <button>로고</button>
       </LogoContainer>
       <RightButtonContainer>
         <HeaderRightButton name={"큰 SNS"} />
