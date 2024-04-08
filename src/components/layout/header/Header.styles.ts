@@ -19,6 +19,12 @@ export const LogoContainer = styled.div`
   padding-left: 104px;
   display: flex;
   align-items: center;
+
+  button {
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
+  }
 `;
 export const RightButtonContainer = styled.div`
   display: flex;
