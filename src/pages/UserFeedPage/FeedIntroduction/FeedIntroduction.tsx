@@ -10,7 +10,7 @@ import {
 import profileImg from "../../../assets/testImage/Image.png";
 import Button from "../../../components/Button/Button.tsx";
 
-const FeedIntroduction = ({ setToggleFollowerModal }) => {
+const FeedIntroduction = ({ setToggleFollowerModal, setToggleFollowModal }) => {
   return (
     <FeedIntroductionContainer>
       <FeedIntroductionContent>
@@ -28,7 +28,7 @@ const FeedIntroduction = ({ setToggleFollowerModal }) => {
           <UserDetailStateContainer>
             <p>{"1,258"}게시물</p>
             <p onClick={() => setToggleFollowerModal(true)}> {"4M"}팔로워</p>
-            <p>{"1,250"}팔로우</p>
+            <p onClick={() => setToggleFollowModal(true)}>{"1,250"}팔로우</p>
           </UserDetailStateContainer>
           <UserDescContainer>
             <p>Terry Lucas 입니다 안녕하세요</p>
