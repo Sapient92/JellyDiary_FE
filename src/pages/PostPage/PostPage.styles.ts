@@ -11,4 +11,5 @@ export const PostPageContent = styled.div`
   border: 1px solid #dbdbdb;
   background-color: #f7f8fa;
   margin-top: 10px;
+  margin-bottom: 10px;
 `;

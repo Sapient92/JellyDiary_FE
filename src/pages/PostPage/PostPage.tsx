@@ -1,6 +1,7 @@
 import { PostPageContainer, PostPageContent } from "./PostPage.styles.ts";
 import PostPageHeader from "./PostPageHeader/PostPageHeader.tsx";
 import PostPageDetail from "./PostPageDetail/PostPageDetail.tsx";
+import PostPageDiary from "./PostPageDiary/PostPageDiary.tsx";
 
 const PostPage = () => {
   return (
@@ -8,6 +9,7 @@ const PostPage = () => {
       <PostPageContent>
         <PostPageHeader />
         <PostPageDetail />
+        <PostPageDiary />
       </PostPageContent>
     </PostPageContainer>
   );

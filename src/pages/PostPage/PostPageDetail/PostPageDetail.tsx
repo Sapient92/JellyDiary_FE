@@ -1,5 +1,6 @@
 import {
   PostDetailBtnContainer,
+  PostDetailDesc,
   PostDetailImgContainer,
   PostPageDetailContainer,
 } from "./PostPageDetail.styles.ts";
@@ -25,6 +26,14 @@ const PostPageDetail = () => {
           <img src={sendBtn} alt={"send_button"} />
         </button>
       </PostDetailBtnContainer>
+      <PostDetailDesc>
+        <p>1,069 likes</p>
+        <p>경주여행</p>
+        <div>
+          <button>View all 100 comments</button>
+        </div>
+        <p>2023.04.11</p>
+      </PostDetailDesc>
     </PostPageDetailContainer>
   );
 };
