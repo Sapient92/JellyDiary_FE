@@ -1,6 +1,11 @@
 import { FeedPostContainer } from "./FeedPost.styles.ts";
+import * as React from "react";
 
-const FeedPost = ({ fakeImg }) => {
+interface FeedPostProps {
+  fakeImg: string;
+}
+
+const FeedPost: React.FC<FeedPostProps> = ({ fakeImg }) => {
   return (
     <FeedPostContainer>
       <img src={fakeImg} alt={"feed_img"} />
