@@ -35,6 +35,7 @@ export const RightButtonContainer = styled.div`
 export const AccountButton = styled(MdAccountCircle)`
   width: 52px;
   height: 52px;
+  color: gray;
 
   &:hover {
     cursor: pointer;
