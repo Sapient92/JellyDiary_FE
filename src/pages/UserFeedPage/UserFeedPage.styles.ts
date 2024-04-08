@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
-export const FeedPageContainer = styled.div`
+interface FeedPageContainer {
+  toggleFollowerModal: boolean;
+}
+
+export const FeedPageContainer = styled.div<FeedPageContainer>`
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: ${(props) => props.toggleFollowerModal && "60%"};
 `;
 
 export const FeedPageContent = styled.div`
