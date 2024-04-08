@@ -11,4 +11,5 @@ export const WritePageContent = styled.div`
   background-color: #ffffff;
   margin-top: 20px;
   margin-bottom: 10px;
+  padding-bottom: 30px;
 `;

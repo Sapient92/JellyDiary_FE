@@ -31,6 +31,7 @@ export const WritePageTitle = styled.div`
     margin-left: 60px;
     color: black;
     font-weight: bold;
+    cursor: default;
   }
 `;
 

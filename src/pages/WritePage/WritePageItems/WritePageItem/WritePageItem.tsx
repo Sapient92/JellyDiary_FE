@@ -1,4 +1,5 @@
 import {
+  WritePageInput,
   WritePageItemContainer,
   WritePageItemTitleContainer,
   WritePageTitle,
@@ -23,7 +24,7 @@ const WritePageItem: FC<WritePageItem> = ({ title }) => {
           <p>{title}</p>
         </WritePageTitle>
       </WritePageItemTitleContainer>
-      <input type={"text"} disabled={!checkboxChecked} />
+      <WritePageInput type={"text"} disabled={!checkboxChecked} />
     </WritePageItemContainer>
   );
 };
