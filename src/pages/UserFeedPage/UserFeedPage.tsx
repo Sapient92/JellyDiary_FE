@@ -10,8 +10,12 @@ const UserFeedPage: FC = () => {
   const [toggleFollowModal, setToggleFollowModal] = useState(false);
   return (
     <>
-      {toggleFollowerModal && <FollowModal title={"팔로워"} />}
-      {toggleFollowModal && <FollowModal title={"팔로우"} />}
+      {toggleFollowerModal && (
+        <FollowModal title={"팔로워"} closeModal={setToggleFollowerModal} />
+      )}
+      {toggleFollowModal && (
+        <FollowModal title={"팔로우"} closeModal={setToggleFollowModal} />
+      )}
       <FeedPageContainer
         $toggleFollowerModal={toggleFollowerModal}
         $toggleFollowModal={toggleFollowModal}
