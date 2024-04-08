@@ -2,6 +2,7 @@ import Header from "./header/Header.tsx";
 import {
   HeaderWrapper,
   LayoutContainer,
+  OutletContent,
   OutletWrapper,
 } from "./Layout.styles.ts";
 import { Outlet } from "react-router-dom";
@@ -13,7 +14,9 @@ const Layout = () => {
         <Header />
       </HeaderWrapper>
       <OutletWrapper>
-        <Outlet />
+        <OutletContent>
+          <Outlet />
+        </OutletContent>
       </OutletWrapper>
     </LayoutContainer>
   );
