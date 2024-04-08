@@ -13,8 +13,8 @@ const UserFeedPage: FC = () => {
       {toggleFollowerModal && <FollowModal title={"팔로워"} />}
       {toggleFollowModal && <FollowModal title={"팔로우"} />}
       <FeedPageContainer
-        toggleFollowerModal={toggleFollowerModal}
-        toggleFollowModal={toggleFollowModal}
+        $toggleFollowerModal={toggleFollowerModal}
+        $toggleFollowModal={toggleFollowModal}
       >
         <FeedPageContent>
           <FeedIntroduction
