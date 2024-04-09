@@ -25,6 +25,7 @@ export const PostDetailBtnContainer = styled.div`
     height: 40px;
     background: none;
     border: none;
+    cursor: pointer;
   }
 `;
 
@@ -56,6 +57,11 @@ export const PostDetailDesc = styled.div`
     border: none;
     color: #8e8e8e;
     font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
   p:nth-child(4) {
     color: #8e8e8e;
