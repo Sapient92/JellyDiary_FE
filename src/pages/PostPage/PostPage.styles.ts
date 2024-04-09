@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const PostPageContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
 `;
 

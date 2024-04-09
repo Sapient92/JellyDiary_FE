@@ -8,8 +8,20 @@ import detailImg from "../../../assets/testImage/FakeImg-Post.png";
 import heartBtn from "../../../assets/button/HeartBtn.png";
 import chatBtn from "../../../assets/button/ChattingBtn.png";
 import sendBtn from "../../../assets/button/SendBtn.png";
+import * as React from "react";
 
-const PostPageDetail = () => {
+interface PostPageDetailProps {
+  setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const PostPageDetail: React.FC<PostPageDetailProps> = ({
+  setToggleCommentModal,
+}) => {
+  const handleCommentClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setToggleCommentModal(true);
+  };
+
   return (
     <PostPageDetailContainer>
       <PostDetailImgContainer>
@@ -30,7 +42,7 @@ const PostPageDetail = () => {
         <p>1,069 likes</p>
         <p>경주여행</p>
         <div>
-          <button>View all 100 comments</button>
+          <button onClick={handleCommentClick}>View all 100 comments</button>
         </div>
         <p>2023.04.11</p>
       </PostDetailDesc>
