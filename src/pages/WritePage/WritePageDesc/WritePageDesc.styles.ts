@@ -62,3 +62,33 @@ export const DiaryDateContainer = styled.div`
     }
   }
 `;
+
+export const WritePageDetailContainer = styled.div`
+  p:nth-child(1) {
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0;
+    cursor: default;
+  }
+  p:nth-child(2) {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    color: #515e72;
+    cursor: default;
+  }
+
+  textarea {
+    border: 1px solid #cad1dc;
+    resize: none;
+    width: 100%;
+    height: 240px;
+    box-sizing: border-box;
+    padding: 6px 3px;
+    font-size: 16px;
+    &::placeholder {
+      font-size: 16px;
+      padding-left: 4px;
+    }
+  }
+`;
