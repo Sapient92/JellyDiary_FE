@@ -4,14 +4,20 @@ import {
   WritePageItemTitleContainer,
   WritePageTitle,
 } from "./WritePageItem.styles.ts";
-import { FC, useState } from "react";
+import { FC, memo, useState } from "react";
+import { Diary } from "../../../../store/writeStore/writeStore.type.ts";
+import { useDiaryStore } from "../../../../store/writeStore/writeStore.ts";
 
 interface WritePageItem {
   title: string;
+  value: Diary[keyof Diary];
+  name: string;
 }
 
-const WritePageItem: FC<WritePageItem> = ({ title }) => {
+const WritePageItem: FC<WritePageItem> = ({ title, value, name }) => {
   const [checkboxChecked, setCheckboxChecked] = useState(false);
+  const changeValue = useDiaryStore((state) => state.changeValue);
+
   return (
     <WritePageItemContainer>
       <WritePageItemTitleContainer>
@@ -24,9 +30,16 @@ const WritePageItem: FC<WritePageItem> = ({ title }) => {
           <p>{title}</p>
         </WritePageTitle>
       </WritePageItemTitleContainer>
-      <WritePageInput type={"text"} disabled={!checkboxChecked} />
+      <WritePageInput
+        type={"text"}
+        disabled={!checkboxChecked}
+        value={value}
+        onChange={(e) => changeValue({ [name]: e.target.value })}
+      />
     </WritePageItemContainer>
   );
 };
 
-export default WritePageItem;
+const MemoedWritePageItem = memo(WritePageItem);
+
+export default MemoedWritePageItem;

@@ -17,10 +17,28 @@ export const WritePageImgTitleContainer = styled.div`
   }
 `;
 
+export const PreviewImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 420px;
+    height: 340px;
+  }
+`;
+
 export const WritePageImgContent = styled.div`
   width: 100%;
   min-height: 100px;
   border: 1px solid #cad1dc;
+  background-color: #f1f3f6;
+  position: relative;
+  margin-top: 6px;
+  box-sizing: border-box;
+  padding: 0 1px;
+  input {
+    display: none;
+  }
 `;
 
 export const UploadBtn = styled.button`
@@ -33,6 +51,9 @@ export const UploadBtn = styled.button`
   border: 1px solid #cad1dc;
   background-color: white;
   cursor: pointer;
+  position: absolute;
+  right: 6px;
+  top: 6px;
 `;
 
 export const UploadBtnIcons = styled(PiUpload)`

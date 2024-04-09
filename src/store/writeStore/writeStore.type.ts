@@ -1,4 +1,4 @@
-type WriteStore = {
+export type Diary = {
   title: string;
   createdAt: string;
   meal?: string;
