@@ -13,10 +13,10 @@ const Header = () => {
         <button>로고</button>
       </LogoContainer>
       <RightButtonContainer>
-        <HeaderRightButton name={"큰 SNS"} />
-        <HeaderRightButton name={"작은 SNS"} />
-        <HeaderRightButton name={"내 피드"} />
-        <HeaderRightButton name={"DM"} />
+        <HeaderRightButton title={"큰 SNS"} name={"bigSns"} />
+        <HeaderRightButton title={"작은 SNS"} name={"smallSns"} />
+        <HeaderRightButton title={"내 피드"} name={"myFeed"} />
+        <HeaderRightButton title={"DM"} name={"dm"} />
         <AccountButton />
       </RightButtonContainer>
     </HeaderContainer>

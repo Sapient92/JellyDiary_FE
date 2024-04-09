@@ -13,7 +13,7 @@ const WritePageImg = () => {
   const [postImg, setPostImg] = useState<File[]>([]);
   const [previewImg, setPreviewImg] = useState<string[]>([]);
   const imgRef = useRef<HTMLInputElement>(null);
-
+  console.log(postImg);
   const handleUploadClick = () => {
     if (!imgRef.current) {
       return;

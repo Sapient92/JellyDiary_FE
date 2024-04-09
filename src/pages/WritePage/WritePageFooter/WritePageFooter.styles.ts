@@ -19,6 +19,7 @@ export const PrivateBtnContainer = styled.div`
   input {
     width: 17px;
     height: 17px;
+    cursor: pointer;
   }
   label {
     color: #7d8fb3;

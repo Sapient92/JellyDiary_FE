@@ -1,19 +1,33 @@
 import SelectButton from "../../../../assets/button/HeaderSelectButton.png";
 import { ButtonContainer, CheckedButton } from "./HeaderRightButton.styles.ts";
 import { FC } from "react";
+import { useCategoriesStore } from "../../../../store/categoriesStore/categoriesStore.ts";
+import * as React from "react";
 
 type HeaderRightButtonProps = {
+  title: string;
   name: string;
 };
 
-const HeaderRightButton: FC<HeaderRightButtonProps> = ({ name }) => {
+const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name }) => {
+  const { categories, changeCategory } = useCategoriesStore((state) => state);
+  console.log(categories[name]);
+
+  const handleCategoryClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (categories[name]) {
+      return;
+    }
+    changeCategory(name);
+  };
+
   return (
-    <ButtonContainer>
+    <ButtonContainer onClick={handleCategoryClick}>
       <button id={"big_sns_btn"}>
         <img src={SelectButton} alt={"SelectButton"} />
-        <CheckedButton />
+        {categories[name] && <CheckedButton />}
       </button>
-      <label htmlFor={"big_sns_btn"}>{name}</label>
+      <label htmlFor={"big_sns_btn"}>{title}</label>
     </ButtonContainer>
   );
 };
