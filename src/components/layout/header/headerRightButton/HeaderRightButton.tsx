@@ -11,8 +11,6 @@ type HeaderRightButtonProps = {
 
 const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name }) => {
   const { categories, changeCategory } = useCategoriesStore((state) => state);
-  console.log(categories[name]);
-
   const handleCategoryClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (categories[name]) {
