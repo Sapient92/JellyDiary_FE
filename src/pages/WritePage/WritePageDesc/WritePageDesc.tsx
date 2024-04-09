@@ -3,6 +3,7 @@ import {
   DiaryTitleContainer,
   WritePageDescContainer,
 } from "./WritePageDesc.styles.ts";
+import WritePageImg from "./WritePageImg/WritePageImg.tsx";
 
 const WritePageDesc = () => {
   const today = new Date().toISOString().split("T")[0];
@@ -16,8 +17,9 @@ const WritePageDesc = () => {
       <DiaryDateContainer>
         <p>일지 작성 일자</p>
         <p>일지를 기록한 날짜를 선택해 주세요.</p>
-        <input type={"date"} defaultValue={today} />
+        <input type={"date"} defaultValue={today} max={today} />
       </DiaryDateContainer>
+      <WritePageImg />
     </WritePageDescContainer>
   );
 };
