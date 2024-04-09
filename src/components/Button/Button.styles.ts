@@ -22,4 +22,11 @@ export const ButtonTag = styled.button`
       background-color: #717d96;
       margin-left: 5px;
     `}
+  
+  ${(props) =>
+    props.className === "post" &&
+    css`
+      background-color: #3ea9e5;
+      padding: 10px 28px;
+    `}
 `;
