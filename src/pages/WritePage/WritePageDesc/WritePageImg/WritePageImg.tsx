@@ -10,12 +10,14 @@ import {
 } from "./WritePageImg.styles.ts";
 import * as React from "react";
 import { useRef, useState } from "react";
+import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 
 const WritePageImg = () => {
   const [postList, setPostList] = useState<
     { id: number; previewUrl: string; origin: File }[]
   >([]);
   const imgRef = useRef<HTMLInputElement>(null);
+  const { toggleImageAlertModal, toggleImgDupliAlertModal } = useModalStore();
   const handleUploadClick = () => {
     if (!imgRef.current) {
       return;
@@ -23,17 +25,19 @@ const WritePageImg = () => {
     imgRef.current.click();
   };
 
+  const prevImg = postList.map((post) => post.origin.name);
+
   const uploadImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let fileArr = e.target.files;
     if (fileArr) {
       const newFilesArray = Array.from(fileArr);
       newFilesArray.forEach((file) => {
         const fileReader = new FileReader();
-        const prevImg = postList.map((post) => post.id);
         fileReader.onload = () => {
           if (
             typeof fileReader.result === "string" &&
-            !prevImg.includes(file.lastModified)
+            !prevImg.includes(file.name) &&
+            postList.length + newFilesArray.length <= 5
           ) {
             setPostList((prev) => [
               ...prev,
@@ -43,15 +47,22 @@ const WritePageImg = () => {
                 origin: file,
               },
             ]);
+          } else if (prevImg.includes(file.name)) {
+            toggleImgDupliAlertModal(true);
+            setTimeout(() => {
+              toggleImgDupliAlertModal(false);
+            }, 3000);
           } else {
-            console.error(
-              "잘못된 형식의 파일이거나 이미 업로드된 이미지 입니다.",
-            );
+            toggleImageAlertModal(true);
+            setTimeout(() => {
+              toggleImageAlertModal(false);
+            }, 3000);
           }
         };
         fileReader.readAsDataURL(file);
       });
     }
+    e.target.value = "";
   };
 
   const handleLeftClick = () => {
