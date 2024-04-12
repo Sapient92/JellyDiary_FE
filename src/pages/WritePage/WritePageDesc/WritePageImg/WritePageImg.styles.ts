@@ -17,18 +17,11 @@ export const WritePageImgTitleContainer = styled.div`
   }
 `;
 
-export const PreviewImgContainer = styled.div`
+export const WritePageImgContent = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    width: 420px;
-    height: 340px;
-  }
-`;
-
-export const WritePageImgContent = styled.div`
-  width: 100%;
   min-height: 100px;
   border: 1px solid #cad1dc;
   background-color: #f1f3f6;
@@ -36,8 +29,51 @@ export const WritePageImgContent = styled.div`
   margin-top: 6px;
   box-sizing: border-box;
   padding: 0 1px;
+
   input {
     display: none;
+  }
+
+  span:nth-child(1) {
+    font-size: 50px;
+    box-sizing: border-box;
+    padding-right: 40px;
+    cursor: pointer;
+    color: darkgray;
+
+    &:hover {
+      font-weight: 600;
+      color: gray;
+    }
+  }
+
+  span:nth-child(3) {
+    font-size: 50px;
+    box-sizing: border-box;
+    padding-left: 40px;
+    cursor: pointer;
+    color: darkgray;
+
+    &:hover {
+      font-weight: 600;
+      color: gray;
+    }
+  }
+`;
+
+export const PreviewImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  width: 420px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  img {
+    width: 420px;
+    height: 340px;
   }
 `;
 
