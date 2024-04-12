@@ -66,11 +66,23 @@ const WritePageImg = () => {
   };
 
   const handleLeftClick = () => {
-    document.getElementById("imgContainer")!.scrollLeft -= 420;
+    const imgContainer = document.getElementById("imgContainer")!;
+    const maxScrollLeft = imgContainer.scrollWidth - imgContainer.clientWidth;
+    if (imgContainer.scrollLeft === 0) {
+      imgContainer.scrollLeft = maxScrollLeft;
+    } else {
+      document.getElementById("imgContainer")!.scrollLeft -= 420;
+    }
   };
 
   const handleRightClick = () => {
-    document.getElementById("imgContainer")!.scrollLeft += 420;
+    const imgContainer = document.getElementById("imgContainer")!;
+    const maxScrollLeft = imgContainer.scrollWidth - imgContainer.clientWidth;
+    if (imgContainer.scrollLeft >= maxScrollLeft) {
+      imgContainer.scrollLeft = 0;
+    } else {
+      document.getElementById("imgContainer")!.scrollLeft += 420;
+    }
   };
 
   const handleImgDeleteClick = (id: number) => {
