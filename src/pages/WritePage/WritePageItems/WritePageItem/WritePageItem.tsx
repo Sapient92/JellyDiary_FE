@@ -18,13 +18,18 @@ const WritePageItem: FC<WritePageItem> = ({ title, value, name }) => {
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const changeValue = useDiaryStore((state) => state.changeValue);
 
+  const handleChangeChecked = () => {
+    setCheckboxChecked(!checkboxChecked);
+    changeValue({ [name]: "" });
+  };
+
   return (
     <WritePageItemContainer>
       <WritePageItemTitleContainer>
         <input
           type={"checkbox"}
           checked={checkboxChecked ?? checkboxChecked}
-          onChange={() => setCheckboxChecked(!checkboxChecked)}
+          onChange={handleChangeChecked}
         />
         <WritePageTitle>
           <p>{title}</p>
