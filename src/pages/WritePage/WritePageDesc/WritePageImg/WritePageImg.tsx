@@ -1,4 +1,6 @@
 import {
+  ImgDeleteButton,
+  PreviewImgBox,
   PreviewImgContainer,
   UploadBtn,
   UploadBtnIcons,
@@ -27,8 +29,12 @@ const WritePageImg = () => {
       const newFilesArray = Array.from(fileArr);
       newFilesArray.forEach((file) => {
         const fileReader = new FileReader();
+        const prevImg = postList.map((post) => post.id);
         fileReader.onload = () => {
-          if (typeof fileReader.result === "string") {
+          if (
+            typeof fileReader.result === "string" &&
+            !prevImg.includes(file.lastModified)
+          ) {
             setPostList((prev) => [
               ...prev,
               {
@@ -38,7 +44,9 @@ const WritePageImg = () => {
               },
             ]);
           } else {
-            console.error("fileRead.result is not a string");
+            console.error(
+              "잘못된 형식의 파일이거나 이미 업로드된 이미지 입니다.",
+            );
           }
         };
         fileReader.readAsDataURL(file);
@@ -54,6 +62,11 @@ const WritePageImg = () => {
     document.getElementById("imgContainer")!.scrollLeft += 420;
   };
 
+  const handleImgDeleteClick = (id: number) => {
+    const newPostList = postList.filter((post) => post.id !== id);
+    setPostList(newPostList);
+  };
+
   return (
     <WritePageImgContainer>
       <WritePageImgTitleContainer>
@@ -65,7 +78,12 @@ const WritePageImg = () => {
         <PreviewImgContainer id={"imgContainer"}>
           {postList.length !== 0 &&
             postList.map((post) => (
-              <img key={post.id} src={post.previewUrl} alt={"uploadImg"} />
+              <PreviewImgBox key={post.id}>
+                <img src={post.previewUrl} alt={"uploadImg"} />
+                <ImgDeleteButton
+                  onClick={() => handleImgDeleteClick(post.id)}
+                />
+              </PreviewImgBox>
             ))}
         </PreviewImgContainer>
         {postList.length >= 2 && <span onClick={handleRightClick}>{">"}</span>}

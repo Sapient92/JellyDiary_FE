@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { PiUpload } from "react-icons/pi";
+import { TiDeleteOutline } from "react-icons/ti";
 
 export const WritePageImgContainer = styled.div``;
 
@@ -70,10 +71,30 @@ export const PreviewImgContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+export const ImgDeleteButton = styled(TiDeleteOutline)`
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 26px;
+  height: 26px;
+  display: none;
+  color: gray;
+`;
+
+export const PreviewImgBox = styled.div`
+  position: relative;
+  height: 340px;
 
   img {
+    position: relative;
     width: 420px;
     height: 340px;
+  }
+
+  &:hover ${ImgDeleteButton} {
+    display: block;
+    cursor: pointer;
   }
 `;
 
