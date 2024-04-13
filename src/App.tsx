@@ -7,6 +7,7 @@ import WritePage from "./pages/WritePage/WritePage.tsx";
 import SettingPage from "./pages/SettingPage/SettingPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.tsx";
 import SuggestedPage from "./pages/SuggestedPage/SuggestedPage.tsx";
+import ChatPage from "./pages/ChatPage/ChatPage.tsx";
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
           <Route path={"/write"} element={<WritePage />} />
           <Route path={"/setting"} element={<SettingPage />} />
           <Route path={"/"} element={<SuggestedPage />} />
+          <Route path={"/chat"} element={<ChatPage />} />
           <Route path={"*"} element={<NotFoundPage />} />
         </Route>
       </Routes>
