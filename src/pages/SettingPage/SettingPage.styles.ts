@@ -2,19 +2,21 @@ import styled from "styled-components";
 
 export const SettingPageContainer = styled.div`
   display: flex;
+  height: fit-content;
   align-items: center;
   justify-content: center;
 `;
 
 export const SettingPageContent = styled.div`
   width: 935px;
-  height: 80vh;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin-top: 10px;
   color: #6b7a99;
   font-weight: 600;
+  gap: 0.5em;
   h3 {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -71,7 +73,7 @@ export const UserInfo = styled.div`
   align-items: center;
   gap: 0.5vh;
   padding: 0.5vh;
-  margin-top: 2vh;
+  margin-top: 4vh;
   div > span {
     color: #6b7a99;
     font-size: 16px;

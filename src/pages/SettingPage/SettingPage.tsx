@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   SettingPageContainer,
   SettingPageContent,
@@ -19,6 +19,21 @@ import { MdEdit } from "react-icons/md";
 import ToggleButton from "../../components/Button/ToggleButton/ToggleButton";
 
 const SettingPage = () => {
+  const scrollView = useRef<HTMLInputElement>(null);
+
+  const onMoveToSelect = () => {
+    if (scrollView.current !== undefined && scrollView.current !== null) {
+      scrollView.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const onMoveToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <SettingPageContainer>
       <SettingLeftContent>
@@ -36,8 +51,8 @@ const SettingPage = () => {
           <div>유저이메일@gmail.com</div>
         </UserInfo>
         <SettingLeftNav>
-          <div>내프로필</div>
-          <div>알림설정</div>
+          <div onClick={onMoveToTop}>내프로필</div>
+          <div onClick={onMoveToSelect}>알림설정</div>
           <div>언어설정</div>
         </SettingLeftNav>
       </SettingLeftContent>
@@ -73,7 +88,7 @@ const SettingPage = () => {
             />
           </ButtonContent>
         </ProfileInfo>
-        <ProfileInfo>
+        <ProfileInfo ref={scrollView}>
           <ToggleTitle>
             <h3>알림설정</h3>
             <ButtonContent>
