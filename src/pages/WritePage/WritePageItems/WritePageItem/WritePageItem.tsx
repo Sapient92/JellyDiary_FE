@@ -5,8 +5,8 @@ import {
   WritePageTitle,
 } from "./WritePageItem.styles.ts";
 import { FC, memo, useState } from "react";
-import { Diary } from "../../../../store/writeStore/writeStore.type.ts";
-import { useDiaryStore } from "../../../../store/writeStore/writeStore.ts";
+import { Diary } from "../../../../store/writeStore/diaryStore.type.ts";
+import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
 
 interface WritePageItem {
   title: string;
@@ -38,7 +38,7 @@ const WritePageItem: FC<WritePageItem> = ({ title, value, name }) => {
       <WritePageInput
         type={"text"}
         disabled={!checkboxChecked}
-        value={value}
+        value={value ? value.toString() : ""}
         onChange={(e) => changeValue({ [name]: e.target.value })}
       />
     </WritePageItemContainer>

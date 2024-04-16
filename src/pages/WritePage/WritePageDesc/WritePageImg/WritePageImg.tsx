@@ -28,7 +28,7 @@ const WritePageImg = () => {
   const prevImg = postList.map((post) => post.origin.name);
 
   const uploadImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let fileArr = e.target.files;
+    const fileArr = e.target.files;
     if (fileArr) {
       const newFilesArray = Array.from(fileArr);
       newFilesArray.forEach((file) => {
