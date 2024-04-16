@@ -1,25 +1,26 @@
 import { create } from "zustand";
-import { Diary } from "./writeStore.type.ts";
+import { Diary } from "./diaryStore.type.ts";
 
 export type DiaryStoreProps = {
   diary: Diary;
-  changeValue: (el: Object) => void;
+  changeValue: (el: object) => void;
 };
 
 export const useDiaryStore = create<DiaryStoreProps>((set) => ({
   diary: {
-    title: "",
-    createdAt: new Date().toISOString().split("T")[0],
+    postTitle: "",
+    postDate: new Date().toISOString().split("T")[0],
+    weather: "",
     meal: "",
     snack: "",
     water: "",
     walk: "",
-    defecation: "",
-    bath: "",
+    toiletRecord: "",
+    shower: "",
     weight: "",
-    significant: "",
+    specialNote: "",
   },
-  changeValue: (el: Object) =>
+  changeValue: (el: object) =>
     set((prev) => ({
       diary: {
         ...prev.diary,

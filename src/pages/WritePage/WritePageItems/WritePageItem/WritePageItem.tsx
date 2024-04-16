@@ -5,8 +5,8 @@ import {
   WritePageTitle,
 } from "./WritePageItem.styles.ts";
 import { FC, memo, useState } from "react";
-import { Diary } from "../../../../store/writeStore/writeStore.type.ts";
-import { useDiaryStore } from "../../../../store/writeStore/writeStore.ts";
+import { Diary } from "../../../../store/writeStore/diaryStore.type.ts";
+import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
 
 interface WritePageItem {
   title: string;

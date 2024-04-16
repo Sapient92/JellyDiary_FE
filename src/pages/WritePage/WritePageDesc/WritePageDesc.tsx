@@ -5,7 +5,7 @@ import {
   WritePageDetailContainer,
 } from "./WritePageDesc.styles.ts";
 import WritePageImg from "./WritePageImg/WritePageImg.tsx";
-import { useDiaryStore } from "../../../store/writeStore/writeStore.ts";
+import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 
 const WritePageDesc = () => {
   const { title, createdAt } = useDiaryStore((state) => state.diary);

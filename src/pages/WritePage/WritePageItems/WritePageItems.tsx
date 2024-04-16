@@ -3,7 +3,7 @@ import MemoedWritePageItem from "./WritePageItem/WritePageItem.tsx";
 import {
   DiaryStoreProps,
   useDiaryStore,
-} from "../../../store/writeStore/writeStore.ts";
+} from "../../../store/writeStore/diaryStore.ts";
 
 const WritePageItems = () => {
   const diary = useDiaryStore((state: DiaryStoreProps) => state.diary);

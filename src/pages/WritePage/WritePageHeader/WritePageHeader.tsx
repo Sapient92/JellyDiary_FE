@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import {
   CloudyBtn,
   PartlySunnyBtn,
@@ -9,29 +9,22 @@ import {
   WritePageTitle,
   WritePageWeatherContainer,
 } from "./WritePageHeader.styles.ts";
+import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 
 interface WritePageHeaderProps {
   title: string;
 }
 
 const WritePageHeader: FC<WritePageHeaderProps> = ({ title }) => {
-  const [wheather, setWheather] = useState({
-    sunny: false,
-    partlySunny: false,
-    cloudy: false,
-    rain: false,
-    snow: false,
-  });
+  const changeValue = useDiaryStore((state) => state.changeValue);
+  const { weather } = useDiaryStore((state) => state.diary);
 
-  const handleWeatherChange = (weather: string) => {
-    setWheather({
-      sunny: false,
-      partlySunny: false,
-      cloudy: false,
-      rain: false,
-      snow: false,
-      [weather]: true,
-    });
+  console.log(weather);
+  const handleWeatherChange = (state: string) => {
+    if (weather === state) {
+      return;
+    }
+    changeValue({ weather: state });
   };
 
   return (
@@ -42,25 +35,19 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title }) => {
       </WritePageTitle>
       <WritePageWeatherContainer>
         <SunnyBtn
-          $sunny={wheather.sunny}
-          onClick={() => handleWeatherChange("sunny")}
+          weather={weather}
+          onClick={() => handleWeatherChange("맑음")}
         />
         <PartlySunnyBtn
-          $partlySunny={wheather.partlySunny}
-          onClick={() => handleWeatherChange("partlySunny")}
+          weather={weather}
+          onClick={() => handleWeatherChange("구름낀")}
         />
         <CloudyBtn
-          $cloudy={wheather.cloudy}
-          onClick={() => handleWeatherChange("cloudy")}
+          weather={weather}
+          onClick={() => handleWeatherChange("흐림")}
         />
-        <RainBtn
-          $rain={wheather.rain}
-          onClick={() => handleWeatherChange("rain")}
-        />
-        <SnowBtn
-          $snow={wheather.snow}
-          onClick={() => handleWeatherChange("snow")}
-        />
+        <RainBtn weather={weather} onClick={() => handleWeatherChange("비")} />
+        <SnowBtn weather={weather} onClick={() => handleWeatherChange("눈")} />
       </WritePageWeatherContainer>
     </WritePageHeaderContainer>
   );

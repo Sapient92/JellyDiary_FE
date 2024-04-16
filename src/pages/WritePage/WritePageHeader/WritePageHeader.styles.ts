@@ -36,8 +36,8 @@ export const WritePageTitle = styled.div`
 `;
 
 export const WritePageWeatherContainer = styled.div``;
-export const SunnyBtn = styled(MdOutlineWbSunny)<{ $sunny: boolean }>`
-  color: ${(props) => (props.$sunny ? "#3EA9E5" : "#c4c4c4")};
+export const SunnyBtn = styled(MdOutlineWbSunny)<{ weather: string }>`
+  color: ${(props) => (props.weather === "맑음" ? "#3EA9E5" : "#c4c4c4")};
   width: 32px;
   height: 32px;
 
@@ -45,8 +45,8 @@ export const SunnyBtn = styled(MdOutlineWbSunny)<{ $sunny: boolean }>`
     cursor: pointer;
   }
 `;
-export const CloudyBtn = styled(LuCloudy)<{ $cloudy: boolean }>`
-  color: ${(props) => (props.$cloudy ? "#3EA9E5" : "#c4c4c4")};
+export const CloudyBtn = styled(LuCloudy)<{ weather: string }>`
+  color: ${(props) => (props.weather === "흐림" ? "#3EA9E5" : "#c4c4c4")};
   margin-left: 20px;
   width: 32px;
   height: 32px;
@@ -56,9 +56,9 @@ export const CloudyBtn = styled(LuCloudy)<{ $cloudy: boolean }>`
   }
 `;
 export const PartlySunnyBtn = styled(IoPartlySunnyOutline)<{
-  $partlySunny: boolean;
+  weather: string;
 }>`
-  color: ${(props) => (props.$partlySunny ? "#3EA9E5" : "#c4c4c4")};
+  color: ${(props) => (props.weather === "구름낀" ? "#3EA9E5" : "#c4c4c4")};
   margin-left: 20px;
   width: 32px;
   height: 32px;
@@ -67,8 +67,8 @@ export const PartlySunnyBtn = styled(IoPartlySunnyOutline)<{
     cursor: pointer;
   }
 `;
-export const RainBtn = styled(BsCloudRain)<{ $rain: boolean }>`
-  color: ${(props) => (props.$rain ? "#3EA9E5" : "#c4c4c4")};
+export const RainBtn = styled(BsCloudRain)<{ weather: string }>`
+  color: ${(props) => (props.weather === "비" ? "#3EA9E5" : "#c4c4c4")};
   margin-left: 20px;
   width: 32px;
   height: 32px;
@@ -77,8 +77,8 @@ export const RainBtn = styled(BsCloudRain)<{ $rain: boolean }>`
     cursor: pointer;
   }
 `;
-export const SnowBtn = styled(IoIosSnow)<{ $snow: boolean }>`
-  color: ${(props) => (props.$snow ? "#3EA9E5" : "#c4c4c4")};
+export const SnowBtn = styled(IoIosSnow)<{ weather: string }>`
+  color: ${(props) => (props.weather === "눈" ? "#3EA9E5" : "#c4c4c4")};
   margin-left: 20px;
   width: 32px;
   height: 32px;
