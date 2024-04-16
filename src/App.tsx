@@ -9,6 +9,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.tsx";
 import SuggestedPage from "./pages/SuggestedPage/SuggestedPage.tsx";
 import ChatPage from "./pages/ChatPage/ChatPage.tsx";
 import DiaryPage from "./pages/DiaryPage/DiaryPage.tsx";
+
 function App() {
   return (
     <>

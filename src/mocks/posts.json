@@ -1,0 +1,23 @@
+[
+  {
+    "postId" : 12,
+    "postTitle" : "산책최고",
+    "postDate" : "2024-04-09",
+    "meal" : "OO 사료 129g 급여",
+    "snack" : "OO 북어 1개 급여",
+    "water" : "120ml",
+    "walk" : "A코스 20분",
+    "toiletRecord" : "맛동산 1회 / 감자 2회",
+    "shower" : "안 함",
+    "weight" : "5.2kg",
+    "specialNote" : null,
+    "weather" : "맑음",
+    "postContent" : "오늘 하루 종일 잠이 늘었다. 놀이 반응이 좋아서 재밌게 놀았다",
+    "createdAt" : "2024-04-10T14:00:00Z",
+    "modifiedAt" : null,
+    "isPublic" : true,
+    "isDelete" : false,
+    "diaryId" : 2,
+    "userId" : 33
+  }
+]
