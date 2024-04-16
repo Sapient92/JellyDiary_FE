@@ -38,7 +38,7 @@ const WritePageItem: FC<WritePageItem> = ({ title, value, name }) => {
       <WritePageInput
         type={"text"}
         disabled={!checkboxChecked}
-        value={value}
+        value={value ? value.toString() : ""}
         onChange={(e) => changeValue({ [name]: e.target.value })}
       />
     </WritePageItemContainer>

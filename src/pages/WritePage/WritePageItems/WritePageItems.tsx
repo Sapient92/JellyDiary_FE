@@ -19,10 +19,14 @@ const WritePageItems = () => {
       />
       <MemoedWritePageItem
         title={"배변"}
-        value={diary.defecation}
-        name={"defecation"}
+        value={diary.toiletRecord}
+        name={"toiletRecord"}
       />
-      <MemoedWritePageItem title={"목욕"} value={diary.bath} name={"bath"} />
+      <MemoedWritePageItem
+        title={"목욕"}
+        value={diary.shower}
+        name={"shower"}
+      />
       <MemoedWritePageItem
         title={"체중"}
         value={diary.weight}
@@ -30,8 +34,8 @@ const WritePageItems = () => {
       />
       <MemoedWritePageItem
         title={`     행동 \n/ 특이사항`}
-        value={diary.significant}
-        name={"significant"}
+        value={diary.specialNote}
+        name={"specialNote"}
       />
     </WritePageItemsContainer>
   );

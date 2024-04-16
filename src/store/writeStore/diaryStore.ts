@@ -9,7 +9,10 @@ export type DiaryStoreProps = {
 export const useDiaryStore = create<DiaryStoreProps>((set) => ({
   diary: {
     postTitle: "",
+    createdAt: new Date().toISOString(),
     postDate: new Date().toISOString().split("T")[0],
+    postContent: "",
+    isPublic: true,
     weather: "",
     meal: "",
     snack: "",

@@ -16,12 +16,10 @@ interface WritePageHeaderProps {
 }
 
 const WritePageHeader: FC<WritePageHeaderProps> = ({ title }) => {
-  const changeValue = useDiaryStore((state) => state.changeValue);
-  const { weather } = useDiaryStore((state) => state.diary);
+  const { diary, changeValue } = useDiaryStore((state) => state);
 
-  console.log(weather);
   const handleWeatherChange = (state: string) => {
-    if (weather === state) {
+    if (diary.weather === state) {
       return;
     }
     changeValue({ weather: state });
@@ -35,19 +33,25 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title }) => {
       </WritePageTitle>
       <WritePageWeatherContainer>
         <SunnyBtn
-          weather={weather}
+          weather={diary.weather}
           onClick={() => handleWeatherChange("맑음")}
         />
         <PartlySunnyBtn
-          weather={weather}
+          weather={diary.weather}
           onClick={() => handleWeatherChange("구름낀")}
         />
         <CloudyBtn
-          weather={weather}
+          weather={diary.weather}
           onClick={() => handleWeatherChange("흐림")}
         />
-        <RainBtn weather={weather} onClick={() => handleWeatherChange("비")} />
-        <SnowBtn weather={weather} onClick={() => handleWeatherChange("눈")} />
+        <RainBtn
+          weather={diary.weather}
+          onClick={() => handleWeatherChange("비")}
+        />
+        <SnowBtn
+          weather={diary.weather}
+          onClick={() => handleWeatherChange("눈")}
+        />
       </WritePageWeatherContainer>
     </WritePageHeaderContainer>
   );
