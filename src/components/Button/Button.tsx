@@ -5,10 +5,15 @@ import * as React from "react";
 type ButtonProps = {
   className: string;
   children: React.ReactNode;
+  onClick?: () => void;
 };
 
-const Button: FC<ButtonProps> = ({ className, children }) => {
-  return <ButtonTag className={className}>{children}</ButtonTag>;
+const Button: FC<ButtonProps> = ({ className, children, onClick }) => {
+  return (
+    <ButtonTag onClick={onClick} className={className}>
+      {children}
+    </ButtonTag>
+  );
 };
 
 export default Button;

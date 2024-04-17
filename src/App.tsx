@@ -9,6 +9,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.tsx";
 import SuggestedPage from "./pages/SuggestedPage/SuggestedPage.tsx";
 import ChatPage from "./pages/ChatPage/ChatPage.tsx";
 import DiaryPage from "./pages/DiaryPage/DiaryPage.tsx";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path={"*"} element={<NotFoundPage />} />
         </Route>
       </Routes>
+      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
     </>
   );
 }
