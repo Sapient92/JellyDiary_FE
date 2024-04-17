@@ -31,7 +31,7 @@ const PostPageDiary: React.FC<PostPageDiaryProps> = ({ data }) => {
     { label: "목욕", value: shower },
     { label: "체중", value: weight },
     { label: "행동\n/특이사항", value: specialNote },
-  ].filter((data) => data.value !== null);
+  ].filter((data) => data.value !== null && data.value !== undefined);
 
   return (
     <PostPageDiaryContainer>

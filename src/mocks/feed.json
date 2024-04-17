@@ -1,0 +1,20 @@
+[
+  {
+    "postId": 2,
+    "isPublic": true,
+    "postImgIsMultiple": false,
+    "postImg":"https://jellydiary-actions-s3-bucket.s3.ap-northeast-2.amazonaws.com/image/c34b124b-57d3-48f4-86d9-aa905e0c85d7860eed6ee96ae06fea4d69e3d701d247.jpg"
+  },
+  {
+    "postId": 3,
+    "isPublic": false,
+    "postImgIsMultiple": true,
+    "postImg":"https://jellydiary-actions-s3-bucket.s3.ap-northeast-2.amazonaws.com/image/c34b124b-57d3-48f4-86d9-aa905e0c85d7860eed6ee96ae06fea4d69e3d701d247.jpg"
+  },
+  {
+    "postId": 4,
+    "isPublic": true,
+    "postImgIsMultiple": false,
+    "postImg":"https://jellydiary-actions-s3-bucket.s3.ap-northeast-2.amazonaws.com/image/c34b124b-57d3-48f4-86d9-aa905e0c85d7860eed6ee96ae06fea4d69e3d701d247.jpg"
+  }
+]

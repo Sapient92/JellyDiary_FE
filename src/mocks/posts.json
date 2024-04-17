@@ -1,6 +1,6 @@
 [
   {
-    "postId" : 12,
+    "postId" : 2,
     "postTitle" : "산책최고",
     "postDate" : "2024-04-09",
     "meal" : "OO 사료 129g 급여",
@@ -19,5 +19,41 @@
     "isDelete" : false,
     "diaryId" : 2,
     "userId" : 33
-  }
+  },{
+  "postId" : 3,
+  "postTitle" : "산책 그저그래",
+  "postDate" : "2024-04-09",
+  "meal" : "OO 사료 129g 급여",
+  "snack" : "OO 북어 1개 급여",
+  "water" : "120ml",
+  "walk" : "A코스 20분",
+  "toiletRecord" : "맛동산 1회 / 감자 2회",
+  "specialNote" : "배탈남",
+  "weather" : "맑음",
+  "postContent" : "똥이 너무 마려운 하루였다.",
+  "createdAt" : "2024-04-10T14:00:00Z",
+  "modifiedAt" : null,
+  "isPublic" : true,
+  "isDelete" : false,
+  "diaryId" : 2,
+  "userId" : 33
+},{
+  "postId" : 4,
+  "postTitle" : "산책시러",
+  "postDate" : "2024-04-09",
+  "snack" : "OO 북어 1개 급여",
+  "water" : "120ml",
+  "toiletRecord" : "맛동산 1회 / 감자 2회",
+  "shower" : "안 함",
+  "weight" : "5.2kg",
+  "specialNote" : "배탈남",
+  "weather" : "맑음",
+  "postContent" : "많이 먹은 건 고양인데 왜 살은 내가 찌냐",
+  "createdAt" : "2024-04-10T14:00:00Z",
+  "modifiedAt" : null,
+  "isPublic" : true,
+  "isDelete" : false,
+  "diaryId" : 2,
+  "userId" : 33
+}
 ]

@@ -9,14 +9,18 @@ import heartBtn from "../../../assets/button/HeartBtn.png";
 import chatBtn from "../../../assets/button/ChattingBtn.png";
 import sendBtn from "../../../assets/button/SendBtn.png";
 import * as React from "react";
+import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
+  data: Diary;
 }
 
 const PostPageDetail: React.FC<PostPageDetailProps> = ({
   setToggleCommentModal,
+  data,
 }) => {
+  const { postTitle, createdAt, postContent } = data;
   const handleCommentClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setToggleCommentModal(true);
@@ -40,11 +44,12 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
       </PostDetailBtnContainer>
       <PostDetailDesc>
         <p>1,069 likes</p>
-        <p>경주여행</p>
+        <p>{postTitle}</p>
+        <p>{postContent}</p>
         <div>
           <button onClick={handleCommentClick}>View all 100 comments</button>
         </div>
-        <p>2023.04.11</p>
+        <p>{createdAt.split("T")[0].replaceAll("-", ".")}</p>
       </PostDetailDesc>
     </PostPageDetailContainer>
   );

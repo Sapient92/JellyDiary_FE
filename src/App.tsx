@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Layout />}>
           <Route path={"/userfeed"} element={<UserFeedPage />} />
-          <Route path={"/post"} element={<PostPage />} />
+          <Route path={"/post/:id"} element={<PostPage />} />
           <Route path={"/write"} element={<WritePage />} />
           <Route path={"/setting"} element={<SettingPage />} />
           <Route path={"/diary"} element={<DiaryPage />} />

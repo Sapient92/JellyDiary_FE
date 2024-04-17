@@ -48,6 +48,12 @@ export const PostDetailDesc = styled.div`
   }
 
   p:nth-child(2) {
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  p:nth-child(3) {
+    font-size: 14px;
   }
 
   button {
@@ -63,7 +69,7 @@ export const PostDetailDesc = styled.div`
       text-decoration: underline;
     }
   }
-  p:nth-child(4) {
+  p:nth-child(5) {
     color: #8e8e8e;
     font-size: 12px;
   }
