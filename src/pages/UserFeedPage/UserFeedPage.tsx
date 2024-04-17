@@ -8,6 +8,7 @@ import FollowModal from "../../components/Modal/FollowModal/FollowModal.tsx";
 const UserFeedPage: FC = () => {
   const [toggleFollowerModal, setToggleFollowerModal] = useState(false);
   const [toggleFollowModal, setToggleFollowModal] = useState(false);
+
   return (
     <>
       {toggleFollowerModal && (
