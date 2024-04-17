@@ -1,7 +1,13 @@
 import { PostPageDiaryContainer } from "./PostPageDiary.styles.ts";
 import PostPageDiaryInfo from "./PostPageDiaryInfo/PostPageDiaryInfo.tsx";
+import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import React from "react";
 
-const PostPageDiary = ({ data }) => {
+type PostPageDiaryProps = {
+  data: Diary;
+};
+
+const PostPageDiary: React.FC<PostPageDiaryProps> = ({ data }) => {
   const {
     meal,
     snack,
@@ -33,7 +39,7 @@ const PostPageDiary = ({ data }) => {
         <PostPageDiaryInfo
           key={data.label}
           title={data.label}
-          content={data.value}
+          content={typeof data.value === "string" ? data.value : ""}
         />
       ))}
     </PostPageDiaryContainer>
