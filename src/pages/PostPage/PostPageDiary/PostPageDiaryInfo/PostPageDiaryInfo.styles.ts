@@ -13,6 +13,7 @@ export const PostPageDiaryInfoContainer = styled.div`
     color: #7d8fb3;
     font-size: 14px;
     font-weight: bold;
+    white-space: pre-wrap;
   }
 
   p:nth-child(2) {
