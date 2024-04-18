@@ -47,15 +47,6 @@ export const PostDetailDesc = styled.div`
     font-weight: 600;
   }
 
-  p:nth-child(2) {
-    font-weight: 600;
-    margin-top: 4px;
-  }
-
-  p:nth-child(3) {
-    font-size: 14px;
-  }
-
   button {
     margin: 4px 0;
     padding: 0;
@@ -69,8 +60,32 @@ export const PostDetailDesc = styled.div`
       text-decoration: underline;
     }
   }
-  p:nth-child(5) {
+  p:nth-child(4) {
     color: #8e8e8e;
     font-size: 12px;
+  }
+`;
+
+export const PostDetailDescContainer = styled.div<{ seeMore: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (!props.seeMore ? "row" : "column")};
+  margin-top: 4px;
+
+  p:nth-child(1) {
+    font-weight: 600;
+    margin-right: 6px;
+  }
+
+  p:nth-child(2) {
+    font-size: 14px;
+    margin: 0 6px 0 0;
+
+    span {
+      color: #8e8e8e;
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
   }
 `;
