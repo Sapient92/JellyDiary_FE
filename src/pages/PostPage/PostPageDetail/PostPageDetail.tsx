@@ -51,7 +51,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
       </PostDetailBtnContainer>
       <PostDetailDesc>
         <p>1,069 likes</p>
-        <PostDetailDescContainer seeMore={toggleSeeMore}>
+        <PostDetailDescContainer $seeMore={toggleSeeMore}>
           <p>{postTitle}</p>
           {!toggleSeeMore ? (
             <p>

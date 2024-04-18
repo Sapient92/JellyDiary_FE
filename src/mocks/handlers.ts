@@ -1,6 +1,7 @@
 import { http, HttpResponse } from "msw";
 import posts from "./posts.json";
 import feeds from "./feed.json";
+import comments from "./comment.json";
 
 export const handlers = [
   http.get("/posts/:id", ({ params }) => {
@@ -20,5 +21,8 @@ export const handlers = [
     const feed = await request.json();
     feeds.push(feed);
     return HttpResponse.json({ success: true });
+  }),
+  http.get("/comments", () => {
+    return HttpResponse.json(comments);
   }),
 ];

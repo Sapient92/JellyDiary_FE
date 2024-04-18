@@ -1,0 +1,42 @@
+{
+  "postId": 2,
+  "comments": [
+    {
+      "userId": 100,
+      "userName": "찰리친구",
+      "userProfileImg": "/testImage/FakeCat-1.png",
+      "commentId": 200,
+      "createdAt": "2024-04-18T06:54:00.384Z",
+      "userTag": [],
+      "commentContent": "고양이가 너무 귀여운 것 같아요!🥳",
+      "isDelete": false
+    },
+    {
+      "userId": 102,
+      "userName": "찰리팬",
+      "userProfileImg": "/testImage/FakeCat-2.png",
+      "commentId": 201,
+      "createdAt": "2024-04-10T14:00:00Z",
+      "userTag": [
+        {
+          "userId": 11,
+          "userName": "김주희는감자"
+        },
+        {
+          "userId": 12,
+          "userName": "신영이는최고의팀장"
+        },
+        {
+          "userId": 13,
+          "userName": "똑순이다운"
+        },
+        {
+          "userId": 14,
+          "userName": "고(수)경모"
+        }
+      ],
+      "commentContent": "얘들아, 이 고양이 겁나 미묘 아니냐? 인정?",
+      "isDelete": false
+    }
+  ]
+}

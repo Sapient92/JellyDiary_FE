@@ -67,9 +67,9 @@ export const PostDetailDesc = styled.div`
   }
 `;
 
-export const PostDetailDescContainer = styled.div<{ seeMore: boolean }>`
+export const PostDetailDescContainer = styled.div<{ $seeMore: boolean }>`
   display: flex;
-  flex-direction: ${(props) => (!props.seeMore ? "row" : "column")};
+  flex-direction: ${(props) => (!props.$seeMore ? "row" : "column")};
   margin-top: 4px;
 
   p:nth-child(1) {
