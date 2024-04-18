@@ -6,12 +6,16 @@ import {
 import Button from "../../../components/Button/Button.tsx";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const WritePageFooter = () => {
   const { diary, changeValue } = useDiaryStore((state) => state);
-  axios.get("/posts").then((res) => console.log(res));
-  const handlePostClick = () => {
+  const navigate = useNavigate();
+  const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     axios.post("/post", { ...diary }).then((r) => r);
+    navigate("../../userfeed");
   };
 
   return (
