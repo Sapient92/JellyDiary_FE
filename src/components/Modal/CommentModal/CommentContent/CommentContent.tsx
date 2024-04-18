@@ -31,7 +31,6 @@ const CommentContent: React.FC<CommentContentProps> = ({ id }) => {
       },
     },
   );
-  console.log(data);
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>댓글을 불러오지 못했습니다.</>;
