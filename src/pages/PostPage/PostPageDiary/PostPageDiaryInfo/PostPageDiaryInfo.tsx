@@ -9,7 +9,9 @@ type PostPageDiaryInfoProps = {
 const PostPageDiaryInfo: FC<PostPageDiaryInfoProps> = ({ title, content }) => {
   return (
     <PostPageDiaryInfoContainer>
-      <p>{title}</p>
+      <div>
+        <p>{title}</p>
+      </div>
       <p>{content}</p>
     </PostPageDiaryInfoContainer>
   );

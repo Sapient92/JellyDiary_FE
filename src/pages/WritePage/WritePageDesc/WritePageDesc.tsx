@@ -5,11 +5,14 @@ import {
   WritePageDetailContainer,
 } from "./WritePageDesc.styles.ts";
 import WritePageImg from "./WritePageImg/WritePageImg.tsx";
-import { useDiaryStore } from "../../../store/writeStore/writeStore.ts";
+import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 
 const WritePageDesc = () => {
-  const { title, createdAt } = useDiaryStore((state) => state.diary);
+  const { postTitle, postDate, postContent } = useDiaryStore(
+    (state) => state.diary,
+  );
   const changeValue = useDiaryStore((state) => state.changeValue);
+
   return (
     <>
       <WritePageDescContainer>
@@ -18,8 +21,8 @@ const WritePageDesc = () => {
           <p>제목을 작성해 주세요.</p>
           <input
             type={"text"}
-            value={title}
-            onChange={(e) => changeValue({ title: e.target.value })}
+            value={postTitle}
+            onChange={(e) => changeValue({ postTitle: e.target.value })}
           />
         </DiaryTitleContainer>
         <DiaryDateContainer>
@@ -27,16 +30,20 @@ const WritePageDesc = () => {
           <p>일지를 기록한 날짜를 선택해 주세요.</p>
           <input
             type={"date"}
-            defaultValue={createdAt}
-            max={createdAt}
-            onChange={(e) => changeValue({ createdAt: e.target.value })}
+            defaultValue={postDate}
+            max={postDate}
+            onChange={(e) => changeValue({ postDate: e.target.value })}
           />
         </DiaryDateContainer>
         <WritePageImg />
         <WritePageDetailContainer>
           <p>내용</p>
           <p>일지에 대한 설명을 적어주세요.</p>
-          <textarea placeholder={"작성해주세요"} />
+          <textarea
+            value={postContent}
+            onChange={(e) => changeValue({ postContent: e.target.value })}
+            placeholder={"작성해주세요"}
+          />
         </WritePageDetailContainer>
       </WritePageDescContainer>
     </>

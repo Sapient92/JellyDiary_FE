@@ -1,22 +1,47 @@
 import { PostPageDiaryContainer } from "./PostPageDiary.styles.ts";
 import PostPageDiaryInfo from "./PostPageDiaryInfo/PostPageDiaryInfo.tsx";
+import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import React from "react";
 
-const PostPageDiary = () => {
+type PostPageDiaryProps = {
+  data: Diary;
+};
+
+const PostPageDiary: React.FC<PostPageDiaryProps> = ({ data }) => {
+  const {
+    meal,
+    snack,
+    water,
+    walk,
+    toiletRecord,
+    shower,
+    weight,
+    specialNote,
+  } = data;
+
+  const diaryData = [
+    { label: "식사", value: meal },
+    { label: "간식", value: snack },
+    { label: "물", value: water },
+    {
+      label: `  산책\n(일광욕)`,
+      value: walk,
+    },
+    { label: "배변", value: toiletRecord },
+    { label: "목욕", value: shower },
+    { label: "체중", value: weight },
+    { label: "행동\n/특이사항", value: specialNote },
+  ].filter((data) => data.value !== null && data.value !== undefined);
+
   return (
     <PostPageDiaryContainer>
-      <PostPageDiaryInfo
-        title={"라리 일지"}
-        content={`오늘 하루 종일 잠이 늘었다
-        놀이 반응이 좋아서 재밌게 놀았다`}
-      />
-      <PostPageDiaryInfo
-        title={"식사"}
-        content={"내가 먹다 남은 것 조금 나눠줌"}
-      />
-      <PostPageDiaryInfo title={"간식"} content={"나도 못 먹는걸 줄리가"} />
-      <PostPageDiaryInfo title={"물"} content={"변기물 마시는거 봤음"} />
-      <PostPageDiaryInfo title={"산책"} content={"A 코스"} />
-      <PostPageDiaryInfo title={"목욕"} content={"일단 나부터"} />
+      {diaryData.map((data) => (
+        <PostPageDiaryInfo
+          key={data.label}
+          title={data.label}
+          content={typeof data.value === "string" ? data.value : ""}
+        />
+      ))}
     </PostPageDiaryContainer>
   );
 };

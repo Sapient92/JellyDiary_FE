@@ -1,18 +1,27 @@
 import { PostsSection } from "./FeedPostsSection.styles.ts";
 import FeedPost from "./FeedPost/FeedPost.tsx";
 import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
-import FakeCat2 from "../../../assets/testImage/FakeCat-2.png";
-import FakeCat3 from "../../../assets/testImage/FakeCat-3.png";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+
+const fetchFeeds = () => axios.get("/feeds");
 
 const FeedPostsSection = () => {
+  const { isLoading, data, isError } = useQuery("fetch-feeds", fetchFeeds);
+  console.log(data);
+  if (isLoading) return <>Loading...</>;
+  if (isError) return <>데이터를 불러오지 못했습니다.</>;
   return (
     <PostsSection>
-      <FeedPost fakeImg={FakeCat1} />
-      <FeedPost fakeImg={FakeCat2} />
-      <FeedPost fakeImg={FakeCat3} />
-      <FeedPost fakeImg={FakeCat1} />
-      <FeedPost fakeImg={FakeCat2} />
-      <FeedPost fakeImg={FakeCat3} />
+      {data?.data.map(
+        (feed) =>
+          feed.isPublic && (
+            <Link key={feed.postId} to={`/post/${feed.postId}`}>
+              <FeedPost fakeImg={FakeCat1} />
+            </Link>
+          ),
+      )}
     </PostsSection>
   );
 };

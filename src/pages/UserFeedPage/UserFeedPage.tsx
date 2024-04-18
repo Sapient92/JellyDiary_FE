@@ -4,10 +4,13 @@ import FeedIntroduction from "./FeedIntroduction/FeedIntroduction.tsx";
 import FeedNavbar from "./FeedNavbar/FeedNavbar.tsx";
 import FeedPostsSection from "./FeedPostsSection/FeedPostsSection.tsx";
 import FollowModal from "../../components/Modal/FollowModal/FollowModal.tsx";
+import posts from "../../mocks/posts.json";
 
 const UserFeedPage: FC = () => {
   const [toggleFollowerModal, setToggleFollowerModal] = useState(false);
   const [toggleFollowModal, setToggleFollowModal] = useState(false);
+  console.log(posts);
+
   return (
     <>
       {toggleFollowerModal && (
