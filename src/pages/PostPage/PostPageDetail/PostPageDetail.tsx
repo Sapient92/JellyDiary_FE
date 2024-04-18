@@ -11,7 +11,6 @@ import {
   SendButton,
 } from "./PostPageDetail.styles.ts";
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
-import sendBtn from "../../../assets/button/SendBtn.png";
 import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
 
 interface PostPageDetailProps {
