@@ -9,6 +9,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.tsx";
 import SuggestedPage from "./pages/SuggestedPage/SuggestedPage.tsx";
 import ChatPage from "./pages/ChatPage/ChatPage.tsx";
 import DiaryPage from "./pages/DiaryPage/DiaryPage.tsx";
+import DemoApp from "./pages/DiaryPage/DiaryTestPage.tsx";
 function App() {
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
           <Route path={"/diary"} element={<DiaryPage />} />
           <Route path={"/"} element={<SuggestedPage />} />
           <Route path={"/chat"} element={<ChatPage />} />
+          <Route path={"/test"} element={<DemoApp />} />
           <Route path={"*"} element={<NotFoundPage />} />
         </Route>
       </Routes>
