@@ -6,13 +6,27 @@ import {
 } from "./WritePageDesc.styles.ts";
 import WritePageImg from "./WritePageImg/WritePageImg.tsx";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import React, { useEffect } from "react";
 
-const WritePageDesc = () => {
+interface WritePageDescProps {
+  data?: Diary;
+}
+
+const today = new Date().toISOString().split("T")[0];
+
+const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
   const { postTitle, postDate, postContent } = useDiaryStore(
     (state) => state.diary,
   );
   const changeValue = useDiaryStore((state) => state.changeValue);
+  const { postTitle: title, postDate: date, postContent: content } = data || {};
 
+  useEffect(() => {
+    if (title && date && content) {
+      changeValue({ postTitle: title, postDate: date, postContent: content });
+    }
+  }, []);
   return (
     <>
       <WritePageDescContainer>
@@ -30,8 +44,8 @@ const WritePageDesc = () => {
           <p>일지를 기록한 날짜를 선택해 주세요.</p>
           <input
             type={"date"}
-            defaultValue={postDate}
-            max={postDate}
+            defaultValue={date || postDate}
+            max={today}
             onChange={(e) => changeValue({ postDate: e.target.value })}
           />
         </DiaryDateContainer>

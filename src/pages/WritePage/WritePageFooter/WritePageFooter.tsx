@@ -6,12 +6,26 @@ import {
 import Button from "../../../components/Button/Button.tsx";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
 
-const WritePageFooter = () => {
+interface WritePageFooterProps {
+  data: Diary;
+}
+
+const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const { diary, changeValue } = useDiaryStore((state) => state);
+  const { isPublic } = data || {};
   const navigate = useNavigate();
+  console.log(isPublic);
+
+  useEffect(() => {
+    if (isPublic === false) {
+      changeValue({ isPublic: false });
+    }
+  }, []);
+
   const id = useRef(5);
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -42,7 +56,7 @@ const WritePageFooter = () => {
           <label htmlFor={"private_checkbox"}>체크하여 비공개로 게시하기</label>
         </PrivateBtnContainer>
         <Button onClick={handlePostClick} className={"post"}>
-          게시
+          {data ? "수정" : "게시"}
         </Button>
       </FooterBtnContainer>
     </WritePageFooterContainer>
