@@ -24,6 +24,7 @@ export const WritePageTitle = styled.div`
 
     &:hover {
       cursor: pointer;
+      color: lightslategray;
     }
   }
 

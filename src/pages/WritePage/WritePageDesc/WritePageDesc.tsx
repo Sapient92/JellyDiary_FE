@@ -22,7 +22,7 @@ const WritePageDesc = () => {
           <input
             type={"text"}
             value={postTitle}
-            onChange={(e) => changeValue({ title: e.target.value })}
+            onChange={(e) => changeValue({ postTitle: e.target.value })}
           />
         </DiaryTitleContainer>
         <DiaryDateContainer>

@@ -10,6 +10,7 @@ import {
   WritePageWeatherContainer,
 } from "./WritePageHeader.styles.ts";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { useNavigate } from "react-router-dom";
 
 interface WritePageHeaderProps {
   title: string;
@@ -17,6 +18,7 @@ interface WritePageHeaderProps {
 
 const WritePageHeader: FC<WritePageHeaderProps> = ({ title }) => {
   const { diary, changeValue } = useDiaryStore((state) => state);
+  const navigate = useNavigate();
 
   const handleWeatherChange = (state: string) => {
     if (diary.weather === state) {
@@ -28,7 +30,7 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title }) => {
   return (
     <WritePageHeaderContainer>
       <WritePageTitle>
-        <span>{"<"}</span>
+        <span onClick={() => navigate(-1)}>{"<"}</span>
         <p>📝 {title}</p>
       </WritePageTitle>
       <WritePageWeatherContainer>
