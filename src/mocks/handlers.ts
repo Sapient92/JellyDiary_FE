@@ -25,4 +25,9 @@ export const handlers = [
   http.get("/comments", () => {
     return HttpResponse.json(comments);
   }),
+  http.post("/comment", async ({ request }) => {
+    const comment = await request.json();
+    comments.comments.push(comment);
+    return HttpResponse.json({ success: true });
+  }),
 ];

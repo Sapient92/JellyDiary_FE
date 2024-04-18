@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const CommentFooterContainer = styled.div`
+export const CommentFooterContainer = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
