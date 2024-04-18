@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "react-query";
 const CommentFooter = () => {
   const [comment, setComment] = useState("");
   const idRef = useRef(10);
-  const addComment = (comment) => {
+  const addComment = (comment: object) => {
     return axios.post("/comment", comment);
   };
   const queryClient = useQueryClient();
