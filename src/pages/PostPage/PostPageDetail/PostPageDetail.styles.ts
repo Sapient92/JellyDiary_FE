@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IoPaw, IoPawOutline } from "react-icons/io5";
 
 export const PostPageDetailContainer = styled.div`
   display: flex;
@@ -88,4 +89,15 @@ export const PostDetailDescContainer = styled.div<{ seeMore: boolean }>`
       }
     }
   }
+`;
+
+export const NotLikeButton = styled(IoPawOutline)`
+  width: 26px;
+  height: 26px;
+`;
+
+export const LikeButton = styled(IoPaw)`
+  width: 26px;
+  height: 26px;
+  color: hotpink;
 `;

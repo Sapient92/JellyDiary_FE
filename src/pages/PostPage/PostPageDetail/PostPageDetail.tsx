@@ -1,4 +1,7 @@
+import React, { useState } from "react";
 import {
+  LikeButton,
+  NotLikeButton,
   PostDetailBtnContainer,
   PostDetailDesc,
   PostDetailDescContainer,
@@ -6,12 +9,9 @@ import {
   PostPageDetailContainer,
 } from "./PostPageDetail.styles.ts";
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
-import heartBtn from "../../../assets/button/HeartBtn.png";
 import chatBtn from "../../../assets/button/ChattingBtn.png";
 import sendBtn from "../../../assets/button/SendBtn.png";
-import * as React from "react";
 import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
-import { useState } from "react";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +24,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
 }) => {
   const { postTitle, createdAt, postContent } = data;
   const [toggleSeeMore, setToggleSeeMore] = useState(false);
+  const [like, setLike] = useState(false);
   const handleCommentClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setToggleCommentModal(true);
@@ -38,8 +39,8 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
         <img src={detailImg} alt={"post_img"} />
       </PostDetailImgContainer>
       <PostDetailBtnContainer>
-        <button>
-          <img src={heartBtn} alt={"heart_button"} />
+        <button onClick={() => setLike(!like)}>
+          {!like ? <NotLikeButton /> : <LikeButton />}
         </button>
         <button>
           <img src={chatBtn} alt={"chat_button"} />
