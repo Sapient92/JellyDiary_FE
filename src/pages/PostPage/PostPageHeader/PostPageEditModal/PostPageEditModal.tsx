@@ -1,7 +1,8 @@
-import { EditModalContainer } from "./PostPageEditModal.styled.ts";
+import { EditModalContainer, LinkStyled } from "./PostPageEditModal.styled.ts";
 import React, { Dispatch, SetStateAction, useRef } from "react";
 import useOnClickOutside from "../../../../hooks/useOnClickOutside.ts";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 
 interface PostPageEditModalProps {
   setToggleEditModal: Dispatch<SetStateAction<boolean>>;
@@ -11,17 +12,24 @@ const PostPageEditModal: React.FC<PostPageEditModalProps> = ({
   setToggleEditModal,
 }) => {
   const { id } = useParams();
+  const toggleConfirmDeleteModal = useModalStore(
+    (state) => state.toggleConfirmDeleteModal,
+  );
   const modalRef = useRef(null);
   useOnClickOutside(modalRef, () => {
     setToggleEditModal(false);
   });
+  const handleDeleteClick = () => {
+    toggleConfirmDeleteModal(true);
+    setToggleEditModal(false);
+  };
 
   return (
     <EditModalContainer ref={modalRef}>
-      <Link to={`../../../edit/${id}`}>
+      <LinkStyled to={`../../../edit/${id}`}>
         <p>수정</p>
-      </Link>
-      <p>삭제</p>
+      </LinkStyled>
+      <p onClick={handleDeleteClick}>삭제</p>
     </EditModalContainer>
   );
 };

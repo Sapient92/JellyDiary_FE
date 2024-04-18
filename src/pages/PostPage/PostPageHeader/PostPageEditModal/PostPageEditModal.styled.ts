@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const EditModalContainer = styled.div`
   width: 90px;
@@ -25,5 +26,20 @@ export const EditModalContainer = styled.div`
   }
   p:nth-child(1) {
     margin-bottom: 4px;
+  }
+`;
+
+export const LinkStyled = styled(Link)`
+  text-decoration: none;
+  p {
+    font-size: 16px;
+    color: #717171;
+    margin: 0;
+    width: 30px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 `;

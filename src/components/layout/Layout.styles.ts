@@ -7,6 +7,7 @@ export const LayoutContainer = styled.div`
 export const HeaderWrapper = styled.div`
   width: 100%;
   position: fixed;
+  z-index: 10;
 `;
 
 export const OutletWrapper = styled.div`
