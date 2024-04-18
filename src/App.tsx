@@ -20,6 +20,7 @@ function App() {
           <Route path={"/userfeed"} element={<UserFeedPage />} />
           <Route path={"/post/:id"} element={<PostPage />} />
           <Route path={"/write"} element={<WritePage />} />
+          <Route path={"/edit/:id"} element={<WritePage />} />
           <Route path={"/setting"} element={<SettingPage />} />
           <Route path={"/diary"} element={<DiaryPage />} />
           <Route path={"/"} element={<SuggestedPage />} />

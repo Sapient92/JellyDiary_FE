@@ -5,9 +5,24 @@ import WritePageDesc from "./WritePageDesc/WritePageDesc.tsx";
 import WritePageFooter from "./WritePageFooter/WritePageFooter.tsx";
 import AlertModal from "../../components/Modal/AlertModal/AlertModal.tsx";
 import { useModalStore } from "../../store/modalStore/modalStore.ts";
+import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const WritePage = () => {
   const { imageAlertModal, imgDupliAlertModal } = useModalStore();
+  const { id } = useParams();
+  const { isLoading, data, isError } = useQuery(
+    "fetch-post",
+    () => {
+      return axios.get(`edit/${id}`);
+    },
+    {
+      select: (data) => data.data[0],
+    },
+  );
+  if (isLoading) return <>Loading...</>;
+  if (isError) return <>데이터를 불러오는데 실패하였습니다.</>;
 
   return (
     <WritePageContainer>
@@ -22,10 +37,13 @@ const WritePage = () => {
             이미 업로드한 이미지 입니다.
           </AlertModal>
         )}
-        <WritePageHeader title={"일지 작성하기"} />
-        <WritePageItems />
-        <WritePageDesc />
-        <WritePageFooter />
+        <WritePageHeader
+          title={data ? "일지 수정하기" : "일지 작성하기"}
+          data={data}
+        />
+        <WritePageItems data={data} />
+        <WritePageDesc data={data} />
+        <WritePageFooter data={data} />
       </WritePageContent>
     </WritePageContainer>
   );

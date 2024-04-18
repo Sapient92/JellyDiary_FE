@@ -30,4 +30,9 @@ export const handlers = [
     comments.comments.push(comment);
     return HttpResponse.json({ success: true });
   }),
+  http.get("edit/:id", ({ params }) => {
+    const { id } = params;
+    const post = posts.filter((post) => post.postId === Number(id));
+    return HttpResponse.json(post);
+  }),
 ];

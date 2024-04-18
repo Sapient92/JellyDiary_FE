@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   CloudyBtn,
   PartlySunnyBtn,
@@ -11,14 +11,23 @@ import {
 } from "./WritePageHeader.styles.ts";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 import { useNavigate } from "react-router-dom";
+import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
 
 interface WritePageHeaderProps {
   title: string;
+  data?: Diary;
 }
 
-const WritePageHeader: FC<WritePageHeaderProps> = ({ title }) => {
+const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
   const { diary, changeValue } = useDiaryStore((state) => state);
+  const { weather } = data || {};
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (weather) {
+      changeValue({ weather });
+    }
+  }, []);
 
   const handleWeatherChange = (state: string) => {
     if (diary.weather === state) {
