@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { IoChatbubblesOutline, IoPaw, IoPawOutline } from "react-icons/io5";
 import { BsSend } from "react-icons/bs";
-import { LuSend } from "react-icons/lu";
-import { FiSend } from "react-icons/fi";
 
 export const PostPageDetailContainer = styled.div`
   display: flex;
