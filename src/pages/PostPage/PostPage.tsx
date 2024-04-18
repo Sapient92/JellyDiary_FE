@@ -7,10 +7,15 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useModalStore } from "../../store/modalStore/modalStore.ts";
+import ConfirmModal from "../../components/Modal/ConfirmModal/ConfirmModal.tsx";
 
 const PostPage = () => {
   const { id } = useParams();
   const [toggleCommentModal, setToggleCommentModal] = useState(false);
+  const { confirmDeleteModal, toggleConfirmDeleteModal } = useModalStore(
+    (state) => state,
+  );
   const { isLoading, data, isError, error } = useQuery(
     "get-post",
     () => {
@@ -25,7 +30,15 @@ const PostPage = () => {
   if (isError) return <>{error}</>;
 
   return (
-    <PostPageContainer>
+    <PostPageContainer confirmDeleteModal={confirmDeleteModal}>
+      {confirmDeleteModal && (
+        <ConfirmModal
+          message={"게시글을 삭제하시겠습니까?"}
+          confirm={"삭제"}
+          cancel={"취소"}
+          closeModal={toggleConfirmDeleteModal}
+        />
+      )}
       <PostPageContent>
         <PostPageHeader />
         <PostPageDetail
