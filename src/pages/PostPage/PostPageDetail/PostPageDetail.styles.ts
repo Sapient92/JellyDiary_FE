@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { IoPaw, IoPawOutline } from "react-icons/io5";
+import { IoChatbubblesOutline, IoPaw, IoPawOutline } from "react-icons/io5";
+import { BsSend } from "react-icons/bs";
+import { LuSend } from "react-icons/lu";
+import { FiSend } from "react-icons/fi";
 
 export const PostPageDetailContainer = styled.div`
   display: flex;
@@ -26,7 +29,6 @@ export const PostDetailBtnContainer = styled.div`
     height: 40px;
     background: none;
     border: none;
-    cursor: pointer;
   }
 `;
 
@@ -92,12 +94,22 @@ export const PostDetailDescContainer = styled.div<{ $seeMore: boolean }>`
 `;
 
 export const NotLikeButton = styled(IoPawOutline)`
-  width: 26px;
-  height: 26px;
+  font-size: 30px;
+  cursor: pointer;
 `;
 
 export const LikeButton = styled(IoPaw)`
-  width: 26px;
-  height: 26px;
+  font-size: 30px;
   color: hotpink;
+  cursor: pointer;
+`;
+
+export const CommentButton = styled(IoChatbubblesOutline)`
+  font-size: 26px;
+  cursor: pointer;
+`;
+
+export const SendButton = styled(BsSend)`
+  font-size: 26px;
+  cursor: pointer;
 `;

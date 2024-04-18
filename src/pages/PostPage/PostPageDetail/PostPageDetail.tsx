@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  CommentButton,
   LikeButton,
   NotLikeButton,
   PostDetailBtnContainer,
@@ -7,9 +8,9 @@ import {
   PostDetailDescContainer,
   PostDetailImgContainer,
   PostPageDetailContainer,
+  SendButton,
 } from "./PostPageDetail.styles.ts";
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
-import chatBtn from "../../../assets/button/ChattingBtn.png";
 import sendBtn from "../../../assets/button/SendBtn.png";
 import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
 
@@ -43,10 +44,10 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
           {!like ? <NotLikeButton /> : <LikeButton />}
         </button>
         <button>
-          <img src={chatBtn} alt={"chat_button"} />
+          <CommentButton />
         </button>
         <button>
-          <img src={sendBtn} alt={"send_button"} />
+          <SendButton />
         </button>
       </PostDetailBtnContainer>
       <PostDetailDesc>
