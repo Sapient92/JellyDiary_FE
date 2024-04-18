@@ -9,6 +9,7 @@ const fetchFeeds = () => axios.get("/feeds");
 
 const FeedPostsSection = () => {
   const { isLoading, data, isError } = useQuery("fetch-feeds", fetchFeeds);
+  console.log(data);
   if (isLoading) return <>Loading...</>;
   if (isError) return <>데이터를 불러오지 못했습니다.</>;
   return (

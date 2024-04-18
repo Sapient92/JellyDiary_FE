@@ -16,4 +16,9 @@ export const handlers = [
   http.get("/feeds", () => {
     return HttpResponse.json(feeds);
   }),
+  http.post("/feed", async ({ request }) => {
+    const feed = await request.json();
+    feeds.push(feed);
+    return HttpResponse.json({ success: true });
+  }),
 ];
