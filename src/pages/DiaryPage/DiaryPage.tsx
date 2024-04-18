@@ -32,7 +32,6 @@ import { BiChat, BiCloud, BiSun } from "react-icons/bi";
 // 캘린더 어떻게 만들지
 
 function renderEventContent(eventInfo: EventContentArg) {
-  console.log(eventInfo);
   return (
     <ListContent>
       {eventInfo.event.extendedProps.weather === "sunny" ? (
