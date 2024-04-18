@@ -5,8 +5,13 @@ import {
 } from "./CommentModal.styles.ts";
 import CommentContent from "./CommentContent/CommentContent.tsx";
 import CommentFooter from "./CommentFooter/CommentFooter.tsx";
+import React from "react";
 
-const CommentModal = ({ id }) => {
+interface CommentModal {
+  id: string;
+}
+
+const CommentModal: React.FC<CommentModal> = ({ id }) => {
   return (
     <CommentModalContainer>
       <DivContainer>
