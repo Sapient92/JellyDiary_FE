@@ -1,6 +1,6 @@
 import { PostPageDiaryContainer } from "./PostPageDiary.styles.ts";
 import PostPageDiaryInfo from "./PostPageDiaryInfo/PostPageDiaryInfo.tsx";
-import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import { Diary } from "../../../types/diaryType.ts";
 import React from "react";
 
 type PostPageDiaryProps = {
