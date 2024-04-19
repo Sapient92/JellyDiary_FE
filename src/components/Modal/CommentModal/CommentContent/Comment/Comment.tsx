@@ -6,8 +6,14 @@ import {
   CommentProfileContainer,
   DeleteCommentButton,
 } from "./Comment.styled.ts";
+import { CommentType } from "../../../../../types/CommentType.ts";
+import React from "react";
 
-const Comment = ({ comment }) => {
+interface CommentProps {
+  comment: CommentType;
+}
+
+const Comment: React.FC<CommentProps> = ({ comment }) => {
   const writtenAt = () => {
     const date = new Date().getTime() - new Date(comment.createdAt).getTime();
     const seconds = Math.floor(date / 1000);

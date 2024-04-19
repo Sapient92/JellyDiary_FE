@@ -3,20 +3,10 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import Comment from "./Comment/Comment.tsx";
 import React from "react";
+import { CommentType } from "../../../../types/CommentType.ts";
 
 interface CommentContentProps {
   id?: string;
-}
-
-interface CommentProps {
-  commentContent: string;
-  commentId: number;
-  createdAt: string;
-  isDelete: boolean;
-  userId: number;
-  userName: string;
-  userProfileImg: string;
-  userTag: object[];
 }
 
 const fetchComments = () => axios.get("/comments");
@@ -37,7 +27,7 @@ const CommentContent: React.FC<CommentContentProps> = ({ id }) => {
 
   return (
     <CommentContentContainer>
-      {data?.map((comment: CommentProps) => (
+      {data?.map((comment: CommentType) => (
         <Comment key={comment.commentId} comment={comment} />
       ))}
     </CommentContentContainer>
