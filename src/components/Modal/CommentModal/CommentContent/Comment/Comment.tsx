@@ -6,7 +6,7 @@ import {
   CommentProfileContainer,
   DeleteCommentButton,
 } from "./Comment.styled.ts";
-import { CommentType } from "../../../../../types/CommentType.ts";
+import { CommentType } from "../../../../../types/commentType.ts";
 import React from "react";
 
 interface CommentProps {

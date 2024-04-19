@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Diary } from "./diaryStore.type.ts";
+import { Diary } from "../../types/diaryType.ts";
 
 export type DiaryStoreProps = {
   diary: Diary;
