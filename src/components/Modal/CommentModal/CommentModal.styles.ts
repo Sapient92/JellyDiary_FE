@@ -18,4 +18,9 @@ export const CommentHeaderContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #c4c4c4;
+
+  p {
+    font-weight: bold;
+    font-size: 20px;
+  }
 `;

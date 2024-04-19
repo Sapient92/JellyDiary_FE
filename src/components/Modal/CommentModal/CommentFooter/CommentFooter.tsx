@@ -22,6 +22,9 @@ const CommentFooter = () => {
 
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (comment.trim() === "") {
+      return;
+    }
     const newComment = {
       userId: idRef.current,
       userName: "찰리친구",

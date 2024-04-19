@@ -8,7 +8,7 @@ import CommentFooter from "./CommentFooter/CommentFooter.tsx";
 import React from "react";
 
 interface CommentModal {
-  id: string;
+  id?: string;
 }
 
 const CommentModal: React.FC<CommentModal> = ({ id }) => {
