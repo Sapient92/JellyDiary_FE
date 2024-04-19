@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { PiNotebookLight } from "react-icons/pi";
 
 export const PostPageHeaderContainer = styled.header`
   width: 100%;
@@ -23,6 +24,10 @@ export const UserProfileContainer = styled.div`
     margin-left: 14px;
     font-weight: 600;
     font-size: 18px;
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -32,15 +37,9 @@ export const HeaderButtonContainer = styled.div`
 `;
 
 export const PostMenuButton = styled.button`
-  color: black;
-  margin-right: 20px;
+  margin-right: 10px;
   background: none;
   border: none;
-  cursor: pointer;
-  img {
-    width: 15px;
-    height: 15px;
-  }
 `;
 
 export const EditButtonContainer = styled.div`
@@ -51,5 +50,10 @@ export const EditButton = styled(HiOutlineDotsHorizontal)`
   margin-right: 20px;
   width: 24px;
   height: 24px;
+  cursor: pointer;
+`;
+
+export const DiaryButton = styled(PiNotebookLight)`
+  font-size: 32px;
   cursor: pointer;
 `;
