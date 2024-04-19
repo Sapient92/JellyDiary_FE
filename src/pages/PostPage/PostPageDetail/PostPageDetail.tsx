@@ -3,28 +3,53 @@ import {
   CommentButton,
   LikeButton,
   NotLikeButton,
+  PostDetailBtnBox,
   PostDetailBtnContainer,
   PostDetailDesc,
   PostDetailDescContainer,
   PostDetailImgContainer,
   PostPageDetailContainer,
   SendButton,
+  WeatherContainer,
 } from "./PostPageDetail.styles.ts";
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
-import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
+import { MdOutlineWbSunny } from "react-icons/md";
+import { IoPartlySunnyOutline } from "react-icons/io5";
+import { LuCloudy } from "react-icons/lu";
+import { BsCloudRain } from "react-icons/bs";
+import { IoIosSnow } from "react-icons/io";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
-  data: Diary;
+  data: DiaryType;
 }
 
 const PostPageDetail: React.FC<PostPageDetailProps> = ({
   setToggleCommentModal,
   data,
 }) => {
-  const { postTitle, createdAt, postContent } = data;
+  const { postTitle, createdAt, postContent, weather } = data;
   const [toggleSeeMore, setToggleSeeMore] = useState(false);
   const [like, setLike] = useState(false);
+  let Icons;
+  switch (weather) {
+    case "맑음":
+      Icons = MdOutlineWbSunny;
+      break;
+    case "구름낀":
+      Icons = IoPartlySunnyOutline;
+      break;
+    case "흐림":
+      Icons = LuCloudy;
+      break;
+    case "비":
+      Icons = BsCloudRain;
+      break;
+    case "눈":
+      Icons = IoIosSnow;
+      break;
+  }
 
   const handleCommentClick = (
     e: React.MouseEvent<HTMLButtonElement | SVGElement>,
@@ -42,19 +67,22 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
         <img src={detailImg} alt={"post_img"} />
       </PostDetailImgContainer>
       <PostDetailBtnContainer>
-        <button>
-          {!like ? (
-            <NotLikeButton onClick={() => setLike(!like)} />
-          ) : (
-            <LikeButton onClick={() => setLike(!like)} />
-          )}
-        </button>
-        <button>
-          <CommentButton onClick={handleCommentClick} />
-        </button>
-        <button>
-          <SendButton />
-        </button>
+        <PostDetailBtnBox>
+          <button>
+            {!like ? (
+              <NotLikeButton onClick={() => setLike(!like)} />
+            ) : (
+              <LikeButton onClick={() => setLike(!like)} />
+            )}
+          </button>
+          <button>
+            <CommentButton onClick={handleCommentClick} />
+          </button>
+          <button>
+            <SendButton />
+          </button>
+        </PostDetailBtnBox>
+        <WeatherContainer>{Icons ? <Icons /> : null}</WeatherContainer>
       </PostDetailBtnContainer>
       <PostDetailDesc>
         <p>1,069 likes</p>

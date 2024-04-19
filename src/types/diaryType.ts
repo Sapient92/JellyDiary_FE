@@ -1,4 +1,4 @@
-export type Diary = {
+export interface DiaryType {
   postTitle: string;
   postDate: string;
   weather: string;
@@ -13,4 +13,4 @@ export type Diary = {
   shower: string | null;
   weight: string | null;
   specialNote: string | null;
-};
+}

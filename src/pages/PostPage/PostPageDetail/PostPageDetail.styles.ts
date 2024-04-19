@@ -16,6 +16,13 @@ export const PostDetailImgContainer = styled.div`
 `;
 
 export const PostDetailBtnContainer = styled.div`
+  display: flex;
+  background-color: white;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const PostDetailBtnBox = styled.div`
   height: 54px;
   padding-left: 16px;
   background-color: white;
@@ -110,4 +117,12 @@ export const CommentButton = styled(IoChatbubblesOutline)`
 export const SendButton = styled(BsSend)`
   font-size: 26px;
   cursor: pointer;
+`;
+
+export const WeatherContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 26px;
+  margin-right: 20px;
+  color: #3ea9e5;
 `;

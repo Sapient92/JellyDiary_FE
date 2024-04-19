@@ -11,11 +11,11 @@ import {
 } from "./WritePageHeader.styles.ts";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 import { useNavigate } from "react-router-dom";
-import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
 
 interface WritePageHeaderProps {
   title: string;
-  data?: Diary;
+  data?: DiaryType;
 }
 
 const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
