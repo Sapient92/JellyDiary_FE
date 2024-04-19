@@ -1,4 +1,5 @@
 import {
+  CommentHeader,
   CommentHeaderContainer,
   CommentModalContainer,
   DivContainer,
@@ -9,14 +10,25 @@ import React from "react";
 
 interface CommentModal {
   id?: string;
+  setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CommentModal: React.FC<CommentModal> = ({ id }) => {
+const CommentModal: React.FC<CommentModal> = ({
+  id,
+  setToggleCommentModal,
+}) => {
+  const handleCloseClick = () => {
+    setToggleCommentModal(false);
+  };
+
   return (
     <CommentModalContainer>
       <DivContainer>
         <CommentHeaderContainer>
-          <p>댓글</p>
+          <span onClick={handleCloseClick}>{"<"}</span>
+          <CommentHeader>
+            <p>댓글</p>
+          </CommentHeader>
         </CommentHeaderContainer>
         <CommentContent id={id} />
       </DivContainer>
