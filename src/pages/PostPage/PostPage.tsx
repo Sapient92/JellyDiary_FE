@@ -34,7 +34,9 @@ const PostPage = () => {
         />
         <PostPageDiary data={data} />
       </PostPageContent>
-      {toggleCommentModal && <CommentModal id={id} />}
+      {toggleCommentModal && (
+        <CommentModal id={id} setToggleCommentModal={setToggleCommentModal} />
+      )}
     </PostPageContainer>
   );
 };

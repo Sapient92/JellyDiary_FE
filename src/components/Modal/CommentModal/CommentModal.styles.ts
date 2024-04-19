@@ -16,11 +16,29 @@ export const CommentHeaderContainer = styled.div`
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: center;
   border-bottom: 1px solid #c4c4c4;
 
+  span {
+    color: #e1d8d8;
+    font-size: 30px;
+    font-weight: bolder;
+    margin-left: 10px;
+
+    &:hover {
+      cursor: pointer;
+      color: lightslategray;
+    }
+  }
+`;
+
+export const CommentHeader = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   p {
     font-weight: bold;
     font-size: 20px;
+    margin-right: 38px;
   }
 `;
