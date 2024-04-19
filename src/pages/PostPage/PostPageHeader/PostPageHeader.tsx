@@ -1,4 +1,5 @@
 import {
+  DiaryButton,
   EditButton,
   EditButtonContainer,
   HeaderButtonContainer,
@@ -7,7 +8,6 @@ import {
   UserProfileContainer,
 } from "./PostPageHeader.styles.ts";
 import userImg from "../../../assets/testImage/FakeUser-2.png";
-import vectorBtn from "../../../assets/button/ButtonVector.png";
 import { useState } from "react";
 import PostPageEditModal from "./PostPageEditModal/PostPageEditModal.tsx";
 
@@ -22,7 +22,7 @@ const PostPageHeader = () => {
       </UserProfileContainer>
       <HeaderButtonContainer>
         <PostMenuButton>
-          <img src={vectorBtn} alt={"post_menu_button"} />
+          <DiaryButton />
         </PostMenuButton>
         <EditButtonContainer>
           <EditButton onClick={() => setToggleEditModal(true)} />
