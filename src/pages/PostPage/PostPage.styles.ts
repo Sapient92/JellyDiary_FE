@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 
-export const PostPageContainer = styled.div<{ confirmDeleteModal: boolean }>`
+export const PostPageContainer = styled.div<{ $confirmDeleteModal: boolean }>`
   display: flex;
   justify-content: center;
   position: relative;
   ${(props) =>
-    props.confirmDeleteModal &&
+    props.$confirmDeleteModal &&
     css`
       opacity: 80%;
     `}

@@ -30,7 +30,7 @@ const PostPage = () => {
   if (isError) return <>{error}</>;
 
   return (
-    <PostPageContainer confirmDeleteModal={confirmDeleteModal}>
+    <PostPageContainer $confirmDeleteModal={confirmDeleteModal}>
       {confirmDeleteModal && (
         <ConfirmModal
           message={"게시글을 삭제하시겠습니까?"}
