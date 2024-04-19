@@ -3,6 +3,8 @@ import {
   CommentContentContainer,
   CommentDescription,
   CommentInfoContainer,
+  CommentProfileContainer,
+  DeleteCommentButton,
 } from "./Comment.styled.ts";
 
 const Comment = ({ comment }) => {
@@ -20,16 +22,19 @@ const Comment = ({ comment }) => {
   };
   return (
     <CommentContainer>
-      <img src={comment.userProfileImg} alt={"comment_writer_profile_img"} />
-      <CommentContentContainer>
-        <CommentInfoContainer>
-          <p>{comment.userName}</p>
-          <p>{writtenAt()}</p>
-        </CommentInfoContainer>
-        <CommentDescription>
-          <p>{comment.commentContent}</p>
-        </CommentDescription>
-      </CommentContentContainer>
+      <CommentProfileContainer>
+        <img src={comment.userProfileImg} alt={"comment_writer_profile_img"} />
+        <CommentContentContainer>
+          <CommentInfoContainer>
+            <p>{comment.userName}</p>
+            <p>{writtenAt()}</p>
+          </CommentInfoContainer>
+          <CommentDescription>
+            <p>{comment.commentContent}</p>
+          </CommentDescription>
+        </CommentContentContainer>
+      </CommentProfileContainer>
+      <DeleteCommentButton />
     </CommentContainer>
   );
 };

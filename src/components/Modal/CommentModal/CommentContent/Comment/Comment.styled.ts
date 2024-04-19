@@ -1,8 +1,17 @@
 import styled from "styled-components";
+import { RiDeleteBinLine } from "react-icons/ri";
+
+export const DeleteCommentButton = styled(RiDeleteBinLine)`
+  box-sizing: border-box;
+  margin-right: 8px;
+  cursor: pointer;
+  visibility: hidden;
+`;
 
 export const CommentContainer = styled.li`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 6px 8px 12px 8px;
   img {
     margin: 0;
@@ -10,6 +19,14 @@ export const CommentContainer = styled.li`
     height: 40px;
     border-radius: 20px;
   }
+  &:hover ${DeleteCommentButton} {
+    visibility: visible;
+  }
+`;
+
+export const CommentProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const CommentContentContainer = styled.div`
