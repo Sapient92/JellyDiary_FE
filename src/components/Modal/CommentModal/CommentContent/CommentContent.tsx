@@ -5,7 +5,7 @@ import Comment from "./Comment/Comment.tsx";
 import React from "react";
 
 interface CommentContentProps {
-  id: string;
+  id?: string;
 }
 
 interface CommentProps {

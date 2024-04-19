@@ -25,7 +25,10 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
   const { postTitle, createdAt, postContent } = data;
   const [toggleSeeMore, setToggleSeeMore] = useState(false);
   const [like, setLike] = useState(false);
-  const handleCommentClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleCommentClick = (
+    e: React.MouseEvent<HTMLButtonElement | SVGElement>,
+  ) => {
     e.preventDefault();
     setToggleCommentModal(true);
   };
@@ -39,11 +42,15 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
         <img src={detailImg} alt={"post_img"} />
       </PostDetailImgContainer>
       <PostDetailBtnContainer>
-        <button onClick={() => setLike(!like)}>
-          {!like ? <NotLikeButton /> : <LikeButton />}
+        <button>
+          {!like ? (
+            <NotLikeButton onClick={() => setLike(!like)} />
+          ) : (
+            <LikeButton onClick={() => setLike(!like)} />
+          )}
         </button>
         <button>
-          <CommentButton />
+          <CommentButton onClick={handleCommentClick} />
         </button>
         <button>
           <SendButton />
