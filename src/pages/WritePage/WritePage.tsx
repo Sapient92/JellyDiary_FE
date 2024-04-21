@@ -10,7 +10,8 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 const WritePage = () => {
-  const { imageAlertModal, imgDupliAlertModal } = useModalStore();
+  const { imageAlertModal, imgDupliAlertModal, titleAlertModal } =
+    useModalStore();
   const { id } = useParams();
   const { isLoading, data, isError } = useQuery(
     "fetch-post",
@@ -36,6 +37,9 @@ const WritePage = () => {
           <AlertModal type={"duplication"}>
             이미 업로드한 이미지 입니다.
           </AlertModal>
+        )}
+        {titleAlertModal && (
+          <AlertModal type={"titleAlert"}>제목을 입력해 주세요.</AlertModal>
         )}
         <WritePageHeader
           title={data ? "일지 수정하기" : "일지 작성하기"}
