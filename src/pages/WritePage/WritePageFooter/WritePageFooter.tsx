@@ -8,17 +8,20 @@ import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 import axios from "axios";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
+import { useModalStore } from "../../../store/modalStore/modalStore.ts";
 
 interface WritePageFooterProps {
-  data: Diary;
+  data: DiaryType;
 }
 
 const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const { diary, changeValue } = useDiaryStore((state) => state);
+  const toggleTitleAlertModal = useModalStore(
+    (state) => state.toggleTitleAlertModal,
+  );
   const { isPublic } = data || {};
   const navigate = useNavigate();
-  console.log(isPublic);
 
   useEffect(() => {
     if (isPublic === false) {
@@ -29,6 +32,13 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const id = useRef(5);
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (diary.postTitle.trim() === "") {
+      toggleTitleAlertModal(true);
+      setTimeout(() => {
+        toggleTitleAlertModal(false);
+      }, 3000);
+      return;
+    }
     axios.post("/post", { ...diary, postId: id.current }).then((r) => r);
     axios
       .post("feed", {

@@ -6,11 +6,12 @@ import {
 } from "./WritePageDesc.styles.ts";
 import WritePageImg from "./WritePageImg/WritePageImg.tsx";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
-import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
-import React, { useEffect } from "react";
+import { DiaryType } from "../../../types/diaryType.ts";
+import React, { useEffect, useRef } from "react";
+import { useModalStore } from "../../../store/modalStore/modalStore.ts";
 
 interface WritePageDescProps {
-  data?: Diary;
+  data?: DiaryType;
 }
 
 const today = new Date().toISOString().split("T")[0];
@@ -20,13 +21,23 @@ const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
     (state) => state.diary,
   );
   const changeValue = useDiaryStore((state) => state.changeValue);
+  const titleAlertModal = useModalStore((state) => state.titleAlertModal);
   const { postTitle: title, postDate: date, postContent: content } = data || {};
+  const titleRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (title && date && content) {
       changeValue({ postTitle: title, postDate: date, postContent: content });
     }
   }, []);
+
+  useEffect(() => {
+    if (titleAlertModal) {
+      titleRef.current?.focus();
+      return;
+    }
+  }, [titleAlertModal]);
+
   return (
     <>
       <WritePageDescContainer>
@@ -34,6 +45,7 @@ const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
           <p>일지 제목</p>
           <p>제목을 작성해 주세요.</p>
           <input
+            ref={titleRef}
             type={"text"}
             value={postTitle}
             onChange={(e) => changeValue({ postTitle: e.target.value })}

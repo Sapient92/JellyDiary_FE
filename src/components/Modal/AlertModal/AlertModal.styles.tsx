@@ -23,6 +23,14 @@ export const AlertModalContainer = styled.div`
       background-color: darkgray;
       border-radius: 6px;
     `}
+
+  ${(props) =>
+    props.className === "titleAlert" &&
+    css`
+      width: 835px;
+      background-color: skyblue;
+      border-radius: 6px;
+    `}
 `;
 
 export const AlertModalContent = styled.div`
