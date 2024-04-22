@@ -4,7 +4,7 @@ import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { feedType } from "../../../types/feedType.ts";
+import { FeedType } from "../../../types/feedType.ts";
 
 const fetchFeeds = () => axios.get("/feeds");
 
@@ -16,7 +16,7 @@ const FeedPostsSection = () => {
   return (
     <PostsSection>
       {data?.data.map(
-        (feed: feedType) =>
+        (feed: FeedType) =>
           feed.isPublic && (
             <Link key={feed.postId} to={`/post/${feed.postId}`}>
               <FeedPost fakeImg={FakeCat1} />

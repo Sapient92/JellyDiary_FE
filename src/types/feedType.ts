@@ -1,4 +1,4 @@
-export interface feedType {
+export interface FeedType {
   postId: number;
   isPublic: boolean;
   postImgIsMultiple: boolean;
@@ -7,5 +7,5 @@ export interface feedType {
 
 export interface feedListType {
   feedListCount: number;
-  postList: feedType[];
+  postList: FeedType[];
 }

@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { Diary } from "../../types/diaryType.ts";
+import { DiaryType } from "../../types/diaryType.ts";
 
 export type DiaryStoreProps = {
-  diary: Diary;
+  diary: DiaryType;
   changeValue: (el: object) => void;
 };
 
@@ -13,7 +13,7 @@ export const useDiaryStore = create<DiaryStoreProps>((set) => ({
     postDate: new Date().toISOString().split("T")[0],
     postContent: "",
     isPublic: true,
-    weather: "",
+    weather: null,
     meal: null,
     snack: null,
     water: null,
