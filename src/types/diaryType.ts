@@ -1,10 +1,10 @@
 export interface DiaryType {
   postTitle: string;
   postDate: string;
-  weather: string;
   createdAt: string;
   postContent: string;
   isPublic: boolean;
+  weather: string | null;
   meal: string | null;
   snack: string | null;
   water: string | null;
