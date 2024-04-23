@@ -4,15 +4,15 @@ import {
   TitleContainer,
 } from "./FollowModal.styles.ts";
 import { Dispatch, FC, SetStateAction, useRef } from "react";
-import FollowList from "./FollowList/FollowList.tsx";
+import FollowList from "./FollowList";
 import useOnClickOutside from "../../../hooks/useOnClickOutside.ts";
 
-interface FollowModal {
+interface FollowModalProps {
   title: string;
   closeModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const FollowModal: FC<FollowModal> = ({ title, closeModal }) => {
+const FollowModal: FC<FollowModalProps> = ({ title, closeModal }) => {
   const modalRef = useRef(null);
 
   useOnClickOutside(modalRef, () => {

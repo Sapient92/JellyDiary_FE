@@ -5,17 +5,17 @@ import {
   WritePageTitle,
 } from "./WritePageItem.styles.ts";
 import { FC, memo, useEffect, useState } from "react";
-import { Diary } from "../../../../store/writeStore/diaryStore.type.ts";
+import { DiaryType } from "../.././../../types/diaryType.ts";
 import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
 
-interface WritePageItem {
+interface WritePageItemProps {
   title: string;
-  value: Diary[keyof Diary];
+  value: DiaryType[keyof DiaryType];
   name: string;
   defaultValue: string | null;
 }
 
-const WritePageItem: FC<WritePageItem> = ({
+const WritePageItem: FC<WritePageItemProps> = ({
   title,
   value,
   name,

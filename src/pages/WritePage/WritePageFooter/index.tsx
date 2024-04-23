@@ -3,7 +3,7 @@ import {
   PrivateBtnContainer,
   WritePageFooterContainer,
 } from "./WritePageFooter.styles.ts";
-import Button from "../../../components/Button/Button.tsx";
+import Button from "../../../components/Button";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 import axios from "axios";
 import React, { useEffect, useRef } from "react";

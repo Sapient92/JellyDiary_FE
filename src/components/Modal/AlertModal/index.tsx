@@ -4,12 +4,12 @@ import {
 } from "./AlertModal.styles.tsx";
 import React, { ReactNode } from "react";
 
-type AlertModal = {
+type AlertModalProps = {
   children: ReactNode;
   type: string;
 };
 
-const AlertModal: React.FC<AlertModal> = ({ children, type }) => {
+const AlertModal: React.FC<AlertModalProps> = ({ children, type }) => {
   return (
     <AlertModalContainer className={type}>
       <AlertModalContent>

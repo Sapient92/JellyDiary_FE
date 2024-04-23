@@ -1,9 +1,9 @@
 import { CommentContentContainer } from "./CommentContent.styles.ts";
 import { useQuery } from "react-query";
 import axios from "axios";
-import Comment from "./Comment/Comment.tsx";
+import Comment from "./Comment";
 import React from "react";
-import { CommentType } from "../../../../types/CommentType.ts";
+import { CommentType } from "../../../../types/commentType.ts";
 
 interface CommentContentProps {
   id?: string;

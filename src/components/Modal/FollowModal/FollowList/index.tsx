@@ -1,5 +1,5 @@
 import { FollowListContainer } from "./FollowList.styles.ts";
-import Follow from "./Follow/Follow.tsx";
+import Follow from "./Follow";
 
 const FollowList = () => {
   return (

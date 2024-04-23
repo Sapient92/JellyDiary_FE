@@ -1,6 +1,6 @@
 import { ChatMainContainer } from "./ChatPageMain.styles.ts";
-import ChatPageUserList from "./ChatPageUserList/ChatPageUserList.tsx";
-import ChatPageChat from "./ChatPageChat/ChatPageChat.tsx";
+import ChatPageUserList from "./ChatPageUserList";
+import ChatPageChat from "./ChatPageChat";
 
 const ChatPageMain = () => {
   return (

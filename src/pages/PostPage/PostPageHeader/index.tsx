@@ -9,7 +9,7 @@ import {
 } from "./PostPageHeader.styles.ts";
 import userImg from "../../../assets/testImage/FakeUser-2.png";
 import { useState } from "react";
-import PostPageEditModal from "./PostPageEditModal/PostPageEditModal.tsx";
+import PostPageEditModal from "./PostPageEditModal";
 
 const PostPageHeader = () => {
   const [toggleEditModal, setToggleEditModal] = useState(false);

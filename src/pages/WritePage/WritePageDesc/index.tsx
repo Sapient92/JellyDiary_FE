@@ -4,7 +4,7 @@ import {
   WritePageDescContainer,
   WritePageDetailContainer,
 } from "./WritePageDesc.styles.ts";
-import WritePageImg from "./WritePageImg/WritePageImg.tsx";
+import WritePageImg from "./WritePageImg";
 import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
 import { DiaryType } from "../../../types/diaryType.ts";
 import React, { useEffect, useRef } from "react";

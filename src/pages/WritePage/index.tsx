@@ -1,9 +1,9 @@
 import { WritePageContainer, WritePageContent } from "./WritePage.styles.ts";
-import WritePageHeader from "./WritePageHeader/WritePageHeader.tsx";
-import WritePageItems from "./WritePageItems/WritePageItems.tsx";
-import WritePageDesc from "./WritePageDesc/WritePageDesc.tsx";
-import WritePageFooter from "./WritePageFooter/WritePageFooter.tsx";
-import AlertModal from "../../components/Modal/AlertModal/AlertModal.tsx";
+import WritePageHeader from "./WritePageHeader";
+import WritePageItems from "./WritePageItems";
+import WritePageDesc from "./WritePageDesc";
+import WritePageFooter from "./WritePageFooter";
+import AlertModal from "../../components/Modal/AlertModal";
 import { useModalStore } from "../../store/modalStore/modalStore.ts";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";

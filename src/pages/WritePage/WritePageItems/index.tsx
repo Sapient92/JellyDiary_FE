@@ -1,14 +1,14 @@
 import { WritePageItemsContainer } from "./WritePageItems.styles.ts";
-import MemoedWritePageItem from "./WritePageItem/WritePageItem.tsx";
+import MemoedWritePageItem from "./WritePageItem";
 import {
   DiaryStoreProps,
   useDiaryStore,
 } from "../../../store/writeStore/diaryStore.ts";
-import { Diary } from "../../../store/writeStore/diaryStore.type.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
 import React from "react";
 
 interface WritePageItemsProps {
-  data?: Diary;
+  data?: DiaryType;
 }
 
 const WritePageItems: React.FC<WritePageItemsProps> = ({ data }) => {

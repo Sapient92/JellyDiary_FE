@@ -1,22 +1,22 @@
 import React, { useRef } from "react";
 import {
-  SettingPageContainer,
-  SettingPageContent,
-  SettingLeftContent,
-  UserImage,
-  UserInfo,
-  SettingLeftNav,
-  ProfileInfo,
   AccountName,
   ButtonContent,
-  UserLeft,
-  ToggleTitle,
+  ProfileInfo,
+  SettingLeftContent,
+  SettingLeftNav,
+  SettingPageContainer,
+  SettingPageContent,
   ToggleContent,
+  ToggleTitle,
+  UserImage,
+  UserInfo,
+  UserLeft,
 } from "./SettingPage.styles";
 import CustomButton from "../../components/Button/CustomButton/CustomButton";
 import imgSrc from "../../assets/testImage/suggestedPostImage.png";
 import { MdEdit } from "react-icons/md";
-import ToggleButton from "../../components/Button/ToggleButton/ToggleButton";
+import ToggleButton from "../../components/Button/ToggleButton";
 
 const SettingPage = () => {
   const scrollView = useRef<HTMLInputElement>(null);

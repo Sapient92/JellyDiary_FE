@@ -4,16 +4,16 @@ import {
   CommentModalContainer,
   DivContainer,
 } from "./CommentModal.styles.ts";
-import CommentContent from "./CommentContent/CommentContent.tsx";
-import CommentFooter from "./CommentFooter/CommentFooter.tsx";
+import CommentContent from "./CommentContent";
+import CommentFooter from "./CommentFooter";
 import React from "react";
 
-interface CommentModal {
+interface CommentModalProps {
   id?: string;
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CommentModal: React.FC<CommentModal> = ({
+const CommentModal: React.FC<CommentModalProps> = ({
   id,
   setToggleCommentModal,
 }) => {

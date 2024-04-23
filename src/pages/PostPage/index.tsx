@@ -1,14 +1,14 @@
 import { PostPageContainer, PostPageContent } from "./PostPage.styles.ts";
-import PostPageHeader from "./PostPageHeader/PostPageHeader.tsx";
-import PostPageDetail from "./PostPageDetail/PostPageDetail.tsx";
-import PostPageDiary from "./PostPageDiary/PostPageDiary.tsx";
-import CommentModal from "../../components/Modal/CommentModal/CommentModal.tsx";
+import PostPageHeader from "./PostPageHeader";
+import PostPageDetail from "./PostPageDetail";
+import PostPageDiary from "./PostPageDiary";
+import CommentModal from "../../components/Modal/CommentModal";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useModalStore } from "../../store/modalStore/modalStore.ts";
-import ConfirmModal from "../../components/Modal/ConfirmModal/ConfirmModal.tsx";
+import ConfirmModal from "../../components/Modal/ConfirmModal";
 
 const PostPage = () => {
   const { id } = useParams();

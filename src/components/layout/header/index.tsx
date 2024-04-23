@@ -4,7 +4,7 @@ import {
   LogoContainer,
   RightButtonContainer,
 } from "./Header.styles.ts";
-import HeaderRightButton from "./headerRightButton/HeaderRightButton.tsx";
+import HeaderRightButton from "./headerRightButton";
 
 const Header = () => {
   return (

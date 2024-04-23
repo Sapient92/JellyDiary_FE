@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
 import { FeedPageContainer, FeedPageContent } from "./UserFeedPage.styles.ts";
-import FeedIntroduction from "./FeedIntroduction/FeedIntroduction.tsx";
-import FeedNavbar from "./FeedNavbar/FeedNavbar.tsx";
-import FeedPostsSection from "./FeedPostsSection/FeedPostsSection.tsx";
-import FollowModal from "../../components/Modal/FollowModal/FollowModal.tsx";
+import FeedIntroduction from "./FeedIntroduction";
+import FeedNavbar from "./FeedNavbar";
+import FeedPostSection from "./FeedPostsSection";
+import FollowModal from "../../components/Modal/FollowModal";
 
 const UserFeedPage: FC = () => {
   const [toggleFollowerModal, setToggleFollowerModal] = useState(false);
@@ -27,7 +27,7 @@ const UserFeedPage: FC = () => {
             setToggleFollowModal={setToggleFollowModal}
           />
           <FeedNavbar />
-          <FeedPostsSection />
+          <FeedPostSection />
         </FeedPageContent>
       </FeedPageContainer>
     </>

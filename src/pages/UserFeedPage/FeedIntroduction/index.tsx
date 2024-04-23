@@ -8,9 +8,18 @@ import {
   UserStateContainer,
 } from "./FeedIntroduction.styles.ts";
 import profileImg from "../../../assets/testImage/Image.png";
-import Button from "../../../components/Button/Button.tsx";
+import Button from "../../../components/Button";
+import React from "react";
 
-const FeedIntroduction = ({ setToggleFollowerModal, setToggleFollowModal }) => {
+interface FeecIntroductionProps {
+  setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setToggleFollowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const FeedIntroduction: React.FC<FeecIntroductionProps> = ({
+  setToggleFollowerModal,
+  setToggleFollowModal,
+}) => {
   return (
     <FeedIntroductionContainer>
       <FeedIntroductionContent>

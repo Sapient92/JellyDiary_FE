@@ -1,5 +1,5 @@
 import { PostsSection } from "./FeedPostsSection.styles.ts";
-import FeedPost from "./FeedPost/FeedPost.tsx";
+import FeedPost from "./FeedPost";
 import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -8,7 +8,7 @@ import { FeedType } from "../../../types/feedType.ts";
 
 const fetchFeeds = () => axios.get("/feeds");
 
-const FeedPostsSection = () => {
+const FeedPostSection = () => {
   const { isLoading, data, isError } = useQuery("fetch-feeds", fetchFeeds);
 
   if (isLoading) return <>Loading...</>;
@@ -27,4 +27,4 @@ const FeedPostsSection = () => {
   );
 };
 
-export default FeedPostsSection;
+export default FeedPostSection;
