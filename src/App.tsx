@@ -4,13 +4,13 @@ import Layout from "./components/layout";
 import UserFeedPage from "./pages/UserFeedPage";
 import PostPage from "./pages/PostPage";
 import WritePage from "./pages/WritePage";
-import SettingPage from "./pages/SettingPage/SettingPage.tsx";
-import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.tsx";
-import SuggestedPage from "./pages/SuggestedPage/SuggestedPage.tsx";
+import SettingPage from "./pages/SettingPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import SuggestedPage from "./pages/SuggestedPage";
 import ChatPage from "./pages/ChatPage";
-import DiaryPage from "./pages/DiaryPage/DiaryPage.tsx";
+import DiaryPage from "./pages/DiaryPage";
 import DemoApp from "./pages/DiaryPage/DiaryTestPage.tsx";
-import LoginPage from "./pages/LoginPage/LoginPage.tsx";
+import LoginPage from "./pages/LoginPage";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 function App() {

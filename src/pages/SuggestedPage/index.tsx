@@ -3,8 +3,8 @@ import {
   SuggestedPageContainer,
   SuggestedPageContent,
 } from "./SuggestedPage.styles";
-import SuggestedNavbar from "./SuggestedNavbar/SuggestedNavbar";
-import SuggestedPostsSection from "./SuggestedPostsSection/SuggestedPostsSection";
+import SuggestedNavbar from "./SuggestedNavbar";
+import SuggestedPostsSection from "./SuggestedPostsSection";
 
 const SuggestedPage = () => {
   return (

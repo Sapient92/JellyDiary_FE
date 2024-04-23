@@ -1,5 +1,5 @@
 import React from "react";
-import SuggestedPost from "./SuggestedPost/SuggestedPost";
+import SuggestedPost from "./SuggestedPost";
 import { PostsSection } from "./SuggestedPostsSection.styles";
 
 const SuggestedPostsSection = () => {
