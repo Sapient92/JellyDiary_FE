@@ -11,7 +11,6 @@ import ChatPage from "./pages/ChatPage";
 import DiaryPage from "./pages/DiaryPage";
 import DemoApp from "./pages/DiaryPage/DiaryTestPage.tsx";
 import LoginPage from "./pages/LoginPage";
-import { ReactQueryDevtools } from "react-query/devtools";
 
 function App() {
   return (
@@ -31,7 +30,6 @@ function App() {
           <Route path={"*"} element={<NotFoundPage />} />
         </Route>
       </Routes>
-      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
     </>
   );
 }

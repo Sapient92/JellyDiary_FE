@@ -15,14 +15,10 @@ import { MdEdit } from "react-icons/md";
 import imgSrc from "../../assets/testImage/suggestedPostImage.png";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AiFillPlusCircle } from "react-icons/ai";
-import CustomButton from "../../components/Button/CustomButton/CustomButton";
+import CustomButton from "../../components/CustomButton/CustomButton";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import {
-  CustomButtonInput,
-  EventClickArg,
-  EventContentArg,
-} from "@fullcalendar/core/index.js";
+import { EventClickArg, EventContentArg } from "@fullcalendar/core/index.js";
 import allLocales from "@fullcalendar/core/locales-all";
 import { BiChat, BiCloud, BiSun } from "react-icons/bi";
 
