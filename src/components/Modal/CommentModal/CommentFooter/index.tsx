@@ -2,7 +2,7 @@ import { CommentFooterContainer } from "./CommentFooter.styles.ts";
 import userImg from "../../../../assets/testImage/Image.png";
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CommentFooter = () => {
   const [comment, setComment] = useState("");
@@ -12,9 +12,11 @@ const CommentFooter = () => {
   };
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(addComment, {
+  const { mutate } = useMutation({
+    mutationFn: addComment,
+
     onSuccess: () => {
-      queryClient.invalidateQueries("fetch-comments");
+      queryClient.invalidateQueries({ queryKey: ["fetch-comments"] });
       setComment("");
       idRef.current++;
     },

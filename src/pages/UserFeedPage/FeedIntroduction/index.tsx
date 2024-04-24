@@ -11,12 +11,12 @@ import profileImg from "../../../assets/testImage/Image.png";
 import Button from "../../../components/Button";
 import React from "react";
 
-interface FeecIntroductionProps {
+interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
   setToggleFollowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FeedIntroduction: React.FC<FeecIntroductionProps> = ({
+const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowerModal,
   setToggleFollowModal,
 }) => {
