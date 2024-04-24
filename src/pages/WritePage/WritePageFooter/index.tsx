@@ -1,15 +1,18 @@
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import Button from "../../../components/Button";
+
+import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { useModalStore } from "../../../store/modalStore/modalStore.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
+
 import {
   FooterBtnContainer,
   PrivateBtnContainer,
   WritePageFooterContainer,
 } from "./WritePageFooter.styles.ts";
-import Button from "../../../components/Button";
-import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
-import axios from "axios";
-import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { DiaryType } from "../../../types/diaryType.ts";
-import { useModalStore } from "../../../store/modalStore/modalStore.ts";
 
 interface WritePageFooterProps {
   data: DiaryType;

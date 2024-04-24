@@ -1,9 +1,12 @@
-import { CommentContentContainer } from "./CommentContent.styles.ts";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+
 import Comment from "./Comment";
-import React from "react";
+
 import { CommentType } from "../../../../types/commentType.ts";
+
+import { CommentContentContainer } from "./CommentContent.styles.ts";
 
 interface CommentContentProps {
   id?: string;

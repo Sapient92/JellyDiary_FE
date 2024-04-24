@@ -1,5 +1,6 @@
-import { FeedPostContainer } from "./FeedPost.styles.ts";
 import * as React from "react";
+
+import { FeedPostContainer } from "./FeedPost.styles.ts";
 
 interface FeedPostProps {
   fakeImg: string;

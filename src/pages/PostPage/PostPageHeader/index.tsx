@@ -1,3 +1,7 @@
+import { useState } from "react";
+
+import PostPageEditModal from "./PostPageEditModal";
+
 import {
   DiaryButton,
   EditButton,
@@ -7,9 +11,8 @@ import {
   PostPageHeaderContainer,
   UserProfileContainer,
 } from "./PostPageHeader.styles.ts";
+
 import userImg from "../../../assets/testImage/FakeUser-2.png";
-import { useState } from "react";
-import PostPageEditModal from "./PostPageEditModal";
 
 const PostPageHeader = () => {
   const [toggleEditModal, setToggleEditModal] = useState(false);

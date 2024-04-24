@@ -1,3 +1,7 @@
+import React, { useRef, useState } from "react";
+
+import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
+
 import {
   ImgDeleteButton,
   PreviewImgBox,
@@ -8,11 +12,8 @@ import {
   WritePageImgContent,
   WritePageImgTitleContainer,
 } from "./WritePageImg.styles.ts";
-import * as React from "react";
-import { useRef, useState } from "react";
-import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 
-const WritePageImg = () => {
+const WritePageImg: React.FC = () => {
   const [postList, setPostList] = useState<
     { id: number; previewUrl: string; origin: File }[]
   >([]);

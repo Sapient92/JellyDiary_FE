@@ -1,6 +1,6 @@
-import { FC } from "react";
+import React, { FC } from "react";
+
 import { ButtonTag } from "./Button.styles.ts";
-import * as React from "react";
 
 type ButtonProps = {
   className: string;

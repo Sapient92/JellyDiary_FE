@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+import { MdOutlineWbSunny } from "react-icons/md";
+import { IoPartlySunnyOutline } from "react-icons/io5";
+import { LuCloudy } from "react-icons/lu";
+import { BsCloudRain } from "react-icons/bs";
+import { IoIosSnow } from "react-icons/io";
+
+import { DiaryType } from "../../../types/diaryType.ts";
+
 import {
   CommentButton,
   LikeButton,
@@ -12,13 +20,8 @@ import {
   SendButton,
   WeatherContainer,
 } from "./PostPageDetail.styles.ts";
+
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
-import { DiaryType } from "../../../types/diaryType.ts";
-import { MdOutlineWbSunny } from "react-icons/md";
-import { IoPartlySunnyOutline } from "react-icons/io5";
-import { LuCloudy } from "react-icons/lu";
-import { BsCloudRain } from "react-icons/bs";
-import { IoIosSnow } from "react-icons/io";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;

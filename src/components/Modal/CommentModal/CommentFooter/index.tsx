@@ -1,8 +1,10 @@
-import { CommentFooterContainer } from "./CommentFooter.styles.ts";
-import userImg from "../../../../assets/testImage/Image.png";
-import axios from "axios";
 import React, { useRef, useState } from "react";
+import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { CommentFooterContainer } from "./CommentFooter.styles.ts";
+
+import userImg from "../../../../assets/testImage/Image.png";
 
 const CommentFooter = () => {
   const [comment, setComment] = useState("");

@@ -1,5 +1,6 @@
-import { PostPageDiaryInfoContainer } from "./PostPageDiaryInfo.styles.ts";
 import { FC } from "react";
+
+import { PostPageDiaryInfoContainer } from "./PostPageDiaryInfo.styles.ts";
 
 type PostPageDiaryInfoProps = {
   title: string;
