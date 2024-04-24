@@ -1,14 +1,17 @@
+import React, { useEffect, useRef } from "react";
+
+import WritePageImg from "./WritePageImg";
+
+import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { useModalStore } from "../../../store/modalStore/modalStore.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
+
 import {
   DiaryDateContainer,
   DiaryTitleContainer,
   WritePageDescContainer,
   WritePageDetailContainer,
 } from "./WritePageDesc.styles.ts";
-import WritePageImg from "./WritePageImg";
-import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
-import { DiaryType } from "../../../types/diaryType.ts";
-import React, { useEffect, useRef } from "react";
-import { useModalStore } from "../../../store/modalStore/modalStore.ts";
 
 interface WritePageDescProps {
   data?: DiaryType;

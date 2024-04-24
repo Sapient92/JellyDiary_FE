@@ -1,3 +1,7 @@
+import React from "react";
+
+import Button from "../../../components/Button";
+
 import {
   FeedIntroductionContainer,
   FeedIntroductionContent,
@@ -7,9 +11,8 @@ import {
   UserNicknameContainer,
   UserStateContainer,
 } from "./FeedIntroduction.styles.ts";
+
 import profileImg from "../../../assets/testImage/Image.png";
-import Button from "../../../components/Button";
-import React from "react";
 
 interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,12 +1,14 @@
+import { FC, memo, useEffect, useState } from "react";
+
+import { DiaryType } from "../.././../../types/diaryType.ts";
+import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
+
 import {
   WritePageInput,
   WritePageItemContainer,
   WritePageItemTitleContainer,
   WritePageTitle,
 } from "./WritePageItem.styles.ts";
-import { FC, memo, useEffect, useState } from "react";
-import { DiaryType } from "../.././../../types/diaryType.ts";
-import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
 
 interface WritePageItemProps {
   title: string;

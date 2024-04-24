@@ -1,10 +1,13 @@
-import { PostsSection } from "./FeedPostsSection.styles.ts";
-import FeedPost from "./FeedPost";
-import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+
+import FeedPost from "./FeedPost";
+
+import { PostsSection } from "./FeedPostsSection.styles.ts";
 import { FeedType } from "../../../types/feedType.ts";
+
+import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
 
 const fetchFeeds = () => axios.get("/feeds");
 

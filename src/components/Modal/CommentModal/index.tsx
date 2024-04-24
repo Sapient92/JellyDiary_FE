@@ -1,12 +1,14 @@
+import React from "react";
+
+import CommentContent from "./CommentContent";
+import CommentFooter from "./CommentFooter";
+
 import {
   CommentHeader,
   CommentHeaderContainer,
   CommentModalContainer,
   DivContainer,
 } from "./CommentModal.styles.ts";
-import CommentContent from "./CommentContent";
-import CommentFooter from "./CommentFooter";
-import React from "react";
 
 interface CommentModalProps {
   id?: string;

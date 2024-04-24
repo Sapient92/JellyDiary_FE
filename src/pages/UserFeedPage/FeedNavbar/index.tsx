@@ -3,6 +3,7 @@ import {
   FeedNavbarContent,
   NavbarButton,
 } from "./FeedNavbar.styles.ts";
+
 import VectorButton from "../../../assets/button/ButtonVector.png";
 
 const FeedNavbar = () => {

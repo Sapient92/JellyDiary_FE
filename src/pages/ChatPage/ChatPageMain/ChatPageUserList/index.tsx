@@ -1,5 +1,6 @@
-import { ChatUserListContainer } from "./ChatPageUserList.styles.ts";
 import ChatPageUserSearch from "./ChatPageUserSearch";
+
+import { ChatUserListContainer } from "./ChatPageUserList.styles.ts";
 
 const ChatPageUserList = () => {
   return (
