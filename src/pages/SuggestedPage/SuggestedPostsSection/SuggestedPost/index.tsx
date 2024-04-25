@@ -6,7 +6,7 @@ import {
   PawButton,
 } from "./SuggestedPost.styles";
 import fakeImg from "../../../../assets/testImage/suggestedPostImage.png";
-import LikeButton from "../../../../components/Button/LikeButton/LikeButton";
+import LikeButton from "../../../../components/LikeButton/LikeButton";
 
 const SuggestedPost = () => {
   const [like, setLike] = useState(false);

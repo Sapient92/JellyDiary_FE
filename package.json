@@ -15,7 +15,7 @@
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
-    "@tanstack/react-query": "^5.29.2",
+    "@tanstack/react-query": "^5.31.0",
     "@tanstack/react-query-devtools": "^5.32.0",
     "@types/styled-components": "^5.1.34",
     "axios": "^1.6.8",
@@ -27,6 +27,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.28.11",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
