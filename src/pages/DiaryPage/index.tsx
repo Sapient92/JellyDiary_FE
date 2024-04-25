@@ -1,4 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { BiChat, BiCloud, BiSun } from 'react-icons/bi';
+import { AiFillPlusCircle } from 'react-icons/ai';
+import { MdEdit } from 'react-icons/md';
+
+import { EventClickArg, EventContentArg } from '@fullcalendar/core/index.js';
+import allLocales from '@fullcalendar/core/locales-all';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import FullCalendar from '@fullcalendar/react';
+
+import CustomButton from '../../components/CustomButton/CustomButton';
+
 import {
   DiaryPageContainer,
   DiaryPageContent,
@@ -10,17 +23,9 @@ import {
   AddUser,
   ListContent,
   DiaryRightNav,
-} from "./DiaryPage.styles";
-import { MdEdit } from "react-icons/md";
-import imgSrc from "../../assets/testImage/suggestedPostImage.png";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { AiFillPlusCircle } from "react-icons/ai";
-import CustomButton from "../../components/CustomButton/CustomButton";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import { EventClickArg, EventContentArg } from "@fullcalendar/core/index.js";
-import allLocales from "@fullcalendar/core/locales-all";
-import { BiChat, BiCloud, BiSun } from "react-icons/bi";
+} from './DiaryPage.styles';
+
+import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 
 // 오류 'JSX.IntrinsicElements' 형식에 'div' 속성이 없습니다.ts(2339)
 // https://github.com/vitejs/vite/issues/14011
@@ -30,7 +35,7 @@ import { BiChat, BiCloud, BiSun } from "react-icons/bi";
 function renderEventContent(eventInfo: EventContentArg) {
   return (
     <ListContent>
-      {eventInfo.event.extendedProps.weather === "sunny" ? (
+      {eventInfo.event.extendedProps.weather === 'sunny' ? (
         <b>
           <BiSun />
         </b>
@@ -48,27 +53,13 @@ function renderEventContent(eventInfo: EventContentArg) {
 const DiaryPage = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [events, setEvents] = useState([]);
+
   const handleEventClick = (clickInfo: EventClickArg) => {
-    if (
-      confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
+    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
     }
   };
-  const customButton = {
-    saveButton: {
-      text: "Today",
-      icon: "plus",
-      click: () => console.log("Today"),
-    },
-    cancelButton: {
-      click: () => console.log("Cancelling..."),
-      text: "Cancel",
-      color: "red",
-    },
-  };
+
   return (
     <DiaryPageContainer>
       <DiaryLeftContent>
@@ -88,7 +79,7 @@ const DiaryPage = () => {
             text="Edit Profile"
             backgroundColor="gray"
             disabled={false}
-            onClick={() => console.log("Edit Profile")}
+            onClick={() => console.log('Edit Profile')}
           />
         </UserInfo>
         <DiaryLeftNav>
@@ -129,20 +120,20 @@ const DiaryPage = () => {
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
-            left: "",
-            center: "prev,title,next",
-            right: "myCustomButton",
+            left: '',
+            center: 'prev,title,next',
+            right: 'myCustomButton',
           }}
           customButtons={{
             myCustomButton: {
-              text: "+",
+              text: '+',
               click: () => {
                 setEvents([
                   ...events,
                   {
-                    title: "event",
+                    title: 'event',
                     date: new Date().toISOString().substr(0, 10),
-                    color: "#ffffff",
+                    color: '#ffffff',
                   },
                 ]);
               },
@@ -161,11 +152,7 @@ const DiaryPage = () => {
       <DiaryRightNav>
         <BiChat />
         <div>
-          <img
-            onClick={() => console.log("삭제?")}
-            src={imgSrc}
-            alt="invitedUsers"
-          />
+          <img onClick={() => console.log('삭제?')} src={imgSrc} alt="invitedUsers" />
           <img src={imgSrc} alt="invitedUsers" />
           <img src={imgSrc} alt="invitedUsers" />
           <img src={imgSrc} alt="invitedUsers" />

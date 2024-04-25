@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React from 'react';
 import {
   EventApi,
   DateSelectArg,
   EventClickArg,
   EventContentArg,
   formatDate,
-  Calendar,
-} from "@fullcalendar/core";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid"; // 추가
-import interactionPlugin from "@fullcalendar/interaction"; // 추가
-import { INITIAL_EVENTS, createEventId } from "./event-utils"; // 추가
-import "./DiaryTestPage.css";
-import { IoSunny } from "react-icons/io5";
-import { BiCloud, BiSun } from "react-icons/bi";
+} from '@fullcalendar/core';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction'; // 추가
+import { INITIAL_EVENTS, createEventId } from './event-utils'; // 추가
+import './DiaryTestPage.css';
+import { BiCloud, BiSun } from 'react-icons/bi';
 interface DemoAppState {
   weekendsVisible: boolean;
   currentEvents: EventApi[];
@@ -34,9 +31,9 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             headerToolbar={{
-              left: "prev next",
-              center: "title",
-              right: "",
+              left: 'prev next',
+              center: 'title',
+              right: '',
             }}
             initialView="dayGridMonth"
             editable={false}
@@ -86,8 +83,8 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
   }
 
   handleDateSelect = (selectInfo: DateSelectArg) => {
-    let title = prompt("✏️ 일정 제목을 작성해주세요.");
-    let calendarApi = selectInfo.view.calendar;
+    const title = prompt('✏️ 일정 제목을 작성해주세요.');
+    const calendarApi = selectInfo.view.calendar;
     console.log(selectInfo.view.calendar);
     calendarApi.unselect(); // clear date selection
 
@@ -95,11 +92,11 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
       calendarApi.addEvent({
         id: createEventId(),
         title,
-        writer: "User1",
+        writer: 'User1',
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         allDay: selectInfo.allDay,
-        backgroundColor: "#ffffff",
+        backgroundColor: '#ffffff',
       });
     }
   };
@@ -120,7 +117,7 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
 function renderEventContent(eventContent: EventContentArg) {
   return (
     <>
-      {eventContent.event.extendedProps.weather === "sunny" ? (
+      {eventContent.event.extendedProps.weather === 'sunny' ? (
         <b>
           <BiSun />
         </b>
@@ -141,9 +138,9 @@ function renderSidebarEvent(event: EventApi) {
     <li key={event.id}>
       <b>
         {formatDate(event.start!, {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
         })}
       </b>
       <a>{event.title}</a>
