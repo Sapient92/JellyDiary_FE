@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { MdEdit } from 'react-icons/md';
 
-import CustomButton from '../../components/CustomButton/CustomButton';
+import CustomButton from '../../components/CustomButton';
 import ToggleButton from '../../components/ToggleButton';
 
 import {
