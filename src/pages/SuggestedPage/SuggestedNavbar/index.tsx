@@ -1,9 +1,12 @@
+import React from 'react';
+
 import {
   SuggestedNavbarContainer,
   SuggestedNavbarContent,
   NavbarButton,
-} from "./SuggestedNavbar.styles.ts";
-import VectorButton from "../../../assets/button/ButtonVector.png";
+} from './SuggestedNavbar.styles.ts';
+
+import VectorButton from '../../../assets/button/ButtonVector.png';
 
 const SuggestedNavbar = () => {
   return (
