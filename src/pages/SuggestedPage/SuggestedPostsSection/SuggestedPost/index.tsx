@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+
+import LikeButton from '../../../../components/LikeButton/LikeButton';
+
 import {
   SuggestedPostContainer,
   SuggestedPostHeader,
   UserButton,
   PawButton,
-} from "./SuggestedPost.styles";
-import fakeImg from "../../../../assets/testImage/suggestedPostImage.png";
-import LikeButton from "../../../../components/LikeButton/LikeButton";
+} from './SuggestedPost.styles.ts';
+
+import fakeImg from '../../../../assets/testImage/suggestedPostImage.png';
 
 const SuggestedPost = () => {
   const [like, setLike] = useState(false);
+
   const toggleLike = async () => {
     setLike(!like);
   };
@@ -27,7 +31,7 @@ const SuggestedPost = () => {
         </UserButton>
       </SuggestedPostHeader>
       <div>
-        <img src={fakeImg} alt={"feed_img"} />
+        <img src={fakeImg} alt={'feed_img'} />
         <PawButton>
           <LikeButton like={like} onClick={toggleLike} />
         </PawButton>

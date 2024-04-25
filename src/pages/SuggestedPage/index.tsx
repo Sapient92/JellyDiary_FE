@@ -1,10 +1,9 @@
-import React from "react";
-import {
-  SuggestedPageContainer,
-  SuggestedPageContent,
-} from "./SuggestedPage.styles";
-import SuggestedNavbar from "./SuggestedNavbar";
-import SuggestedPostsSection from "./SuggestedPostsSection";
+import React from 'react';
+
+import SuggestedNavbar from './SuggestedNavbar';
+import SuggestedPostsSection from './SuggestedPostsSection';
+
+import { SuggestedPageContainer, SuggestedPageContent } from './SuggestedPage.styles.ts';
 
 const SuggestedPage = () => {
   return (
