@@ -1,15 +1,18 @@
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import Button from "../../../components/Button";
+
+import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { useModalStore } from "../../../store/modalStore/modalStore.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
+
 import {
   FooterBtnContainer,
   PrivateBtnContainer,
   WritePageFooterContainer,
 } from "./WritePageFooter.styles.ts";
-import Button from "../../../components/Button";
-import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
-import axios from "axios";
-import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { DiaryType } from "../../../types/diaryType.ts";
-import { useModalStore } from "../../../store/modalStore/modalStore.ts";
 
 interface WritePageFooterProps {
   data: DiaryType;
@@ -53,6 +56,10 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       });
   };
 
+  const handleIsPublicClick = () => {
+    changeValue({ isPublic: !diary.isPublic });
+  };
+
   return (
     <WritePageFooterContainer>
       <FooterBtnContainer>
@@ -61,7 +68,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
             id={"private_checkbox"}
             type={"checkbox"}
             checked={!diary.isPublic}
-            onChange={() => changeValue({ isPublic: !diary.isPublic })}
+            onChange={handleIsPublicClick}
           />
           <label htmlFor={"private_checkbox"}>체크하여 비공개로 게시하기</label>
         </PrivateBtnContainer>

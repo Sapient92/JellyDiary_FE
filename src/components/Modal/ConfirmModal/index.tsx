@@ -1,9 +1,11 @@
+import React, { useRef } from "react";
+
+import useOnClickOutside from "../../../hooks/useOnClickOutside.ts";
+
 import {
   ConfirmButtonContainer,
   ConfirmModalContainer,
 } from "./ConfirmModal.styles.ts";
-import React, { useRef } from "react";
-import useOnClickOutside from "../../../hooks/useOnClickOutside.ts";
 
 interface ConfirmModalProps {
   message: string;

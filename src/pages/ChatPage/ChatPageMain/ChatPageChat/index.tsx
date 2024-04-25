@@ -4,6 +4,7 @@ import {
   ChatFooter,
   ChatHeader,
 } from "./ChatPageChat.styles.ts";
+
 import sendBtn from "../../../../assets/button/SendBtn.png";
 
 const ChatPageChat = () => {

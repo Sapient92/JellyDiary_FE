@@ -1,14 +1,17 @@
-import { PostPageContainer, PostPageContent } from "./PostPage.styles.ts";
+import { useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
 import PostPageHeader from "./PostPageHeader";
 import PostPageDetail from "./PostPageDetail";
 import PostPageDiary from "./PostPageDiary";
 import CommentModal from "../../components/Modal/CommentModal";
-import { useState } from "react";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { useModalStore } from "../../store/modalStore/modalStore.ts";
 import ConfirmModal from "../../components/Modal/ConfirmModal";
+
+import { useModalStore } from "../../store/modalStore/modalStore.ts";
+
+import { PostPageContainer, PostPageContent } from "./PostPage.styles.ts";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -16,15 +19,13 @@ const PostPage = () => {
   const { confirmDeleteModal, toggleConfirmDeleteModal } = useModalStore(
     (state) => state,
   );
-  const { isLoading, data, isError, error } = useQuery(
-    "get-post",
-    () => {
+  const { isLoading, data, isError, error } = useQuery({
+    queryKey: ["get-post"],
+    queryFn: () => {
       return axios.get(`/posts/${id}`);
     },
-    {
-      select: (r) => r.data[0],
-    },
-  );
+    select: (r) => r.data[0],
+  });
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>{error}</>;

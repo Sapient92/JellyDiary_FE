@@ -1,13 +1,14 @@
+import React, { ReactNode } from "react";
+
 import {
   AlertModalContainer,
   AlertModalContent,
 } from "./AlertModal.styles.tsx";
-import React, { ReactNode } from "react";
 
-type AlertModalProps = {
+interface AlertModalProps {
   children: ReactNode;
   type: string;
-};
+}
 
 const AlertModal: React.FC<AlertModalProps> = ({ children, type }) => {
   return (

@@ -1,8 +1,10 @@
-import { CommentFooterContainer } from "./CommentFooter.styles.ts";
-import userImg from "../../../../assets/testImage/Image.png";
-import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { CommentFooterContainer } from "./CommentFooter.styles.ts";
+
+import userImg from "../../../../assets/testImage/Image.png";
 
 const CommentFooter = () => {
   const [comment, setComment] = useState("");
@@ -12,9 +14,10 @@ const CommentFooter = () => {
   };
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(addComment, {
+  const { mutate } = useMutation({
+    mutationFn: addComment,
     onSuccess: () => {
-      queryClient.invalidateQueries("fetch-comments");
+      queryClient.invalidateQueries({ queryKey: ["fetch-comments"] });
       setComment("");
       idRef.current++;
     },
@@ -38,12 +41,16 @@ const CommentFooter = () => {
     mutate(newComment);
   };
 
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+  };
+
   return (
     <CommentFooterContainer>
       <img src={userImg} alt={"user_image"} />
       <input
         value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        onChange={handleCommentChange}
         type={"text"}
         placeholder={"terrylucas님에게 댓글 추가..."}
       />

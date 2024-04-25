@@ -1,9 +1,11 @@
 import { FC, useState } from "react";
-import { FeedPageContainer, FeedPageContent } from "./UserFeedPage.styles.ts";
+
 import FeedIntroduction from "./FeedIntroduction";
 import FeedNavbar from "./FeedNavbar";
 import FeedPostSection from "./FeedPostsSection";
 import FollowModal from "../../components/Modal/FollowModal";
+
+import { FeedPageContainer, FeedPageContent } from "./UserFeedPage.styles.ts";
 
 const UserFeedPage: FC = () => {
   const [toggleFollowerModal, setToggleFollowerModal] = useState(false);

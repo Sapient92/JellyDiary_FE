@@ -1,3 +1,7 @@
+import React from "react";
+
+import Button from "../../../components/Button";
+
 import {
   FeedIntroductionContainer,
   FeedIntroductionContent,
@@ -7,19 +11,25 @@ import {
   UserNicknameContainer,
   UserStateContainer,
 } from "./FeedIntroduction.styles.ts";
-import profileImg from "../../../assets/testImage/Image.png";
-import Button from "../../../components/Button";
-import React from "react";
 
-interface FeecIntroductionProps {
+import profileImg from "../../../assets/testImage/Image.png";
+
+interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
   setToggleFollowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FeedIntroduction: React.FC<FeecIntroductionProps> = ({
+const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowerModal,
   setToggleFollowModal,
 }) => {
+  const handleFollowClick = () => {
+    setToggleFollowModal(true);
+  };
+
+  const handleFollowerClick = () => {
+    setToggleFollowerModal(true);
+  };
   return (
     <FeedIntroductionContainer>
       <FeedIntroductionContent>
@@ -36,8 +46,8 @@ const FeedIntroduction: React.FC<FeecIntroductionProps> = ({
           </UserNicknameContainer>
           <UserDetailStateContainer>
             <p>{"1,258"}게시물</p>
-            <p onClick={() => setToggleFollowerModal(true)}> {"4M"}팔로워</p>
-            <p onClick={() => setToggleFollowModal(true)}>{"1,250"}팔로우</p>
+            <p onClick={handleFollowerClick}> {"4M"}팔로워</p>
+            <p onClick={handleFollowClick}>{"1,250"}팔로우</p>
           </UserDetailStateContainer>
           <UserDescContainer>
             <p>Terry Lucas 입니다 안녕하세요</p>

@@ -1,3 +1,7 @@
+import React from "react";
+
+import { CommentType } from "../../../../../types/commentType.ts";
+
 import {
   CommentContainer,
   CommentContentContainer,
@@ -6,8 +10,6 @@ import {
   CommentProfileContainer,
   DeleteCommentButton,
 } from "./Comment.styled.ts";
-import { CommentType } from "../../../../../types/commentType.ts";
-import React from "react";
 
 interface CommentProps {
   comment: CommentType;

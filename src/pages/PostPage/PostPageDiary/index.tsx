@@ -1,7 +1,10 @@
-import { PostPageDiaryContainer } from "./PostPageDiary.styles.ts";
-import PostPageDiaryInfo from "./PostPageDiaryInfo";
-import { DiaryType } from "../../../types/diaryType.ts";
 import React from "react";
+
+import PostPageDiaryInfo from "./PostPageDiaryInfo";
+
+import { DiaryType } from "../../../types/diaryType.ts";
+
+import { PostPageDiaryContainer } from "./PostPageDiary.styles.ts";
 
 type PostPageDiaryProps = {
   data: DiaryType;

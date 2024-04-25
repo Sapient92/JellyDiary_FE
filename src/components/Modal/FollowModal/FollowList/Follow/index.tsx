@@ -5,6 +5,7 @@ import {
   UserProfileDesc,
   UserProfileImg,
 } from "./Follow.styles.ts";
+
 import testImg from "../../../../../assets/testImage/FakeUser-1.png";
 
 const Follow = () => {

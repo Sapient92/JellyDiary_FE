@@ -1,14 +1,17 @@
+import React, { useEffect, useRef } from "react";
+
+import WritePageImg from "./WritePageImg";
+
+import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { useModalStore } from "../../../store/modalStore/modalStore.ts";
+import { DiaryType } from "../../../types/diaryType.ts";
+
 import {
   DiaryDateContainer,
   DiaryTitleContainer,
   WritePageDescContainer,
   WritePageDetailContainer,
 } from "./WritePageDesc.styles.ts";
-import WritePageImg from "./WritePageImg";
-import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
-import { DiaryType } from "../../../types/diaryType.ts";
-import React, { useEffect, useRef } from "react";
-import { useModalStore } from "../../../store/modalStore/modalStore.ts";
 
 interface WritePageDescProps {
   data?: DiaryType;
@@ -38,6 +41,13 @@ const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
     }
   }, [titleAlertModal]);
 
+  const handleValueChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    name: string,
+  ) => {
+    changeValue({ [name]: e.target.value });
+  };
+
   return (
     <>
       <WritePageDescContainer>
@@ -48,7 +58,7 @@ const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
             ref={titleRef}
             type={"text"}
             value={postTitle}
-            onChange={(e) => changeValue({ postTitle: e.target.value })}
+            onChange={(e) => handleValueChange(e, "postTitle")}
           />
         </DiaryTitleContainer>
         <DiaryDateContainer>
@@ -58,7 +68,7 @@ const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
             type={"date"}
             defaultValue={date || postDate}
             max={today}
-            onChange={(e) => changeValue({ postDate: e.target.value })}
+            onChange={(e) => handleValueChange(e, "postDate")}
           />
         </DiaryDateContainer>
         <WritePageImg />
@@ -67,7 +77,7 @@ const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
           <p>일지에 대한 설명을 적어주세요.</p>
           <textarea
             value={postContent}
-            onChange={(e) => changeValue({ postContent: e.target.value })}
+            onChange={(e) => handleValueChange(e, "postContent")}
             placeholder={"작성해주세요"}
           />
         </WritePageDetailContainer>

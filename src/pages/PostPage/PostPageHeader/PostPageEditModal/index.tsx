@@ -1,8 +1,10 @@
-import { EditModalContainer, LinkStyled } from "./PostPageEditModal.styled.ts";
 import React, { Dispatch, SetStateAction, useRef } from "react";
-import useOnClickOutside from "../../../../hooks/useOnClickOutside.ts";
 import { useParams } from "react-router-dom";
+
+import useOnClickOutside from "../../../../hooks/useOnClickOutside.ts";
 import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
+
+import { EditModalContainer, LinkStyled } from "./PostPageEditModal.styled.ts";
 
 interface PostPageEditModalProps {
   setToggleEditModal: Dispatch<SetStateAction<boolean>>;

@@ -1,27 +1,29 @@
-import { WritePageContainer, WritePageContent } from "./WritePage.styles.ts";
+import { useParams } from "react-router-dom";
+
 import WritePageHeader from "./WritePageHeader";
 import WritePageItems from "./WritePageItems";
 import WritePageDesc from "./WritePageDesc";
 import WritePageFooter from "./WritePageFooter";
 import AlertModal from "../../components/Modal/AlertModal";
+
 import { useModalStore } from "../../store/modalStore/modalStore.ts";
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+
+import { WritePageContainer, WritePageContent } from "./WritePage.styles.ts";
+
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const WritePage = () => {
   const { imageAlertModal, imgDupliAlertModal, titleAlertModal } =
     useModalStore();
   const { id } = useParams();
-  const { isLoading, data, isError } = useQuery(
-    "fetch-post",
-    () => {
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ["fetch-post"],
+    queryFn: () => {
       return axios.get(`edit/${id}`);
     },
-    {
-      select: (data) => data.data[0],
-    },
-  );
+    select: (data) => data.data[0],
+  });
   if (isLoading) return <>Loading...</>;
   if (isError) return <>데이터를 불러오는데 실패하였습니다.</>;
 

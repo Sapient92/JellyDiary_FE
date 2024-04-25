@@ -1,6 +1,7 @@
-import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
 import ChatPageHeader from "./ChatPageHeader";
 import ChatPageMain from "./ChatPageMain";
+
+import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
 
 const ChatPage = () => {
   return (

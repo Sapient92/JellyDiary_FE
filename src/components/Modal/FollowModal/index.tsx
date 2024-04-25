@@ -1,11 +1,14 @@
+import { Dispatch, FC, SetStateAction, useRef } from "react";
+
+import FollowList from "./FollowList";
+
+import useOnClickOutside from "../../../hooks/useOnClickOutside.ts";
+
 import {
   FollowModalContainer,
   FollowModalContent,
   TitleContainer,
 } from "./FollowModal.styles.ts";
-import { Dispatch, FC, SetStateAction, useRef } from "react";
-import FollowList from "./FollowList";
-import useOnClickOutside from "../../../hooks/useOnClickOutside.ts";
 
 interface FollowModalProps {
   title: string;

@@ -1,15 +1,21 @@
-import { PostsSection } from "./FeedPostsSection.styles.ts";
-import FeedPost from "./FeedPost";
-import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
-import axios from "axios";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+import FeedPost from "./FeedPost";
+
+import { PostsSection } from "./FeedPostsSection.styles.ts";
 import { FeedType } from "../../../types/feedType.ts";
+
+import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
 
 const fetchFeeds = () => axios.get("/feeds");
 
 const FeedPostSection = () => {
-  const { isLoading, data, isError } = useQuery("fetch-feeds", fetchFeeds);
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ["fetch-feeds"],
+    queryFn: fetchFeeds,
+  });
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>데이터를 불러오지 못했습니다.</>;
