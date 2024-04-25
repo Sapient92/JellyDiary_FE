@@ -1,15 +1,12 @@
-import React from "react";
-import login_K from "../../assets/button/Login_K.png";
-import login_N from "../../assets/button/Login_N.png";
-import login_G from "../../assets/button/Login_G.png";
-import login_F from "../../assets/button/Login_F.png";
-import login_Line from "../../assets/button/Login_Line.png";
+import React from 'react';
 
-import {
-  LoginPageContainer,
-  LoginPageContent,
-  LoginButton,
-} from "./LoginPage.styles";
+import { LoginPageContainer, LoginPageContent, LoginButton } from './LoginPage.styles';
+
+import login_K from '../../assets/button/Login_K.png';
+import login_N from '../../assets/button/Login_N.png';
+import login_G from '../../assets/button/Login_G.png';
+import login_F from '../../assets/button/Login_F.png';
+import login_Line from '../../assets/button/Login_Line.png';
 
 const LoginPage = () => {
   return (
