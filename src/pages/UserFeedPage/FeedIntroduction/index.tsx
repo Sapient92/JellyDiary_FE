@@ -23,6 +23,13 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowerModal,
   setToggleFollowModal,
 }) => {
+  const handleFollowClick = () => {
+    setToggleFollowModal(true);
+  };
+
+  const handleFollowerClick = () => {
+    setToggleFollowerModal(true);
+  };
   return (
     <FeedIntroductionContainer>
       <FeedIntroductionContent>
@@ -39,8 +46,8 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
           </UserNicknameContainer>
           <UserDetailStateContainer>
             <p>{"1,258"}게시물</p>
-            <p onClick={() => setToggleFollowerModal(true)}> {"4M"}팔로워</p>
-            <p onClick={() => setToggleFollowModal(true)}>{"1,250"}팔로우</p>
+            <p onClick={handleFollowerClick}> {"4M"}팔로워</p>
+            <p onClick={handleFollowClick}>{"1,250"}팔로우</p>
           </UserDetailStateContainer>
           <UserDescContainer>
             <p>Terry Lucas 입니다 안녕하세요</p>

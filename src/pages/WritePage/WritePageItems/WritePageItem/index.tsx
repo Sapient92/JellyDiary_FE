@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 
 import { DiaryType } from "../.././../../types/diaryType.ts";
 import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
@@ -38,6 +38,10 @@ const WritePageItem: FC<WritePageItemProps> = ({
     changeValue({ [name]: "" });
   };
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    changeValue({ [name]: e.target.value });
+  };
+
   return (
     <WritePageItemContainer>
       <WritePageItemTitleContainer>
@@ -54,7 +58,7 @@ const WritePageItem: FC<WritePageItemProps> = ({
         type={"text"}
         disabled={!checkboxChecked}
         value={value ? value.toString() : ""}
-        onChange={(e) => changeValue({ [name]: e.target.value })}
+        onChange={handleTextChange}
       />
     </WritePageItemContainer>
   );

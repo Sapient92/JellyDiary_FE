@@ -54,14 +54,25 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
       break;
   }
 
+  const truncate = (str: string, n: number) => {
+    return str?.length > n ? str.substring(0, n - 1) + "..." : str;
+  };
+
   const handleCommentClick = (
     e: React.MouseEvent<HTMLButtonElement | SVGElement>,
   ) => {
     e.preventDefault();
     setToggleCommentModal(true);
   };
-  const truncate = (str: string, n: number) => {
-    return str?.length > n ? str.substring(0, n - 1) + "..." : str;
+
+  const handleLikeClick = (e: React.MouseEvent<SVGElement>) => {
+    e.preventDefault();
+    setLike(!like);
+  };
+
+  const handleSeemoreClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault();
+    setToggleSeeMore(!toggleSeeMore);
   };
 
   return (
@@ -73,9 +84,9 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
         <PostDetailBtnBox>
           <button>
             {!like ? (
-              <NotLikeButton onClick={() => setLike(!like)} />
+              <NotLikeButton onClick={handleLikeClick} />
             ) : (
-              <LikeButton onClick={() => setLike(!like)} />
+              <LikeButton onClick={handleLikeClick} />
             )}
           </button>
           <button>
@@ -96,7 +107,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
               {postContent?.length > 50 ? (
                 <>
                   {truncate(postContent, 50)}
-                  <span onClick={() => setToggleSeeMore(true)}>더보기</span>
+                  <span onClick={handleSeemoreClick}>더보기</span>
                 </>
               ) : (
                 postContent
@@ -106,7 +117,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
             <p>
               {postContent}
               <br />
-              <span onClick={() => setToggleSeeMore(false)}>간략히 보기</span>
+              <span onClick={handleSeemoreClick}>간략히 보기</span>
             </p>
           )}
         </PostDetailDescContainer>

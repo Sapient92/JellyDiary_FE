@@ -17,6 +17,10 @@ import userImg from "../../../assets/testImage/FakeUser-2.png";
 const PostPageHeader = () => {
   const [toggleEditModal, setToggleEditModal] = useState(false);
 
+  const handleEditClick = () => {
+    setToggleEditModal(true);
+  };
+
   return (
     <PostPageHeaderContainer>
       <UserProfileContainer>
@@ -28,7 +32,7 @@ const PostPageHeader = () => {
           <DiaryButton />
         </PostMenuButton>
         <EditButtonContainer>
-          <EditButton onClick={() => setToggleEditModal(true)} />
+          <EditButton onClick={handleEditClick} />
           {toggleEditModal && (
             <PostPageEditModal setToggleEditModal={setToggleEditModal} />
           )}

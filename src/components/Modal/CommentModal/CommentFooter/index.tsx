@@ -16,7 +16,6 @@ const CommentFooter = () => {
 
   const { mutate } = useMutation({
     mutationFn: addComment,
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["fetch-comments"] });
       setComment("");
@@ -42,12 +41,16 @@ const CommentFooter = () => {
     mutate(newComment);
   };
 
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+  };
+
   return (
     <CommentFooterContainer>
       <img src={userImg} alt={"user_image"} />
       <input
         value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        onChange={handleCommentChange}
         type={"text"}
         placeholder={"terrylucas님에게 댓글 추가..."}
       />

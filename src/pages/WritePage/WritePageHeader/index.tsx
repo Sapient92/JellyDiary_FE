@@ -38,10 +38,14 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
     changeValue({ weather: state });
   };
 
+  const handleGoBackClick = () => {
+    navigate(-1);
+  };
+
   return (
     <WritePageHeaderContainer>
       <WritePageTitle>
-        <span onClick={() => navigate(-1)}>{"<"}</span>
+        <span onClick={handleGoBackClick}>{"<"}</span>
         <p>📝 {title}</p>
       </WritePageTitle>
       <WritePageWeatherContainer>

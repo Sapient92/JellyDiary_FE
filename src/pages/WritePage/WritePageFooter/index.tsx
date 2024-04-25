@@ -56,6 +56,10 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       });
   };
 
+  const handleIsPublicClick = () => {
+    changeValue({ isPublic: !diary.isPublic });
+  };
+
   return (
     <WritePageFooterContainer>
       <FooterBtnContainer>
@@ -64,7 +68,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
             id={"private_checkbox"}
             type={"checkbox"}
             checked={!diary.isPublic}
-            onChange={() => changeValue({ isPublic: !diary.isPublic })}
+            onChange={handleIsPublicClick}
           />
           <label htmlFor={"private_checkbox"}>체크하여 비공개로 게시하기</label>
         </PrivateBtnContainer>
