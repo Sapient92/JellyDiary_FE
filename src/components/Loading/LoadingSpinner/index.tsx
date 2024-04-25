@@ -1,10 +1,12 @@
-import { Wrapper, SpinnerBlade } from "./LoadingSpinner.styles";
+import React from 'react';
 
-export default function LoadingSpinner({
-  bladeNum = 12,
-}: {
+import { Wrapper, SpinnerBlade } from './LoadingSpinner.styles';
+
+interface LoadingSpinnerProps {
   bladeNum: number;
-}) {
+}
+
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ bladeNum = 12 }: { bladeNum: number }) => {
   const bladeNumArr = Array.from({ length: bladeNum }, (_, i) => i);
 
   return (
@@ -14,4 +16,6 @@ export default function LoadingSpinner({
       ))}
     </Wrapper>
   );
-}
+};
+
+export default LoadingSpinner;

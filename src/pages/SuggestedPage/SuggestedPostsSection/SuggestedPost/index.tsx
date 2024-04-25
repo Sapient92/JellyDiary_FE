@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import LikeButton from '../../../../components/LikeButton/LikeButton';
+import LikeButton from '../../../../components/LikeButton';
 
 import {
   SuggestedPostContainer,

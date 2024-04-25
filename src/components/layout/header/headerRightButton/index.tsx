@@ -1,8 +1,11 @@
-import SelectButton from "../../../../assets/button/HeaderSelectButton.png";
-import { ButtonContainer, CheckedButton } from "./HeaderRightButton.styles.ts";
-import { FC } from "react";
-import { useCategoriesStore } from "../../../../store/categoriesStore/categoriesStore.ts";
-import * as React from "react";
+import * as React from 'react';
+import { FC } from 'react';
+
+import { useCategoriesStore } from '../../../../store/categoriesStore/categoriesStore.ts';
+
+import { ButtonContainer, CheckedButton } from './HeaderRightButton.styles.ts';
+
+import SelectButton from '../../../../assets/button/HeaderSelectButton.png';
 
 type HeaderRightButtonProps = {
   title: string;
@@ -21,11 +24,11 @@ const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name }) => {
 
   return (
     <ButtonContainer onClick={handleCategoryClick}>
-      <button id={"big_sns_btn"}>
-        <img src={SelectButton} alt={"SelectButton"} />
+      <button id={'big_sns_btn'}>
+        <img src={SelectButton} alt={'SelectButton'} />
         {categories[name] && <CheckedButton />}
       </button>
-      <label htmlFor={"big_sns_btn"}>{title}</label>
+      <label htmlFor={'big_sns_btn'}>{title}</label>
     </ButtonContainer>
   );
 };
