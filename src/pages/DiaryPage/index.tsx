@@ -27,11 +27,6 @@ import {
 
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 
-// 오류 'JSX.IntrinsicElements' 형식에 'div' 속성이 없습니다.ts(2339)
-// https://github.com/vitejs/vite/issues/14011
-
-// 캘린더 어떻게 만들지
-
 function renderEventContent(eventInfo: EventContentArg) {
   return (
     <ListContent>
