@@ -1,4 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
+import { MdEdit } from 'react-icons/md';
+
+import CustomButton from '../../components/CustomButton/CustomButton';
+import ToggleButton from '../../components/ToggleButton';
+
 import {
   AccountName,
   ButtonContent,
@@ -12,25 +17,23 @@ import {
   UserImage,
   UserInfo,
   UserLeft,
-} from "./SettingPage.styles";
-import CustomButton from "../../components/CustomButton/CustomButton";
-import imgSrc from "../../assets/testImage/suggestedPostImage.png";
-import { MdEdit } from "react-icons/md";
-import ToggleButton from "../../components/ToggleButton";
+} from './SettingPage.styles';
+
+import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 
 const SettingPage = () => {
   const scrollView = useRef<HTMLInputElement>(null);
 
   const onMoveToSelect = () => {
     if (scrollView.current !== undefined && scrollView.current !== null) {
-      scrollView.current.scrollIntoView({ behavior: "smooth" });
+      scrollView.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const onMoveToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -66,7 +69,7 @@ const SettingPage = () => {
               <CustomButton
                 text="중복 확인"
                 backgroundColor="blue"
-                onClick={() => console.log("사용 가능한 계정 이름입니다.")}
+                onClick={() => console.log('사용 가능한 계정 이름입니다.')}
                 disabled={true}
               />
               <div>
@@ -84,7 +87,7 @@ const SettingPage = () => {
               text="저장"
               backgroundColor="blue"
               disabled={false}
-              onClick={() => console.log("계정 정보가 저장되었습니다.")}
+              onClick={() => console.log('계정 정보가 저장되었습니다.')}
             />
           </ButtonContent>
         </ProfileInfo>
@@ -136,7 +139,7 @@ const SettingPage = () => {
               text="저장"
               backgroundColor="blue"
               disabled={false}
-              onClick={() => console.log("알림이 설정되었습니다..")}
+              onClick={() => console.log('알림이 설정되었습니다..')}
             />
           </ButtonContent>
         </ProfileInfo>
@@ -148,7 +151,7 @@ const SettingPage = () => {
                 text="회원 탈퇴"
                 backgroundColor="red"
                 disabled={false}
-                onClick={() => console.log("알림이 설정되었습니다..")}
+                onClick={() => console.log('알림이 설정되었습니다..')}
               />
             </ButtonContent>
           </UserLeft>
