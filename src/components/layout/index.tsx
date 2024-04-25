@@ -1,11 +1,10 @@
-import Header from "./header";
-import {
-  HeaderWrapper,
-  LayoutContainer,
-  OutletContent,
-  OutletWrapper,
-} from "./Layout.styles.ts";
-import { Outlet } from "react-router-dom";
+import React from 'react';
+
+import { Outlet } from 'react-router-dom';
+
+import Header from './header';
+
+import { HeaderWrapper, LayoutContainer, OutletContent, OutletWrapper } from './Layout.styles.ts';
 
 const Layout = () => {
   return (
