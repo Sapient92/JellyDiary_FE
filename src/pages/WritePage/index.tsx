@@ -18,12 +18,13 @@ const WritePage = () => {
     useModalStore();
   const { id } = useParams();
   const { isLoading, data, isError } = useQuery({
-    queryKey: ["fetch-post"],
+    queryKey: ["fetch-post", id],
     queryFn: () => {
       return axios.get(`edit/${id}`);
     },
     select: (data) => data.data[0],
   });
+
   if (isLoading) return <>Loading...</>;
   if (isError) return <>데이터를 불러오는데 실패하였습니다.</>;
 
