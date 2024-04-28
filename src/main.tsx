@@ -1,28 +1,26 @@
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-import { BrowserRouter } from "react-router-dom";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./react-query/queryClient.ts";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Loading } from "./components/Loading/index.tsx";
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './react-query/queryClient.ts';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 async function enableMocking() {
   if (!import.meta.env.DEV) {
     return;
   }
-  const { worker } = await import("./mocks/browser.ts");
-  return worker.start({ onUnhandledRequest: "bypass" });
+  const { worker } = await import('./mocks/browser.ts');
+  return worker.start({ onUnhandledRequest: 'bypass' });
 }
 
 enableMocking().then(() => {
-  ReactDOM.createRoot(document.getElementById("root")!).render(
+  ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <App />
-        <Loading />
       </BrowserRouter>
       <ReactQueryDevtools />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 });
