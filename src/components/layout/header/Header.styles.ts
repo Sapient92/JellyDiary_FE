@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { MdAccountCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { MdAccountCircle } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.header`
   width: 100%;

@@ -1,13 +1,18 @@
-import { QueryCache, QueryClient } from "@tanstack/react-query";
+import { QueryCache, QueryClient } from '@tanstack/react-query';
 
-// function errorHandler(errorMsg: string) {
-//      console.log(errorMsg);
-// }
+// 전역 오류 처리 함수
+function globalErrorHandler(error: Error) {
+  console.error('An error occurred:', error);
+}
 
+// QueryClient 인스턴스 생성
 export const queryClient = new QueryClient({
+  defaultOptions: {
+    mutations: {
+      onError: globalErrorHandler,
+    },
+  },
   queryCache: new QueryCache({
-    // onError: (error) => {
-    //   //   errorHandler(error.message);
-    // },
+    onError: globalErrorHandler,
   }),
 });
