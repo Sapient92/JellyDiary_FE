@@ -17,8 +17,8 @@ export const UserProfileImg = styled.div`
   margin-right: 12px;
 
   img {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
   }
 `;
 
@@ -26,12 +26,14 @@ export const UserProfileDesc = styled.div`
   width: 198px;
   p {
     font-size: 16px;
+    font-weight: 600;
     margin: 0;
   }
 `;
 
 export const FollowButton = styled.button`
   color: #0095f6;
+  font-size: 14px;
   font-weight: 600;
   background: none;
   border: none;

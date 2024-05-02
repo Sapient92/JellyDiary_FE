@@ -12,29 +12,63 @@ const config: AxiosRequestConfig = {
 
 const api = axios.create(config);
 
-// 인증 토큰 관리 인터셉터 추가
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
-  }
-  return config;
-});
+// 요청 인터셉터 추가
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('Authorization');
+    if (token && config.url !== '/reissue' && config.url !== '/login') {
+      config.headers['Authorization'] = token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
+let isTokenRefreshing = false;
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const { data } = await api.post('/reissue');
-        localStorage.setItem('access_token', data.access_token);
-        api.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
-        return api(originalRequest);
-      } catch (error) {
-        console.error('토큰 재발급 실패', error);
-        return Promise.reject(error);
+      if (originalRequest.url !== '/login') {
+        if (!isTokenRefreshing) {
+          isTokenRefreshing = true;
+          return await api
+            .post('/reissue')
+            .then((res) => {
+              if (res.status === 200) {
+                api.defaults.headers.common['Authorization'] = res.headers.Authorization;
+                originalRequest.headers['Authorization'] = res.headers.Authorization;
+                localStorage.setItem('Authorization', res.headers.Authorization);
+                originalRequest._retry = false;
+                if (originalRequest.method === 'post') {
+                  return api.post(originalRequest.url, originalRequest.data);
+                } else if (originalRequest.method === 'get') {
+                  return api.get(originalRequest.url, {
+                    params: originalRequest.params,
+                  });
+                } else if (originalRequest.method === 'put') {
+                  return api.put(originalRequest.url, originalRequest.data);
+                } else if (originalRequest.method === 'delete') {
+                  return api.delete(originalRequest.url);
+                } else if (originalRequest.method === 'patch') {
+                  return api.patch(originalRequest.url);
+                }
+              }
+            })
+            .catch((error) => {
+              console.log('토큰 재발급 실패', error);
+              return Promise.reject(error);
+            })
+            .finally(() => {
+              isTokenRefreshing = false;
+            });
+        }
       }
     }
     return Promise.reject(error);
