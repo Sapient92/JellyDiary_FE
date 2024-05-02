@@ -8,7 +8,14 @@ import login_G from '../../assets/button/Login_G.png';
 import login_F from '../../assets/button/Login_F.png';
 import login_Line from '../../assets/button/Login_Line.png';
 
+const BaseURL = import.meta.env.VITE_BASE_URL;
+
 const LoginPage = () => {
+  const handleLogin = (prop: string) => {
+    const newLink = BaseURL + `/oauth2/authorization/${prop}`;
+    window.location.href = newLink;
+  };
+
   return (
     <LoginPageContainer>
       <LoginPageContent>
@@ -16,11 +23,11 @@ const LoginPage = () => {
           <img src={login_K} />
         </LoginButton>
         <img src={login_Line} />
-        <LoginButton>
+        <LoginButton onClick={() => handleLogin('naver')}>
           <img src={login_N} />
           <span>네이버 로그인 </span>
         </LoginButton>
-        <LoginButton>
+        <LoginButton onClick={() => handleLogin('google')}>
           <img src={login_G} />
           <span>Google 로그인 </span>
         </LoginButton>

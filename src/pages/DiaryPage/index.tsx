@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { BiChat, BiCloud, BiSun } from 'react-icons/bi';
@@ -26,7 +26,13 @@ import {
 } from './DiaryPage.styles';
 
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
+import api from '../../api';
 
+interface DiaryProps {
+  diaryDescription: string;
+  diaryName: string;
+  diaryProfileImage: string;
+}
 function renderEventContent(eventInfo: EventContentArg) {
   return (
     <ListContent>
@@ -48,6 +54,7 @@ function renderEventContent(eventInfo: EventContentArg) {
 const DiaryPage = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [events, setEvents] = useState([]);
+  const [diaryData, setDiaryData] = useState<DiaryProps>([]);
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
@@ -55,6 +62,19 @@ const DiaryPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      //   const response = await api.post('http://localhost:8080/api/diary', {
+      //     diaryName: '나의 여름 휴가',
+      //     diaryDescription: '그리스에서 보낸 여름 휴가에 대한 다이어리.',
+      //     diaryProfileImage: '이미지_URL',
+      //   });
+      const response = await api.get('http://localhost:8080/api/diary/profile/2');
+      console.log(response.data);
+      setDiaryData(response.data.data);
+    };
+    fetchData();
+  }, []);
   return (
     <DiaryPageContainer>
       <DiaryLeftContent>
@@ -67,9 +87,9 @@ const DiaryPage = () => {
         <UserInfo>
           <div>
             <span>Hello, </span>
-            <span>다이어리이름 </span>
+            <span>{diaryData?.diaryName} </span>
           </div>
-          <div>다이어리 소개글</div>
+          <div>{diaryData?.diaryDescription} </div>
           <CustomButton
             text="Edit Profile"
             backgroundColor="gray"
