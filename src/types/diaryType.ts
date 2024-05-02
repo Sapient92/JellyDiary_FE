@@ -4,6 +4,7 @@ export interface DiaryType {
   createdAt: string;
   postContent: string;
   isPublic: boolean;
+  postImgs: { id: number; previewUrl: string; origin: File }[] | [];
   weather: string | null;
   meal: string | null;
   snack: string | null;

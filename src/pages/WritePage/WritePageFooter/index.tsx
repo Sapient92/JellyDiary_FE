@@ -1,6 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect } from "react";
 
 import Button from "../../../components/Button";
 
@@ -24,7 +22,8 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
     (state) => state.toggleTitleAlertModal,
   );
   const { isPublic } = data || {};
-  const navigate = useNavigate();
+
+  console.log(diary);
 
   useEffect(() => {
     if (isPublic === false) {
@@ -32,7 +31,6 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
     }
   }, []);
 
-  const id = useRef(5);
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (diary.postTitle.trim() === "") {
@@ -42,18 +40,6 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       }, 3000);
       return;
     }
-    axios.post("/post", { ...diary, postId: id.current }).then((r) => r);
-    axios
-      .post("feed", {
-        postId: id.current,
-        isPublic: diary.isPublic,
-        postImgIsMultiple: true,
-        postImg: "",
-      })
-      .then(() => {
-        navigate(`../../post/${id.current}`);
-        id.current++;
-      });
   };
 
   const handleIsPublicClick = () => {
