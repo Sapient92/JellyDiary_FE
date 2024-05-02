@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SuggestedPageContainer = styled.div`
   display: flex;
@@ -8,6 +8,7 @@ export const SuggestedPageContainer = styled.div`
 
 export const SuggestedPageContent = styled.div`
   width: 80vw;
+  padding-left: 5vw;
   background-color: white;
   margin-top: 10px;
   height: 80vh;
