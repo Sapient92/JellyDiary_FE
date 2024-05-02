@@ -13,9 +13,10 @@ import {
 interface FollowModalProps {
   title: string;
   closeModal: Dispatch<SetStateAction<boolean>>;
+  follow: number;
 }
 
-const FollowModal: FC<FollowModalProps> = ({ title, closeModal }) => {
+const FollowModal: FC<FollowModalProps> = ({ title, closeModal, follow }) => {
   const modalRef = useRef(null);
 
   useOnClickOutside(modalRef, () => {
@@ -26,7 +27,9 @@ const FollowModal: FC<FollowModalProps> = ({ title, closeModal }) => {
     <FollowModalContainer ref={modalRef}>
       <FollowModalContent>
         <TitleContainer>
-          <p>{title}</p>
+          <p>
+            {follow} {title}
+          </p>
         </TitleContainer>
         <FollowList />
       </FollowModalContent>
