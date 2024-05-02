@@ -9,3 +9,12 @@ export interface User {
   alarmNewFollower: boolean;
   alarmDM: boolean;
 }
+
+export interface UserFeedInfo {
+  followerCount: number;
+  followingCount: number;
+  profileImg: [] | null;
+  userDesc: string | null;
+  userId: number;
+  userName: string;
+}

@@ -2,6 +2,8 @@ import React from "react";
 
 import Button from "../../../components/Button";
 
+import { UserFeedInfo } from "../../../types/userType.ts";
+
 import {
   FeedIntroductionContainer,
   FeedIntroductionContent,
@@ -17,12 +19,16 @@ import profileImg from "../../../assets/testImage/Image.png";
 interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
   setToggleFollowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  data: UserFeedInfo;
 }
 
 const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowerModal,
   setToggleFollowModal,
+  data,
 }) => {
+  console.log(data);
+
   const handleFollowClick = () => {
     setToggleFollowModal(true);
   };
@@ -38,7 +44,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
         </FeedIntroductionImg>
         <UserStateContainer>
           <UserNicknameContainer>
-            <p>terrylucas</p>
+            <p>{data.userName}</p>
             <div>
               <Button className={"follow"}>팔로우</Button>
               <Button className={"send_message"}>메세지 보내기</Button>
@@ -46,11 +52,11 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
           </UserNicknameContainer>
           <UserDetailStateContainer>
             <p>{"1,258"}게시물</p>
-            <p onClick={handleFollowerClick}> {"4M"}팔로워</p>
-            <p onClick={handleFollowClick}>{"1,250"}팔로우</p>
+            <p onClick={handleFollowerClick}> {data.followerCount}팔로워</p>
+            <p onClick={handleFollowClick}>{data.followingCount}팔로우</p>
           </UserDetailStateContainer>
           <UserDescContainer>
-            <p>Terry Lucas 입니다 안녕하세요</p>
+            <p>{data.userDesc}</p>
           </UserDescContainer>
         </UserStateContainer>
       </FeedIntroductionContent>
