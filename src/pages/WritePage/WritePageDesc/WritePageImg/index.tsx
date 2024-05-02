@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 
@@ -12,13 +12,20 @@ import {
   WritePageImgContent,
   WritePageImgTitleContainer,
 } from "./WritePageImg.styles.ts";
+import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
 
 const WritePageImg: React.FC = () => {
   const [postList, setPostList] = useState<
     { id: number; previewUrl: string; origin: File }[]
   >([]);
+  const changeValue = useDiaryStore((state) => state.changeValue);
   const imgRef = useRef<HTMLInputElement>(null);
   const { toggleImageAlertModal, toggleImgDupliAlertModal } = useModalStore();
+
+  useEffect(() => {
+    changeValue({ postImgs: postList });
+  }, [changeValue, postList]);
+
   const handleUploadClick = () => {
     if (!imgRef.current) {
       return;
