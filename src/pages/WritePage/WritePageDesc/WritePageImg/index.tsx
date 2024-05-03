@@ -12,19 +12,20 @@ import {
   WritePageImgContent,
   WritePageImgTitleContainer,
 } from "./WritePageImg.styles.ts";
-import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
+import { useImgsStore } from "../../../../store/imgsStore/imgsStore.ts";
 
 const WritePageImg: React.FC = () => {
   const [postList, setPostList] = useState<
     { id: number; previewUrl: string; origin: File }[]
   >([]);
-  const changeValue = useDiaryStore((state) => state.changeValue);
+  const changeImgs = useImgsStore((state) => state.changeImgs);
   const imgRef = useRef<HTMLInputElement>(null);
   const { toggleImageAlertModal, toggleImgDupliAlertModal } = useModalStore();
 
   useEffect(() => {
-    changeValue({ postImgs: postList });
-  }, [changeValue, postList]);
+    const imgs = postList.map((img) => img.origin);
+    changeImgs(imgs);
+  }, [postList]);
 
   const handleUploadClick = () => {
     if (!imgRef.current) {
