@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useCategoriesStore } from '../../../../store/categoriesStore/categoriesStore.ts';
 
@@ -12,14 +13,26 @@ type HeaderRightButtonProps = {
   name: string;
 };
 
+const categryToRoute = {
+  bigSns: '',
+  smallSns: 'diary',
+  myFeed: 'userfeed',
+  dm: 'chat',
+};
+
 const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name }) => {
   const { categories, changeCategory } = useCategoriesStore((state) => state);
+  const navigate = useNavigate();
+
   const handleCategoryClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    const routePath = categryToRoute[name];
+
     if (categories[name]) {
       return;
     }
     changeCategory(name);
+    navigate(`/${routePath}`);
   };
 
   return (
