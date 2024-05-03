@@ -20,6 +20,8 @@ const UserFeedPage: FC = () => {
     select: (data) => data.data?.data,
   });
 
+  console.log(data);
+
   if (isLoading) return <>Loading...</>;
   if (isError) return <>불러오는 중 에러가 발생했습니다.</>;
 

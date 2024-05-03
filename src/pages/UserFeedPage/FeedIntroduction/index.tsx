@@ -28,8 +28,6 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowModal,
   data,
 }) => {
-  console.log(data);
-
   const handleFollowModalClick = () => {
     setToggleFollowModal(true);
   };
@@ -40,10 +38,10 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
 
   const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    try {
-      api.post(`api/feed/follow/${data.userId}`);
-    } catch (err) {
-      console.log(err);
+    if (!data.followStatus) {
+      api.post(`/api/feed/follow/${data.userId}`);
+    } else {
+      api.delete(`/api/feed/follow/${data.userId}`);
     }
   };
 
@@ -58,7 +56,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
             <p>{data.userName}</p>
             <div>
               <Button onClick={handleFollowClick} className={"follow"}>
-                팔로우
+                {data.followStatus ? "언팔로우" : "팔로우"}
               </Button>
               <Button className={"send_message"}>메세지 보내기</Button>
             </div>
