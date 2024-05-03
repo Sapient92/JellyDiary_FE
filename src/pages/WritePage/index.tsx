@@ -20,9 +20,10 @@ const WritePage = () => {
   const { isLoading, data, isError } = useQuery({
     queryKey: ["fetch-post", id],
     queryFn: () => {
-      return axios.get(`edit/${id}`);
+      return axios.patch(`api/post/${id}`);
     },
     select: (data) => data.data[0],
+    enabled: !!id,
   });
 
   if (isLoading) return <>Loading...</>;

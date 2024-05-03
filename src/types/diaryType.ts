@@ -1,10 +1,8 @@
 export interface DiaryType {
   postTitle: string;
   postDate: string;
-  createdAt: string;
   postContent: string;
   isPublic: boolean;
-  postImgs: { id: number; previewUrl: string; origin: File }[] | [];
   weather: string | null;
   meal: string | null;
   snack: string | null;
@@ -14,4 +12,8 @@ export interface DiaryType {
   shower: string | null;
   weight: string | null;
   specialNote: string | null;
+}
+
+export interface PostImgsType {
+  postImgs: File[] | null;
 }

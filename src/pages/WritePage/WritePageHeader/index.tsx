@@ -51,23 +51,23 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
       <WritePageWeatherContainer>
         <SunnyBtn
           weather={diary.weather}
-          onClick={() => handleWeatherChange("맑음")}
+          onClick={() => handleWeatherChange("SUNNY")}
         />
         <PartlySunnyBtn
           weather={diary.weather}
-          onClick={() => handleWeatherChange("구름낀")}
+          onClick={() => handleWeatherChange("PARTLY_SUNNY")}
         />
         <CloudyBtn
           weather={diary.weather}
-          onClick={() => handleWeatherChange("흐림")}
+          onClick={() => handleWeatherChange("CLOUDY")}
         />
         <RainBtn
           weather={diary.weather}
-          onClick={() => handleWeatherChange("비")}
+          onClick={() => handleWeatherChange("RAINNING")}
         />
         <SnowBtn
           weather={diary.weather}
-          onClick={() => handleWeatherChange("눈")}
+          onClick={() => handleWeatherChange("SNOWING")}
         />
       </WritePageWeatherContainer>
     </WritePageHeaderContainer>

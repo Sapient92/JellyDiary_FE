@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,6 +11,7 @@ import ConfirmModal from "../../components/Modal/ConfirmModal";
 import { useModalStore } from "../../store/modalStore/modalStore.ts";
 
 import { PostPageContainer, PostPageContent } from "./PostPage.styles.ts";
+import api from "../../api";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -19,10 +19,11 @@ const PostPage = () => {
   const { confirmDeleteModal, toggleConfirmDeleteModal } = useModalStore(
     (state) => state,
   );
+  console.log(id);
   const { isLoading, data, isError, error } = useQuery({
-    queryKey: ["get-post"],
+    queryKey: ["get-post", id],
     queryFn: () => {
-      return axios.get(`/posts/${id}`);
+      return api.get(`/api/post/${id}`);
     },
     select: (r) => r.data[0],
   });

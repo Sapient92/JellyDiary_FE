@@ -38,7 +38,7 @@ export const WritePageTitle = styled.div`
 
 export const WritePageWeatherContainer = styled.div``;
 export const SunnyBtn = styled(MdOutlineWbSunny)<{ weather: string | null }>`
-  color: ${(props) => (props.weather === "맑음" ? "#3EA9E5" : "#c4c4c4")};
+  color: ${(props) => (props.weather === "SUNNY" ? "#3EA9E5" : "#c4c4c4")};
   width: 32px;
   height: 32px;
 
@@ -47,7 +47,7 @@ export const SunnyBtn = styled(MdOutlineWbSunny)<{ weather: string | null }>`
   }
 `;
 export const CloudyBtn = styled(LuCloudy)<{ weather: string | null }>`
-  color: ${(props) => (props.weather === "흐림" ? "#3EA9E5" : "#c4c4c4")};
+  color: ${(props) => (props.weather === "CLOUDY" ? "#3EA9E5" : "#c4c4c4")};
   margin-left: 20px;
   width: 32px;
   height: 32px;
@@ -59,7 +59,8 @@ export const CloudyBtn = styled(LuCloudy)<{ weather: string | null }>`
 export const PartlySunnyBtn = styled(IoPartlySunnyOutline)<{
   weather: string | null;
 }>`
-  color: ${(props) => (props.weather === "구름낀" ? "#3EA9E5" : "#c4c4c4")};
+  color: ${(props) =>
+    props.weather === "PARTLY_SUNNY" ? "#3EA9E5" : "#c4c4c4"};
   margin-left: 20px;
   width: 32px;
   height: 32px;
@@ -69,7 +70,7 @@ export const PartlySunnyBtn = styled(IoPartlySunnyOutline)<{
   }
 `;
 export const RainBtn = styled(BsCloudRain)<{ weather: string | null }>`
-  color: ${(props) => (props.weather === "비" ? "#3EA9E5" : "#c4c4c4")};
+  color: ${(props) => (props.weather === "RAINNING" ? "#3EA9E5" : "#c4c4c4")};
   margin-left: 20px;
   width: 32px;
   height: 32px;
@@ -79,7 +80,7 @@ export const RainBtn = styled(BsCloudRain)<{ weather: string | null }>`
   }
 `;
 export const SnowBtn = styled(IoIosSnow)<{ weather: string | null }>`
-  color: ${(props) => (props.weather === "눈" ? "#3EA9E5" : "#c4c4c4")};
+  color: ${(props) => (props.weather === "SNOWING" ? "#3EA9E5" : "#c4c4c4")};
   margin-left: 20px;
   width: 32px;
   height: 32px;
