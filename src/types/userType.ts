@@ -17,4 +17,5 @@ export interface UserFeedInfo {
   userDesc: string | null;
   userId: number;
   userName: string;
+  followStatus: boolean;
 }
