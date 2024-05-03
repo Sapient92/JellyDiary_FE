@@ -5,7 +5,7 @@ import { LuCloudy } from "react-icons/lu";
 import { BsCloudRain } from "react-icons/bs";
 import { IoIosSnow } from "react-icons/io";
 
-import { DiaryType } from "../../../types/diaryType.ts";
+import { PostType } from "../../../types/diaryType.ts";
 
 import {
   CommentButton,
@@ -22,19 +22,27 @@ import {
 } from "./PostPageDetail.styles.ts";
 
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
+import api from "../../../api";
+import { useQuery } from "@tanstack/react-query";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
-  data: DiaryType;
+  data: PostType;
 }
 
 const PostPageDetail: React.FC<PostPageDetailProps> = ({
   setToggleCommentModal,
   data,
 }) => {
-  const { postTitle, createdAt, postContent, weather } = data;
+  const { postTitle, postContent, weather, postDate, likeCount, postId } = data;
   const [toggleSeeMore, setToggleSeeMore] = useState(false);
   const [like, setLike] = useState(false);
+  const { data: likeState } = useQuery({
+    queryKey: ["get-likeState", postId],
+    queryFn: () => api.get(`/api/post/like/${postId}`),
+    select: (r) => r.data.data.likeState,
+  });
+
   let Icons;
   switch (weather) {
     case "맑음":
@@ -67,7 +75,15 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
 
   const handleLikeClick = (e: React.MouseEvent<SVGElement>) => {
     e.preventDefault();
-    setLike(!like);
+    if (!likeState) {
+      api.post(`/api/post/like/${postId}`).then((r) => {
+        r.status === 200 && setLike(!like);
+      });
+    } else {
+      api.delete(`/api/post/like/${postId}`).then((r) => {
+        r.status === 200 && setLike(!like);
+      });
+    }
   };
 
   const handleSeemoreClick = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -83,7 +99,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
       <PostDetailBtnContainer>
         <PostDetailBtnBox>
           <button>
-            {!like ? (
+            {!likeState ? (
               <NotLikeButton onClick={handleLikeClick} />
             ) : (
               <LikeButton onClick={handleLikeClick} />
@@ -99,7 +115,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
         <WeatherContainer>{Icons ? <Icons /> : null}</WeatherContainer>
       </PostDetailBtnContainer>
       <PostDetailDesc>
-        <p>1,069 likes</p>
+        <p>{likeCount} likes</p>
         <PostDetailDescContainer $seeMore={toggleSeeMore}>
           <p>{postTitle}</p>
           {!toggleSeeMore ? (
@@ -124,7 +140,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
         <div>
           <button onClick={handleCommentClick}>View all 100 comments</button>
         </div>
-        <p>{createdAt.split("T")[0].replace(/-/g, ".")}</p>
+        <p>{postDate.split("T")[0].replace(/-/g, ".")}</p>
       </PostDetailDesc>
     </PostPageDetailContainer>
   );

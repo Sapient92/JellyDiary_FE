@@ -17,3 +17,27 @@ export interface DiaryType {
 export interface PostImgsType {
   postImgs: File[] | null;
 }
+
+export interface PostType {
+  createdAt: string;
+  diaryId: number;
+  isDelete: boolean;
+  isPublic: boolean;
+  likeCount: number;
+  meal: null | string;
+  modifiedAt: null | string;
+  postContent: string;
+  postDate: string;
+  postId: number;
+  postImgs: File[] | null;
+  postTitle: string | null;
+  shower: null | string;
+  snack: null | string;
+  specialNote: null | string;
+  toiletRecord: null | string;
+  userId: number;
+  walk: null;
+  water: null | string;
+  weather: null | string;
+  weight: null | string;
+}
