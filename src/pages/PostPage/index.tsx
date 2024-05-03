@@ -25,8 +25,9 @@ const PostPage = () => {
     queryFn: () => {
       return api.get(`/api/post/${id}`);
     },
-    select: (r) => r.data[0],
+    select: (r) => r.data.data,
   });
+  console.log(data)
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>{error}</>;

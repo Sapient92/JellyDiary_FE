@@ -52,7 +52,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       const blob = new Blob([diaryJson], { type: "application/json" });
       formData.append("diaryPostCreateRequestDto", blob);
       api
-        .post("/api/post/4", formData, {
+        .post("/api/post/5", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
