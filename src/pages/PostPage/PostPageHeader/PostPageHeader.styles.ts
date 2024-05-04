@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { PiNotebookLight } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 export const PostPageHeaderContainer = styled.header`
   width: 100%;
@@ -19,14 +20,19 @@ export const UserProfileContainer = styled.div`
     width: 42px;
     height: 42px;
   }
+`;
 
+export const LinkTag = styled(Link)`
+  margin: 0 0 0 14px;
+  text-decoration: none;
+  color: black;
   p {
-    margin-left: 14px;
+    margin: 0;
     font-weight: 600;
     font-size: 18px;
+
     &:hover {
       cursor: pointer;
-      text-decoration: underline;
     }
   }
 `;

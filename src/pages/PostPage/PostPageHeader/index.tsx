@@ -7,6 +7,7 @@ import {
   EditButton,
   EditButtonContainer,
   HeaderButtonContainer,
+  LinkTag,
   PostMenuButton,
   PostPageHeaderContainer,
   UserProfileContainer,
@@ -14,7 +15,9 @@ import {
 
 import userImg from "../../../assets/testImage/FakeUser-2.png";
 import { PostType } from "../../../types/diaryType.ts";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import api from "../../../api";
+import { Link } from "react-router-dom";
 
 interface PostPageHeaderProps {
   data: PostType;
@@ -22,12 +25,11 @@ interface PostPageHeaderProps {
 
 const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
   const [toggleEditModal, setToggleEditModal] = useState(false);
-  const queryClient = useQueryClient();
-  const userData = queryClient.getQueryData([
-    "fetch-userFeed",
-    String(data.userId),
-  ]);
-  console.log(userData);
+  const { data: userData } = useQuery({
+    queryKey: ["fetch-userData", data.userId],
+    queryFn: () => api.get(`/api/feed/userInfo/${data.userId}`),
+    select: (data) => data.data.data,
+  });
 
   const handleEditClick = () => {
     setToggleEditModal(true);
@@ -37,7 +39,9 @@ const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
     <PostPageHeaderContainer>
       <UserProfileContainer>
         <img src={userImg} alt={"feed_user_img"} />
-        <p>terrylucas</p>
+        <LinkTag to={`../../userfeed/${userData?.userId}`}>
+          <p>{userData?.userName}</p>
+        </LinkTag>
       </UserProfileContainer>
       <HeaderButtonContainer>
         <PostMenuButton>
