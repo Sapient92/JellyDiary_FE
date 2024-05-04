@@ -4,8 +4,10 @@ import { IoPartlySunnyOutline } from "react-icons/io5";
 import { LuCloudy } from "react-icons/lu";
 import { BsCloudRain } from "react-icons/bs";
 import { IoIosSnow } from "react-icons/io";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { PostType } from "../../../types/diaryType.ts";
+import api from "../../../api";
+import { queryClient } from "../../../react-query/queryClient.ts";
 
 import {
   CommentButton,
@@ -22,25 +24,41 @@ import {
 } from "./PostPageDetail.styles.ts";
 
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
-import api from "../../../api";
-import { useQuery } from "@tanstack/react-query";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
-  data: PostType;
+  id?: string;
 }
 
 const PostPageDetail: React.FC<PostPageDetailProps> = ({
   setToggleCommentModal,
-  data,
+  id,
 }) => {
-  const { postTitle, postContent, weather, postDate, likeCount, postId } = data;
   const [toggleSeeMore, setToggleSeeMore] = useState(false);
-  const [like, setLike] = useState(false);
+  const changeLike = (like: boolean) => {
+    if (!like) {
+      return api.post(`/api/post/like/${Number(id)}`);
+    } else {
+      return api.delete(`/api/post/like/${Number(id)}`);
+    }
+  };
+
+  const data = queryClient.getQueryData(["get-post", id]);
+  const { postTitle, postContent, weather, postDate, likeCount } =
+    data.data.data;
+
   const { data: likeState } = useQuery({
-    queryKey: ["get-likeState", postId],
-    queryFn: () => api.get(`/api/post/like/${postId}`),
+    queryKey: ["get-likeState", id],
+    queryFn: () => api.get(`/api/post/like/${Number(id)}`),
     select: (r) => r.data.data.likeState,
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: changeLike,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-likeState", id] });
+      queryClient.invalidateQueries({ queryKey: ["get-post", id] });
+    },
   });
 
   let Icons;
@@ -75,15 +93,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
 
   const handleLikeClick = (e: React.MouseEvent<SVGElement>) => {
     e.preventDefault();
-    if (!likeState) {
-      api.post(`/api/post/like/${postId}`).then((r) => {
-        r.status === 200 && setLike(!like);
-      });
-    } else {
-      api.delete(`/api/post/like/${postId}`).then((r) => {
-        r.status === 200 && setLike(!like);
-      });
-    }
+    mutate(likeState);
   };
 
   const handleSeemoreClick = (e: React.MouseEvent<HTMLSpanElement>) => {
