@@ -41,12 +41,8 @@ const PostPage = () => {
         />
       )}
       <PostPageContent>
-        <PostPageHeader />
-        <PostPageDetail
-          // data={data}
-          id={id}
-          setToggleCommentModal={setToggleCommentModal}
-        />
+        <PostPageHeader data={data} />
+        <PostPageDetail id={id} setToggleCommentModal={setToggleCommentModal} />
         <PostPageDiary data={data} />
       </PostPageContent>
       {toggleCommentModal && (
