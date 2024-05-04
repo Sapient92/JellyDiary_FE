@@ -80,7 +80,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
             </div>
           </UserNicknameContainer>
           <UserDetailStateContainer>
-            <p>{postData.count}게시물</p>
+            <p>{postData?.count}게시물</p>
             <p onClick={handleFollowerModalClick}>
               {" "}
               {data.followerCount}팔로워
