@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import PostPageEditModal from "./PostPageEditModal";
 
@@ -13,9 +13,21 @@ import {
 } from "./PostPageHeader.styles.ts";
 
 import userImg from "../../../assets/testImage/FakeUser-2.png";
+import { PostType } from "../../../types/diaryType.ts";
+import { useQueryClient } from "@tanstack/react-query";
 
-const PostPageHeader = () => {
+interface PostPageHeaderProps {
+  data: PostType;
+}
+
+const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
   const [toggleEditModal, setToggleEditModal] = useState(false);
+  const queryClient = useQueryClient();
+  const userData = queryClient.getQueryData([
+    "fetch-userFeed",
+    String(data.userId),
+  ]);
+  console.log(userData);
 
   const handleEditClick = () => {
     setToggleEditModal(true);
