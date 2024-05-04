@@ -5,7 +5,7 @@ export interface FeedType {
   postImg: string;
 }
 
-export interface feedListType {
-  feedListCount: number;
-  postList: FeedType[];
+export interface FeedPostType {
+  count: number;
+  feeds: FeedType[];
 }

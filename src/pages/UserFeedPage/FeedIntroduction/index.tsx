@@ -18,17 +18,20 @@ import profileImg from "../../../assets/testImage/Image.png";
 import api from "../../../api";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../../react-query/queryClient.ts";
+import { FeedPostType } from "../../../types/feedType.ts";
 
 interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
   setToggleFollowModal: React.Dispatch<React.SetStateAction<boolean>>;
   data: UserFeedInfo;
+  postData: FeedPostType;
 }
 
 const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowerModal,
   setToggleFollowModal,
   data,
+  postData,
 }) => {
   const changeFollowStatus = (status: boolean) => {
     if (!status) {
@@ -77,7 +80,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
             </div>
           </UserNicknameContainer>
           <UserDetailStateContainer>
-            <p>{"1,258"}게시물</p>
+            <p>{postData.count}게시물</p>
             <p onClick={handleFollowerModalClick}>
               {" "}
               {data.followerCount}팔로워

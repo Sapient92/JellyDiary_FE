@@ -20,6 +20,17 @@ const UserFeedPage: FC = () => {
     select: (data) => data.data?.data,
   });
 
+  const {
+    isLoading: postLoading,
+    data: postData,
+    isError: postIsError,
+    error: postError,
+  } = useQuery({
+    queryKey: ["get-feedPost", userId],
+    queryFn: () => api.get(`/api/feed/feedList/${userId}`),
+    select: (r) => r.data.data,
+  });
+
   if (isLoading) return <>Loading...</>;
   if (isError) return <>불러오는 중 에러가 발생했습니다.</>;
 
@@ -48,9 +59,15 @@ const UserFeedPage: FC = () => {
             setToggleFollowerModal={setToggleFollowerModal}
             setToggleFollowModal={setToggleFollowModal}
             data={data}
+            postData={postData}
           />
           <FeedNavbar />
-          <FeedPostSection />
+          <FeedPostSection
+            postLoading={postLoading}
+            postData={postData}
+            postIsError={postIsError}
+            postError={postError}
+          />
         </FeedPageContent>
       </FeedPageContainer>
     </>

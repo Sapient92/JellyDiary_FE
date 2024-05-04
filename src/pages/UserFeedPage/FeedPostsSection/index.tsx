@@ -1,31 +1,37 @@
-import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-
-import FeedPost from "./FeedPost";
-
 import { PostsSection } from "./FeedPostsSection.styles.ts";
-import { FeedType } from "../../../types/feedType.ts";
-
+import React from "react";
+import { FeedPostType, FeedType } from "../../../types/feedType.ts";
+import { Link } from "react-router-dom";
+import FeedPost from "./FeedPost";
 import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
 
-const FeedPostSection = () => {
-  // const { isLoading, data, isError } = useQuery({
-  //   queryKey: ["fetch-feeds"],
-  //   queryFn: fetchFeeds,
-  // });
+interface FeedPostSectionProps {
+  postLoading: boolean;
+  postData: FeedPostType;
+  postIsError: boolean;
+  postError: Error | null;
+}
+const FeedPostSection: React.FC<FeedPostSectionProps> = ({
+  postLoading,
+  postData,
+  postIsError,
+  postError,
+}) => {
+  if (postLoading) return <>로딩중...</>;
+  if (postIsError) return <>{postError?.message}</>;
 
-  // if (isLoading) return <>Loading...</>;
-  // if (isError) return <>데이터를 불러오지 못했습니다.</>;
+  console.log(postData);
+
   return (
     <PostsSection>
-      {/*{data?.data.map(*/}
-      {/*  (feed: FeedType) =>*/}
-      {/*    feed.isPublic && (*/}
-      {/*      <Link key={feed.postId} to={`/post/${feed.postId}`}>*/}
-      {/*        <FeedPost fakeImg={FakeCat1} />*/}
-      {/*      </Link>*/}
-      {/*    ),*/}
-      {/*)}*/}
+      {postData?.feeds.map(
+        (feed: FeedType) =>
+          feed.isPublic && (
+            <Link key={feed.postId} to={`/post/${feed.postId}`}>
+              <FeedPost fakeImg={FakeCat1} />
+            </Link>
+          ),
+      )}
     </PostsSection>
   );
 };
