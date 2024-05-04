@@ -19,7 +19,6 @@ const PostPage = () => {
   const { confirmDeleteModal, toggleConfirmDeleteModal } = useModalStore(
     (state) => state,
   );
-  console.log(id);
   const { isLoading, data, isError, error } = useQuery({
     queryKey: ["get-post", id],
     queryFn: () => {
@@ -27,7 +26,6 @@ const PostPage = () => {
     },
     select: (r) => r.data.data,
   });
-  console.log(data)
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>{error}</>;
@@ -45,7 +43,8 @@ const PostPage = () => {
       <PostPageContent>
         <PostPageHeader />
         <PostPageDetail
-          data={data}
+          // data={data}
+          id={id}
           setToggleCommentModal={setToggleCommentModal}
         />
         <PostPageDiary data={data} />
