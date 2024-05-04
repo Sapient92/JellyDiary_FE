@@ -16,6 +16,8 @@ import {
 
 import profileImg from "../../../assets/testImage/Image.png";
 import api from "../../../api";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../../../react-query/queryClient.ts";
 
 interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +30,23 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowModal,
   data,
 }) => {
+  const changeFollowStatus = (status: boolean) => {
+    if (!status) {
+      return api.post(`/api/feed/follow/${data.userId}`);
+    } else {
+      return api.delete(`/api/feed/follow/${data.userId}`);
+    }
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: changeFollowStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["fetch-userFeed", String(data.userId)],
+      });
+    },
+  });
+
   const handleFollowModalClick = () => {
     setToggleFollowModal(true);
   };
@@ -38,11 +57,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
 
   const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!data.followStatus) {
-      api.post(`/api/feed/follow/${data.userId}`);
-    } else {
-      api.delete(`/api/feed/follow/${data.userId}`);
-    }
+    mutate(data.followStatus);
   };
 
   return (
