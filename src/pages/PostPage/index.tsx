@@ -39,7 +39,11 @@ const PostPage = () => {
         <PostPageDiary data={data} />
       </PostPageContent>
       {toggleCommentModal && (
-        <CommentModal id={id} setToggleCommentModal={setToggleCommentModal} />
+        <CommentModal
+          id={id}
+          userId={data.userId}
+          setToggleCommentModal={setToggleCommentModal}
+        />
       )}
     </PostPageContainer>
   );

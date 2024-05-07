@@ -11,7 +11,7 @@ export const DeleteCommentButton = styled(RiDeleteBinLine)`
 export const CommentContainer = styled.li`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
   margin: 6px 8px 12px 8px;
   img {
     margin: 0;
@@ -27,6 +27,7 @@ export const CommentContainer = styled.li`
 export const CommentProfileContainer = styled.div`
   display: flex;
   align-items: center;
+  width: 367px;
 `;
 
 export const CommentContentContainer = styled.div`
@@ -36,10 +37,12 @@ export const CommentContentContainer = styled.div`
 export const CommentInfoContainer = styled.div`
   display: flex;
   align-items: center;
+
   p {
     margin: 0;
   }
   p:nth-child(1) {
+    margin: 0;
     font-size: 14px;
     font-weight: 800;
   }
@@ -52,10 +55,18 @@ export const CommentInfoContainer = styled.div`
 `;
 
 export const CommentDescription = styled.div`
-  p {
+  p:nth-child(1) {
+    width: 260px;
     margin: 0;
     color: #254630;
     font-size: 14px;
     font-weight: 600;
+  }
+  p:nth-child(2) {
+    margin: 0;
+    color: #7d8fb3;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
   }
 `;

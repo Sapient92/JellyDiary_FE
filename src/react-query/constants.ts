@@ -5,4 +5,5 @@ export const queryKeys = {
   post: "post",
   writerInfo: "writerInfo",
   postLikeState: "postLikeState",
+  comment: "comment",
 };

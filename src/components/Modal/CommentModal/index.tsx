@@ -13,11 +13,13 @@ import {
 interface CommentModalProps {
   id?: string;
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: number;
 }
 
 const CommentModal: React.FC<CommentModalProps> = ({
   id,
   setToggleCommentModal,
+  userId,
 }) => {
   const handleCloseClick = () => {
     setToggleCommentModal(false);
@@ -34,7 +36,7 @@ const CommentModal: React.FC<CommentModalProps> = ({
         </CommentHeaderContainer>
         <CommentContent id={id} />
       </DivContainer>
-      <CommentFooter />
+      <CommentFooter id={id} userId={userId} />
     </CommentModalContainer>
   );
 };
