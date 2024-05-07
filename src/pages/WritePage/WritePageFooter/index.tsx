@@ -22,6 +22,7 @@ interface WritePageFooterProps {
 const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const { post, changeValue } = usePostInputStore((state) => state);
   const { postImgs } = useImgsStore((state) => state.writeImgs);
+  const { deleteImgIds, changeImgs } = useImgsStore((state) => state);
 
   const toggleTitleAlertModal = useModalStore(
     (state) => state.toggleTitleAlertModal,
@@ -30,6 +31,9 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (data?.postImgs !== null) {
+      changeImgs(data?.postImgs);
+    }
     if (isPublic === false) {
       changeValue({ isPublic: false });
     }
@@ -69,6 +73,11 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
         const diaryJson = JSON.stringify(post);
         const blob = new Blob([diaryJson], { type: "application/json" });
         formData.append("diaryPostCreateRequestDto", blob);
+        const deleteImgsJson = JSON.stringify(deleteImgIds);
+        const imgIdsBlob = new Blob([deleteImgsJson], {
+          type: "application/json",
+        });
+        formData.append("deleteImageIds", imgIdsBlob);
         api
           .patch(`/api/post/${data.postId}`, formData, {
             headers: {

@@ -24,7 +24,6 @@ const WritePage = () => {
     select: (data) => data.data.data,
     enabled: !!id,
   });
-  console.log(data);
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>데이터를 불러오는데 실패하였습니다.</>;

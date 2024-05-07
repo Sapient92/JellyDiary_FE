@@ -4,7 +4,7 @@ import WritePageImg from "./WritePageImg";
 
 import { usePostInputStore } from "../../../store/postStore/postStore.ts";
 import { useModalStore } from "../../../store/modalStore/modalStore.ts";
-import { WriteInputType } from "../../../types/postType.ts";
+import { PostType } from "../../../types/postType.ts";
 
 import {
   DiaryDateContainer,
@@ -14,7 +14,7 @@ import {
 } from "./WritePageDesc.styles.ts";
 
 interface WritePageDescProps {
-  data?: WriteInputType;
+  data?: PostType;
 }
 
 const today = new Date().toISOString().split("T")[0];
@@ -71,7 +71,7 @@ const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
             onChange={(e) => handleValueChange(e, "postDate")}
           />
         </DiaryDateContainer>
-        <WritePageImg />
+        <WritePageImg postImgs={data?.postImgs} />
         <WritePageDetailContainer>
           <p>내용</p>
           <p>일지에 대한 설명을 적어주세요.</p>
