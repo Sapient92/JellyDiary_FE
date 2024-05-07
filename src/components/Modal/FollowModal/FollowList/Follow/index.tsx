@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { FollowType } from "../../../../../types/feedType.ts";
 
@@ -18,14 +18,14 @@ interface FollowProps {
   title?: string;
 }
 
-const Follow: React.FC<FollowProps> = ({ data, title }) => {
-  const { profileImg, userId, userDesc, userName, followStatus } = data;
-
+const Follow: React.FC<FollowProps> = ({ title, data }) => {
+  const { profileImg, userDesc, userName, followStatus, userId } = data;
+  const [status, setStatus] = useState(followStatus);
   const { mutate } = useFollowMutation(userId, title);
-
   const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(followStatus);
+    setStatus(!status);
   };
 
   return (
@@ -43,8 +43,8 @@ const Follow: React.FC<FollowProps> = ({ data, title }) => {
             <p>{userDesc}</p>
           </UserProfileDesc>
         </UserContent>
-        <FollowButton onClick={handleFollowClick}>
-          {followStatus === null ? "" : !followStatus ? "팔로우" : "언팔로우"}
+        <FollowButton $status={status} onClick={handleFollowClick}>
+          {status === null ? "" : !status ? "팔로우" : "언팔로우"}
         </FollowButton>
       </FollowContainer>
     </>

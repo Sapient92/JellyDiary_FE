@@ -36,8 +36,8 @@ export const UserProfileDesc = styled.div`
   }
 `;
 
-export const FollowButton = styled.button`
-  color: #0095f6;
+export const FollowButton = styled.button<{ $status: boolean }>`
+  color: ${(props) => (!props.$status ? "#0095f6" : "rgb(100,100,100)")};
   font-size: 14px;
   font-weight: 600;
   background: none;
