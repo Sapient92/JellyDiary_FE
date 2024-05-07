@@ -6,12 +6,16 @@ import {
   ConfirmButtonContainer,
   ConfirmModalContainer,
 } from "./ConfirmModal.styles.ts";
+import api from "../../../api";
+import { useNavigate } from "react-router-dom";
 
 interface ConfirmModalProps {
   message: string;
   confirm: string;
   cancel: string;
   closeModal: (el: boolean) => void;
+  id?: string;
+  userId?: number;
 }
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
@@ -19,7 +23,10 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   confirm,
   cancel,
   closeModal,
+  id,
+  userId,
 }) => {
+  const navigate = useNavigate();
   const modalRef = useRef(null);
   useOnClickOutside(modalRef, () => {
     closeModal(false);
@@ -28,12 +35,24 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   const handleCancelClick = () => {
     closeModal(false);
   };
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log(message);
+    if (confirm === "삭제") {
+      api
+        .delete(`/api/post/${id}`, { params: { postId: id } })
+        .then(
+          (res) =>
+            res.status === 200 && navigate(`../../../userfeed/${userId}`),
+        );
+    }
+  };
 
   return (
     <ConfirmModalContainer ref={modalRef}>
       <p>{message}</p>
       <ConfirmButtonContainer>
-        <button>{confirm}</button>
+        <button onClick={handleClick}>{confirm}</button>
         <button onClick={handleCancelClick}>{cancel}</button>
       </ConfirmButtonContainer>
     </ConfirmModalContainer>

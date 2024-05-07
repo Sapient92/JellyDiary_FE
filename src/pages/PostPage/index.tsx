@@ -31,6 +31,8 @@ const PostPage = () => {
           confirm={"삭제"}
           cancel={"취소"}
           closeModal={toggleConfirmDeleteModal}
+          id={id}
+          userId={data.userId}
         />
       )}
       <PostPageContent>

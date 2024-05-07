@@ -25,7 +25,6 @@ interface PostPageHeaderProps {
 const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
   const [toggleEditModal, setToggleEditModal] = useState(false);
   const { data: userData } = useFetchWriterInfo(data.userId);
-
   const handleEditClick = () => {
     setToggleEditModal(true);
   };

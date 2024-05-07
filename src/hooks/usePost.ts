@@ -47,3 +47,8 @@ export const useLikeMutation = (id: string) => {
 
   return { mutate };
 };
+
+export const useDeletePost = (id: string) =>
+  api
+    .delete(`/api/post/${id}`, { params: { postId: id } })
+    .then((res) => console.log(res));
