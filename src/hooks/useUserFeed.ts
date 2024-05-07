@@ -17,7 +17,7 @@ export const useFetchUserFeedPost = (userId: string) =>
     select: (r) => r.data.data,
   });
 
-export const useFollowMutation = (userId: number) => {
+export const useFollowMutation = (userId: number, title?: string) => {
   const changeFollowStatus = (status: boolean) => {
     if (!status) {
       return api.post(`/api/feed/follow/${userId}`);
@@ -32,6 +32,15 @@ export const useFollowMutation = (userId: number) => {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.userFeed, String(userId)],
       });
+      if (title === "팔로워") {
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.followerList, String(userId), title],
+        });
+      } else {
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.followList, String(userId), title],
+        });
+      }
     },
   });
 
