@@ -1,3 +1,7 @@
+import React from "react";
+
+import { FollowType } from "../../../../../types/feedType.ts";
+
 import {
   FollowButton,
   FollowContainer,
@@ -6,18 +10,29 @@ import {
   UserProfileImg,
 } from "./Follow.styles.ts";
 
-import testImg from "../../../../../assets/testImage/FakeUser-1.png";
+import userAvatar from "../../../../../assets/images/UserAvatar.png";
 
-const Follow = () => {
+interface FollowProps {
+  data: FollowType;
+}
+
+const Follow: React.FC<FollowProps> = (data) => {
+  const { profileImg, userId, userDesc, userName } = data.data;
+  console.log(userId);
+
   return (
     <>
       <FollowContainer>
         <UserContent>
           <UserProfileImg>
-            <img src={testImg} alt={"user-img"} />
+            <img
+              src={typeof profileImg === "string" ? profileImg : userAvatar}
+              alt={"userProfileImg"}
+            />
           </UserProfileImg>
           <UserProfileDesc>
-            <p>lauramatthews</p>
+            <p>{userName}</p>
+            <p>{userDesc}</p>
           </UserProfileDesc>
         </UserContent>
         <FollowButton>팔로우</FollowButton>

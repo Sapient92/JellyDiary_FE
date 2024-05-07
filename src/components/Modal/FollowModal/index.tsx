@@ -3,6 +3,7 @@ import { Dispatch, FC, SetStateAction, useRef } from "react";
 import FollowList from "./FollowList";
 
 import useOnClickOutside from "../../../hooks/useOnClickOutside.ts";
+import { useFetchFollowerList } from "../../../hooks/useUserFeed.ts";
 
 import {
   FollowModalContainer,
@@ -13,25 +14,31 @@ import {
 interface FollowModalProps {
   title: string;
   closeModal: Dispatch<SetStateAction<boolean>>;
-  follow: number;
+  userId?: string;
 }
 
-const FollowModal: FC<FollowModalProps> = ({ title, closeModal, follow }) => {
+const FollowModal: FC<FollowModalProps> = ({ title, closeModal, userId }) => {
   const modalRef = useRef(null);
+  const { isLoading, data, isError, error } = useFetchFollowerList(
+    userId as string,
+    title,
+  );
 
   useOnClickOutside(modalRef, () => {
     closeModal(false);
   });
+  if (isLoading) return <>로딩중...</>;
+  if (isError) return <>{error?.message}</>;
 
   return (
     <FollowModalContainer ref={modalRef}>
       <FollowModalContent>
         <TitleContainer>
           <p>
-            {follow} {title}
+            {data.length} {title}
           </p>
         </TitleContainer>
-        <FollowList />
+        <FollowList data={data} title={title} />
       </FollowModalContent>
     </FollowModalContainer>
   );

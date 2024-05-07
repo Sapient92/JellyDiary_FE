@@ -36,14 +36,14 @@ const UserFeedPage: FC = () => {
         <FollowModal
           title={"팔로워"}
           closeModal={setToggleFollowerModal}
-          follow={data.followerCount}
+          userId={userId}
         />
       )}
       {toggleFollowModal && (
         <FollowModal
           title={"팔로우"}
+          userId={userId}
           closeModal={setToggleFollowModal}
-          follow={data.followingCount}
         />
       )}
       <FeedPageContainer

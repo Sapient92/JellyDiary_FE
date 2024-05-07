@@ -37,3 +37,16 @@ export const useFollowMutation = (userId: number) => {
 
   return { mutate };
 };
+
+export const useFetchFollowerList = (id: string, title: string) =>
+  useQuery({
+    queryKey: [queryKeys.followerList, id, title],
+    queryFn: () => {
+      if (title === "팔로워") {
+        return api.get(`/api/feed/followerList/${id}`);
+      } else {
+        return api.get(`/api/feed/followList/${id}`);
+      }
+    },
+    select: (data) => data.data.data,
+  });
