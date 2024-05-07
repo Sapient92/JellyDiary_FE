@@ -2,13 +2,13 @@ import React from "react";
 
 import PostPageDiaryInfo from "./PostPageDiaryInfo";
 
-import { DiaryType } from "../../../types/diaryType.ts";
+import { WriteInputType } from "../../../types/postType.ts";
 
 import { PostPageDiaryContainer } from "./PostPageDiary.styles.ts";
 
-type PostPageDiaryProps = {
-  data: DiaryType;
-};
+interface PostPageDiaryProps {
+  data: WriteInputType;
+}
 
 const PostPageDiary: React.FC<PostPageDiaryProps> = ({ data }) => {
   const {

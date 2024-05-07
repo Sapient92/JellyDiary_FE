@@ -11,7 +11,7 @@ const FeedNavbar = () => {
     <FeedNavbarContainer>
       <FeedNavbarContent>
         <NavbarButton>
-          <img src={VectorButton} />
+          <img src={VectorButton} alt={"VectorImgButton"} />
           <p>POSTS</p>
         </NavbarButton>
       </FeedNavbarContent>

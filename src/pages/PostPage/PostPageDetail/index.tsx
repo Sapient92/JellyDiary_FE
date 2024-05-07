@@ -4,9 +4,6 @@ import { IoPartlySunnyOutline } from "react-icons/io5";
 import { LuCloudy } from "react-icons/lu";
 import { BsCloudRain } from "react-icons/bs";
 import { IoIosSnow } from "react-icons/io";
-import { useMutation, useQuery } from "@tanstack/react-query";
-
-import api from "../../../api";
 import { queryClient } from "../../../react-query/queryClient.ts";
 
 import {
@@ -24,6 +21,12 @@ import {
 } from "./PostPageDetail.styles.ts";
 
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
+import { queryKeys } from "../../../react-query/constants.ts";
+import {
+  useFetchPostLikeState,
+  useLikeMutation,
+} from "../../../hooks/usePost.ts";
+import { AxiosResponse } from "axios";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,31 +38,12 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
   id,
 }) => {
   const [toggleSeeMore, setToggleSeeMore] = useState(false);
-  const changeLike = (like: boolean) => {
-    if (!like) {
-      return api.post(`/api/post/like/${Number(id)}`);
-    } else {
-      return api.delete(`/api/post/like/${Number(id)}`);
-    }
-  };
+  const { data: likeState } = useFetchPostLikeState(id as string);
+  const { mutate } = useLikeMutation(id as string);
 
-  const data = queryClient.getQueryData(["get-post", id]);
+  const data: AxiosResponse = queryClient.getQueryData([queryKeys.post, id])!;
   const { postTitle, postContent, weather, postDate, likeCount } =
     data.data.data;
-
-  const { data: likeState } = useQuery({
-    queryKey: ["get-likeState", id],
-    queryFn: () => api.get(`/api/post/like/${Number(id)}`),
-    select: (r) => r.data.data.likeState,
-  });
-
-  const { mutate } = useMutation({
-    mutationFn: changeLike,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get-likeState", id] });
-      queryClient.invalidateQueries({ queryKey: ["get-post", id] });
-    },
-  });
 
   let Icons;
   switch (weather) {

@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react";
 
 import WritePageImg from "./WritePageImg";
 
-import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { usePostInputStore } from "../../../store/postStore/postStore.ts";
 import { useModalStore } from "../../../store/modalStore/modalStore.ts";
-import { DiaryType } from "../../../types/diaryType.ts";
+import { WriteInputType } from "../../../types/postType.ts";
 
 import {
   DiaryDateContainer,
@@ -14,16 +14,16 @@ import {
 } from "./WritePageDesc.styles.ts";
 
 interface WritePageDescProps {
-  data?: DiaryType;
+  data?: WriteInputType;
 }
 
 const today = new Date().toISOString().split("T")[0];
 
 const WritePageDesc: React.FC<WritePageDescProps> = ({ data }) => {
-  const { postTitle, postDate, postContent } = useDiaryStore(
-    (state) => state.diary,
+  const { postTitle, postDate, postContent } = usePostInputStore(
+    (state) => state.post,
   );
-  const changeValue = useDiaryStore((state) => state.changeValue);
+  const changeValue = usePostInputStore((state) => state.changeValue);
   const titleAlertModal = useModalStore((state) => state.titleAlertModal);
   const { postTitle: title, postDate: date, postContent: content } = data || {};
   const titleRef = useRef<HTMLInputElement>(null);

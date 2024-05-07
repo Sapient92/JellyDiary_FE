@@ -1,14 +1,14 @@
 import { create } from "zustand";
 
-import { DiaryType } from "../../types/diaryType.ts";
+import { WriteInputType } from "../../types/postType.ts";
 
 export type DiaryStoreProps = {
-  diary: DiaryType;
+  post: WriteInputType;
   changeValue: (el: object) => void;
 };
 
-export const useDiaryStore = create<DiaryStoreProps>((set) => ({
-  diary: {
+export const usePostInputStore = create<DiaryStoreProps>((set) => ({
+  post: {
     postTitle: "",
     postDate: new Date().toISOString().split("T")[0],
     postContent: "",
@@ -25,8 +25,8 @@ export const useDiaryStore = create<DiaryStoreProps>((set) => ({
   },
   changeValue: (el: object) =>
     set((prev) => ({
-      diary: {
-        ...prev.diary,
+      post: {
+        ...prev.post,
         ...el,
       },
     })),

@@ -2,10 +2,10 @@ import { FC } from "react";
 
 import { PostPageDiaryInfoContainer } from "./PostPageDiaryInfo.styles.ts";
 
-type PostPageDiaryInfoProps = {
+interface PostPageDiaryInfoProps {
   title: string;
   content: string;
-};
+}
 
 const PostPageDiaryInfo: FC<PostPageDiaryInfoProps> = ({ title, content }) => {
   return (
