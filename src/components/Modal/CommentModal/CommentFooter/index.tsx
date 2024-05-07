@@ -1,58 +1,41 @@
-import React, { useRef, useState } from "react";
-import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 
 import { CommentFooterContainer } from "./CommentFooter.styles.ts";
+import { useCommentMutation } from "../../../../hooks/useComment.ts";
 
 import userImg from "../../../../assets/testImage/Image.png";
+import { useFetchWriterInfo } from "../../../../hooks/usePost.ts";
 
-const CommentFooter = () => {
-  const [comment, setComment] = useState("");
-  const idRef = useRef(10);
-  const addComment = (comment: object) => {
-    return axios.post("/comment", comment);
-  };
-  const queryClient = useQueryClient();
+interface CommentFooterProps {
+  id?: string;
+  userId: number;
+}
 
-  const { mutate } = useMutation({
-    mutationFn: addComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["fetch-comments"] });
-      setComment("");
-      idRef.current++;
-    },
-  });
+const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
+  const [commentContent, setCommentContent] = useState("");
+  const { mutate } = useCommentMutation(id as string, setCommentContent);
+  const { data: userData } = useFetchWriterInfo(userId);
 
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (comment.trim() === "") {
+    if (commentContent.trim() === "") {
       return;
     }
-    const newComment = {
-      userId: idRef.current,
-      userName: "찰리친구",
-      userProfileImg: "/testImage/FakeCat-1.png",
-      commentId: idRef.current + 1,
-      createdAt: new Date(),
-      userTag: [],
-      commentContent: comment,
-      isDelete: false,
-    };
-    mutate(newComment);
+    mutate(commentContent);
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
+    setCommentContent(e.target.value);
   };
 
   return (
     <CommentFooterContainer>
       <img src={userImg} alt={"user_image"} />
       <input
-        value={comment}
+        value={commentContent}
         onChange={handleCommentChange}
         type={"text"}
-        placeholder={"terrylucas님에게 댓글 추가..."}
+        placeholder={`${userData.userName}님에게 댓글 추가`}
       />
       <button onClick={handlePostClick}>post</button>
     </CommentFooterContainer>
