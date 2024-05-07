@@ -14,13 +14,18 @@ import {
 } from "./WritePageImg.styles.ts";
 import { useImgsStore } from "../../../../store/imgsStore/imgsStore.ts";
 
-const WritePageImg: React.FC = () => {
+interface WritePageImgProps {
+  postImgs?: File[] | null | undefined;
+}
+
+const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
   const [postList, setPostList] = useState<
     { id: number; previewUrl: string; origin: File }[]
   >([]);
   const changeImgs = useImgsStore((state) => state.changeImgs);
   const imgRef = useRef<HTMLInputElement>(null);
   const { toggleImageAlertModal, toggleImgDupliAlertModal } = useModalStore();
+  const addedDeleteImgIds = useImgsStore((state) => state.addedDeleteImgIds);
 
   useEffect(() => {
     const imgs = postList.map((img) => img.origin);
@@ -97,6 +102,9 @@ const WritePageImg: React.FC = () => {
   const handleImgDeleteClick = (id: number) => {
     const newPostList = postList.filter((post) => post.id !== id);
     setPostList(newPostList);
+    if (postImgs) {
+      addedDeleteImgIds(id);
+    }
   };
 
   return (
