@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import { PostImgsType } from "../../types/diaryType.ts";
+import { PostImgsType } from "../../types/postType.ts";
 
 interface useImgsStoreProps {
   writeImgs: PostImgsType;
   changeImgs: (imgs: File[]) => void;
+  deleteImgIds: number[];
 }
 
 export const useImgsStore = create<useImgsStoreProps>((set) => ({
@@ -12,4 +13,5 @@ export const useImgsStore = create<useImgsStoreProps>((set) => ({
     set((prev) => ({
       writeImgs: { ...prev.writeImgs, postImgs: imgs },
     })),
+  deleteImgIds: [],
 }));

@@ -1,4 +1,4 @@
-export interface DiaryType {
+export interface WriteInputType {
   postTitle: string;
   postDate: string;
   postContent: string;

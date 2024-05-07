@@ -4,24 +4,25 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 
 import api from "../../../api";
-import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
+import { usePostInputStore } from "../../../store/postStore/postStore.ts";
 import { useModalStore } from "../../../store/modalStore/modalStore.ts";
-import { DiaryType } from "../../../types/diaryType.ts";
+import { PostType } from "../../../types/postType.ts";
+import { useImgsStore } from "../../../store/imgsStore/imgsStore.ts";
 
 import {
   FooterBtnContainer,
   PrivateBtnContainer,
   WritePageFooterContainer,
 } from "./WritePageFooter.styles.ts";
-import { useImgsStore } from "../../../store/imgsStore/imgsStore.ts";
 
 interface WritePageFooterProps {
-  data: DiaryType;
+  data: PostType;
 }
 
 const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
-  const { diary, changeValue } = useDiaryStore((state) => state);
+  const { post, changeValue } = usePostInputStore((state) => state);
   const { postImgs } = useImgsStore((state) => state.writeImgs);
+
   const toggleTitleAlertModal = useModalStore(
     (state) => state.toggleTitleAlertModal,
   );
@@ -36,7 +37,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
 
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (diary.postTitle.trim() === "") {
+    if (post.postTitle.trim() === "") {
       toggleTitleAlertModal(true);
       setTimeout(() => {
         toggleTitleAlertModal(false);
@@ -48,7 +49,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       for (const img of postImgs) {
         formData.append("postImgs", img);
       }
-      const diaryJson = JSON.stringify(diary);
+      const diaryJson = JSON.stringify(post);
       const blob = new Blob([diaryJson], { type: "application/json" });
       formData.append("diaryPostCreateRequestDto", blob);
       api
@@ -61,11 +62,29 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
           res.status === 200 && navigate(`../../post/${res.data.data.postId}`);
         })
         .catch((err) => console.log(err));
+    } else if (data && postImgs?.length && postImgs !== null) {
+      const formData = new FormData();
+      for (const img of postImgs) {
+        formData.append("postImgs", img);
+        const diaryJson = JSON.stringify(post);
+        const blob = new Blob([diaryJson], { type: "application/json" });
+        formData.append("diaryPostCreateRequestDto", blob);
+        api
+          .patch(`/api/post/${data.postId}`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            res.status === 200 && navigate(`../../post/${data.postId}`);
+          });
+      }
     }
   };
 
   const handleIsPublicClick = () => {
-    changeValue({ isPublic: !diary.isPublic });
+    changeValue({ isPublic: !post.isPublic });
   };
 
   return (
@@ -75,7 +94,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
           <input
             id={"private_checkbox"}
             type={"checkbox"}
-            checked={!diary.isPublic}
+            checked={!post.isPublic}
             onChange={handleIsPublicClick}
           />
           <label htmlFor={"private_checkbox"}>체크하여 비공개로 게시하기</label>

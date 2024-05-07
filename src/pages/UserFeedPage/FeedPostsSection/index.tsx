@@ -11,6 +11,7 @@ interface FeedPostSectionProps {
   postIsError: boolean;
   postError: Error | null;
 }
+
 const FeedPostSection: React.FC<FeedPostSectionProps> = ({
   postLoading,
   postData,
@@ -19,8 +20,6 @@ const FeedPostSection: React.FC<FeedPostSectionProps> = ({
 }) => {
   if (postLoading) return <>로딩중...</>;
   if (postIsError) return <>{postError?.message}</>;
-
-  console.log(postData);
 
   return (
     <PostsSection>

@@ -1,7 +1,7 @@
 import React, { FC, memo, useEffect, useState } from "react";
 
-import { DiaryType } from "../.././../../types/diaryType.ts";
-import { useDiaryStore } from "../../../../store/writeStore/diaryStore.ts";
+import { WriteInputType } from "../../../../types/postType.ts";
+import { usePostInputStore } from "../../../../store/postStore/postStore.ts";
 
 import {
   WritePageInput,
@@ -12,7 +12,7 @@ import {
 
 interface WritePageItemProps {
   title: string;
-  value: DiaryType[keyof DiaryType];
+  value: WriteInputType[keyof WriteInputType];
   name: string;
   defaultValue: string | null;
 }
@@ -24,7 +24,7 @@ const WritePageItem: FC<WritePageItemProps> = ({
   defaultValue,
 }) => {
   const [checkboxChecked, setCheckboxChecked] = useState(false);
-  const changeValue = useDiaryStore((state) => state.changeValue);
+  const changeValue = usePostInputStore((state) => state.changeValue);
 
   useEffect(() => {
     if (defaultValue) {

@@ -1,8 +1,8 @@
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useDiaryStore } from "../../../store/writeStore/diaryStore.ts";
-import { DiaryType } from "../../../types/diaryType.ts";
+import { usePostInputStore } from "../../../store/postStore/postStore.ts";
+import { WriteInputType } from "../../../types/postType.ts";
 
 import {
   CloudyBtn,
@@ -17,11 +17,11 @@ import {
 
 interface WritePageHeaderProps {
   title: string;
-  data?: DiaryType;
+  data?: WriteInputType;
 }
 
 const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
-  const { diary, changeValue } = useDiaryStore((state) => state);
+  const { post, changeValue } = usePostInputStore((state) => state);
   const { weather } = data || {};
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
   }, []);
 
   const handleWeatherChange = (state: string) => {
-    if (diary.weather === state) {
+    if (post.weather === state) {
       return;
     }
     changeValue({ weather: state });
@@ -50,23 +50,23 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
       </WritePageTitle>
       <WritePageWeatherContainer>
         <SunnyBtn
-          weather={diary.weather}
+          weather={post.weather}
           onClick={() => handleWeatherChange("SUNNY")}
         />
         <PartlySunnyBtn
-          weather={diary.weather}
+          weather={post.weather}
           onClick={() => handleWeatherChange("PARTLY_SUNNY")}
         />
         <CloudyBtn
-          weather={diary.weather}
+          weather={post.weather}
           onClick={() => handleWeatherChange("CLOUDY")}
         />
         <RainBtn
-          weather={diary.weather}
+          weather={post.weather}
           onClick={() => handleWeatherChange("RAINNING")}
         />
         <SnowBtn
-          weather={diary.weather}
+          weather={post.weather}
           onClick={() => handleWeatherChange("SNOWING")}
         />
       </WritePageWeatherContainer>

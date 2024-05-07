@@ -18,9 +18,11 @@ const PostPageEditModal: React.FC<PostPageEditModalProps> = ({
     (state) => state.toggleConfirmDeleteModal,
   );
   const modalRef = useRef(null);
+
   useOnClickOutside(modalRef, () => {
     setToggleEditModal(false);
   });
+
   const handleDeleteClick = () => {
     toggleConfirmDeleteModal(true);
     setToggleEditModal(false);

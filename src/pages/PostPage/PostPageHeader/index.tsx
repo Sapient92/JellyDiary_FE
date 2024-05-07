@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import PostPageEditModal from "./PostPageEditModal";
 
+import { PostType } from "../../../types/postType.ts";
+
 import {
   DiaryButton,
   EditButton,
@@ -14,10 +16,7 @@ import {
 } from "./PostPageHeader.styles.ts";
 
 import userImg from "../../../assets/testImage/FakeUser-2.png";
-import { PostType } from "../../../types/diaryType.ts";
-import { useQuery } from "@tanstack/react-query";
-import api from "../../../api";
-import { Link } from "react-router-dom";
+import { useFetchWriterInfo } from "../../../hooks/usePost.ts";
 
 interface PostPageHeaderProps {
   data: PostType;
@@ -25,11 +24,7 @@ interface PostPageHeaderProps {
 
 const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
   const [toggleEditModal, setToggleEditModal] = useState(false);
-  const { data: userData } = useQuery({
-    queryKey: ["fetch-userData", data.userId],
-    queryFn: () => api.get(`/api/feed/userInfo/${data.userId}`),
-    select: (data) => data.data.data,
-  });
+  const { data: userData } = useFetchWriterInfo(data.userId);
 
   const handleEditClick = () => {
     setToggleEditModal(true);
