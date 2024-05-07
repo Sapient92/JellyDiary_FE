@@ -11,14 +11,22 @@ import {
 } from "./Follow.styles.ts";
 
 import userAvatar from "../../../../../assets/images/UserAvatar.png";
+import { useFollowMutation } from "../../../../../hooks/useUserFeed.ts";
 
 interface FollowProps {
   data: FollowType;
+  title?: string;
 }
 
-const Follow: React.FC<FollowProps> = (data) => {
-  const { profileImg, userId, userDesc, userName } = data.data;
-  console.log(userId);
+const Follow: React.FC<FollowProps> = ({ data, title }) => {
+  const { profileImg, userId, userDesc, userName, followStatus } = data;
+
+  const { mutate } = useFollowMutation(userId, title);
+
+  const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    mutate(followStatus);
+  };
 
   return (
     <>
@@ -35,7 +43,9 @@ const Follow: React.FC<FollowProps> = (data) => {
             <p>{userDesc}</p>
           </UserProfileDesc>
         </UserContent>
-        <FollowButton>팔로우</FollowButton>
+        <FollowButton onClick={handleFollowClick}>
+          {followStatus === null ? "" : !followStatus ? "팔로우" : "언팔로우"}
+        </FollowButton>
       </FollowContainer>
     </>
   );

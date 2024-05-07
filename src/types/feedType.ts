@@ -15,4 +15,5 @@ export interface FollowType {
   userDesc: string | null;
   userId: number;
   userName: string;
+  followStatus: boolean;
 }
