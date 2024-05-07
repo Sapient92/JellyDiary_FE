@@ -24,10 +24,15 @@ export const UserProfileImg = styled.div`
 
 export const UserProfileDesc = styled.div`
   width: 198px;
-  p {
+
+  p:nth-child(1) {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
+  }
+  p:nth-child(2) {
+    margin: 0;
+    font-size: 14px;
   }
 `;
 
@@ -37,4 +42,5 @@ export const FollowButton = styled.button`
   font-weight: 600;
   background: none;
   border: none;
+  cursor: pointer;
 `;
