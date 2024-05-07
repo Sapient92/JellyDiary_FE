@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import WritePageHeader from "./WritePageHeader";
 import WritePageItems from "./WritePageItems";
@@ -6,12 +7,10 @@ import WritePageDesc from "./WritePageDesc";
 import WritePageFooter from "./WritePageFooter";
 import AlertModal from "../../components/Modal/AlertModal";
 
+import api from "../../api";
 import { useModalStore } from "../../store/modalStore/modalStore.ts";
 
 import { WritePageContainer, WritePageContent } from "./WritePage.styles.ts";
-
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 
 const WritePage = () => {
   const { imageAlertModal, imgDupliAlertModal, titleAlertModal } =
@@ -20,11 +19,12 @@ const WritePage = () => {
   const { isLoading, data, isError } = useQuery({
     queryKey: ["fetch-post", id],
     queryFn: () => {
-      return axios.patch(`api/post/${id}`);
+      return api.get(`api/post/${id}`);
     },
-    select: (data) => data.data[0],
+    select: (data) => data.data.data,
     enabled: !!id,
   });
+  console.log(data);
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>데이터를 불러오는데 실패하였습니다.</>;
