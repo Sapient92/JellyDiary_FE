@@ -37,7 +37,6 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   };
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(message);
     if (confirm === "삭제") {
       api
         .delete(`/api/post/${id}`, { params: { postId: id } })

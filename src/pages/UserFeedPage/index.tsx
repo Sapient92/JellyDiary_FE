@@ -12,6 +12,7 @@ import FeedPostSection from "./FeedPostsSection";
 import FollowModal from "../../components/Modal/FollowModal";
 
 import { FeedPageContainer, FeedPageContent } from "./UserFeedPage.styles.ts";
+import useLoginUser from "../../hooks/useLoginUser.ts";
 
 const UserFeedPage: FC = () => {
   const [toggleFollowerModal, setToggleFollowerModal] = useState(false);
@@ -26,8 +27,9 @@ const UserFeedPage: FC = () => {
     isError: postIsError,
     error: postError,
   } = useFetchUserFeedPost(userId as string);
+  const { isLoginUser, loading } = useLoginUser(userId as string);
 
-  if (isLoading) return <>Loading...</>;
+  if (isLoading || loading) return <>Loading...</>;
   if (isError) return <>{error?.message}</>;
 
   return (
@@ -56,6 +58,7 @@ const UserFeedPage: FC = () => {
             setToggleFollowModal={setToggleFollowModal}
             data={data}
             postData={postData}
+            isLoginUser={isLoginUser}
           />
           <FeedNavbar />
           <FeedPostSection
@@ -63,6 +66,7 @@ const UserFeedPage: FC = () => {
             postData={postData}
             postIsError={postIsError}
             postError={postError}
+            isLoginUser={isLoginUser}
           />
         </FeedPageContent>
       </FeedPageContainer>

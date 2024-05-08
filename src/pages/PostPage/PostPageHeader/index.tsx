@@ -17,6 +17,7 @@ import {
 
 import userImg from "../../../assets/testImage/FakeUser-2.png";
 import { useFetchWriterInfo } from "../../../hooks/usePost.ts";
+import useLoginUser from "../../../hooks/useLoginUser.ts";
 
 interface PostPageHeaderProps {
   data: PostType;
@@ -28,6 +29,8 @@ const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
   const handleEditClick = () => {
     setToggleEditModal(true);
   };
+  const { isLoginUser, loading } = useLoginUser(String(data.userId));
+  if (loading) return <>로딩중...</>;
 
   return (
     <PostPageHeaderContainer>
@@ -42,9 +45,13 @@ const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
           <DiaryButton />
         </PostMenuButton>
         <EditButtonContainer>
-          <EditButton onClick={handleEditClick} />
-          {toggleEditModal && (
-            <PostPageEditModal setToggleEditModal={setToggleEditModal} />
+          {isLoginUser && (
+            <>
+              <EditButton onClick={handleEditClick} />
+              {toggleEditModal && (
+                <PostPageEditModal setToggleEditModal={setToggleEditModal} />
+              )}
+            </>
           )}
         </EditButtonContainer>
       </HeaderButtonContainer>
