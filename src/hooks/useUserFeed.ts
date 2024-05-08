@@ -8,6 +8,7 @@ export const useFetchUserFeed = (userId: string) =>
     queryKey: [queryKeys.userFeed, userId],
     queryFn: () => api.get(`/api/feed/userInfo/${userId}`),
     select: (data) => data.data?.data,
+    staleTime: 600000,
   });
 
 export const useFetchUserFeedPost = (userId: string) =>
@@ -17,7 +18,11 @@ export const useFetchUserFeedPost = (userId: string) =>
     select: (r) => r.data.data,
   });
 
-export const useFollowMutation = (userId: number, title?: string) => {
+export const useFollowMutation = (
+  userId: number,
+  userFeed?: string,
+  title?: string,
+) => {
   const changeFollowStatus = (status: boolean) => {
     if (!status) {
       return api.post(`/api/feed/follow/${userId}`);
@@ -29,16 +34,23 @@ export const useFollowMutation = (userId: number, title?: string) => {
   const { mutate } = useMutation({
     mutationFn: changeFollowStatus,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.userFeed, String(userId)],
-      });
       if (title === "팔로워") {
         queryClient.invalidateQueries({
-          queryKey: [queryKeys.followerList, String(userId), title],
+          queryKey: [queryKeys.followerList, String(userFeed), title],
+        });
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.userFeed, String(userFeed)],
+        });
+      } else if (title === "팔로우") {
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.followerList, String(String(userFeed)), title],
+        });
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.userFeed, String(userFeed)],
         });
       } else {
         queryClient.invalidateQueries({
-          queryKey: [queryKeys.followList, String(userId), title],
+          queryKey: [queryKeys.userFeed, String(userId)],
         });
       }
     },

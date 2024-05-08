@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { FollowType } from "../../../../../types/feedType.ts";
 
@@ -12,6 +12,7 @@ import {
 
 import userAvatar from "../../../../../assets/images/UserAvatar.png";
 import { useFollowMutation } from "../../../../../hooks/useUserFeed.ts";
+import { useParams } from "react-router-dom";
 
 interface FollowProps {
   data: FollowType;
@@ -19,13 +20,12 @@ interface FollowProps {
 }
 
 const Follow: React.FC<FollowProps> = ({ title, data }) => {
+  const { userId: id } = useParams();
   const { profileImg, userDesc, userName, followStatus, userId } = data;
-  const [status, setStatus] = useState(followStatus);
-  const { mutate } = useFollowMutation(userId, title);
+  const { mutate } = useFollowMutation(userId, id as string, title);
   const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(followStatus);
-    setStatus(!status);
   };
 
   return (
@@ -43,8 +43,8 @@ const Follow: React.FC<FollowProps> = ({ title, data }) => {
             <p>{userDesc}</p>
           </UserProfileDesc>
         </UserContent>
-        <FollowButton $status={status} onClick={handleFollowClick}>
-          {status === null ? "" : !status ? "팔로우" : "언팔로우"}
+        <FollowButton $status={followStatus} onClick={handleFollowClick}>
+          {followStatus === null ? "" : !followStatus ? "팔로우" : "언팔로우"}
         </FollowButton>
       </FollowContainer>
     </>

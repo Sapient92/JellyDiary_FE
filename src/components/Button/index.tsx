@@ -6,11 +6,21 @@ type ButtonProps = {
   className: string;
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  followStatus?: boolean;
 };
 
-const Button: FC<ButtonProps> = ({ className, children, onClick }) => {
+const Button: FC<ButtonProps> = ({
+  className,
+  children,
+  onClick,
+  followStatus,
+}) => {
   return (
-    <ButtonTag onClick={onClick} className={className}>
+    <ButtonTag
+      $followStatus={followStatus}
+      onClick={onClick}
+      className={className}
+    >
       {children}
     </ButtonTag>
   );

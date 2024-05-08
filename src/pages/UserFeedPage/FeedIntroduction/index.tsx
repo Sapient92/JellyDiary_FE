@@ -58,7 +58,11 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
             <p>{data.userName}</p>
             {!isLoginUser && (
               <div>
-                <Button onClick={handleFollowClick} className={"follow"}>
+                <Button
+                  followStatus={data.followStatus}
+                  onClick={handleFollowClick}
+                  className={"follow"}
+                >
                   {data.followStatus ? "언팔로우" : "팔로우"}
                 </Button>
                 <Button className={"send_message"}>메세지 보내기</Button>
