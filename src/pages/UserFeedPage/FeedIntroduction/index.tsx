@@ -3,6 +3,7 @@ import React from "react";
 import Button from "../../../components/Button";
 import { UserFeedInfo } from "../../../types/userType.ts";
 import { FeedPostType } from "../../../types/feedType.ts";
+import { useFollowMutation } from "../../../hooks/useUserFeed.ts";
 
 import {
   FeedIntroductionContainer,
@@ -14,8 +15,7 @@ import {
   UserStateContainer,
 } from "./FeedIntroduction.styles.ts";
 
-import profileImg from "../../../assets/testImage/Image.png";
-import { useFollowMutation } from "../../../hooks/useUserFeed.ts";
+import userAvatar from "../../../assets/images/UserAvatar.png";
 
 interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -51,7 +51,10 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
     <FeedIntroductionContainer>
       <FeedIntroductionContent>
         <FeedIntroductionImg>
-          <img src={profileImg} alt={"profile_img"} />
+          <img
+            src={data?.profileImg ? data?.profileImg : userAvatar}
+            alt={"profile_img"}
+          />
         </FeedIntroductionImg>
         <UserStateContainer>
           <UserNicknameContainer>

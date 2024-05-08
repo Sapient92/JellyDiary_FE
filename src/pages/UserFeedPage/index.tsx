@@ -5,6 +5,7 @@ import {
   useFetchUserFeed,
   useFetchUserFeedPost,
 } from "../../hooks/useUserFeed.ts";
+import useLoginUser from "../../hooks/useLoginUser.ts";
 
 import FeedIntroduction from "./FeedIntroduction";
 import FeedNavbar from "./FeedNavbar";
@@ -12,7 +13,6 @@ import FeedPostSection from "./FeedPostsSection";
 import FollowModal from "../../components/Modal/FollowModal";
 
 import { FeedPageContainer, FeedPageContent } from "./UserFeedPage.styles.ts";
-import useLoginUser from "../../hooks/useLoginUser.ts";
 
 const UserFeedPage: FC = () => {
   const [toggleFollowerModal, setToggleFollowerModal] = useState(false);
