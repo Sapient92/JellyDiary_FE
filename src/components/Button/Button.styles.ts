@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const ButtonTag = styled.button`
+export const ButtonTag = styled.button<{ $followStatus: boolean | undefined }>`
   color: white;
   font-size: 14px;
   font-weight: 500;
@@ -10,11 +10,15 @@ export const ButtonTag = styled.button`
   cursor: pointer;
 
   ${(props) =>
-    props.className === "follow" &&
-    css`
-      background-color: #0095f6;
-      margin-left: 20px;
-    `}
+    props.className === "follow" && !props.$followStatus
+      ? css`
+          background-color: #0095f6;
+          margin-left: 20px;
+        `
+      : css`
+          background-color: #717d96;
+          margin-left: 20px;
+        `}
 
   ${(props) =>
     props.className === "send_message" &&
