@@ -9,4 +9,5 @@ export const queryKeys = {
   followerList: "followerList",
   followList: "followList",
   deletePost: "deletePost",
+  commentReply: "commentReply",
 };

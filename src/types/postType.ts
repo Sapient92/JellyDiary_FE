@@ -20,6 +20,7 @@ export interface PostImgsType {
 
 export interface PostType {
   createdAt: string;
+  commentCount: number;
   diaryId: number;
   isDelete: boolean;
   isPublic: boolean;

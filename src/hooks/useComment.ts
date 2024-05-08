@@ -32,3 +32,36 @@ export const useCommentMutation = (
 
   return { mutate };
 };
+
+export const useFetchCommentReply = (postId: string, commentId: string) =>
+  useQuery({
+    queryKey: [queryKeys.commentReply, postId, commentId],
+    queryFn: () => api.get(`/api/comment/${postId}/${commentId}`),
+    select: (data) => data.data.data,
+  });
+
+export const useCommentReplyMutation = (
+  postId: string,
+  commentId: string,
+  setCommentReply: React.Dispatch<React.SetStateAction<string>>,
+) => {
+  const addCommentReply = (replyContent: string) => {
+    const request = {
+      commentContent: replyContent,
+      userTag: [],
+    };
+    return api.post(`/api/comment/${postId}/${commentId}`, request);
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: addCommentReply,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.commentReply, postId, commentId],
+      });
+      setCommentReply("");
+    },
+  });
+
+  return { mutate };
+};

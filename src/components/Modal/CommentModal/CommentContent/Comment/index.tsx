@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
+import CommentReply from "./CommentReply";
+
 import { CommentType } from "../../../../../types/commentType.ts";
+import useWrittenAt from "../../../../../hooks/useWrittenAt.ts";
 
 import {
   CommentContainer,
@@ -10,8 +13,9 @@ import {
   CommentProfileContainer,
   DeleteCommentButton,
 } from "./Comment.styled.ts";
-import useWrittenAt from "../../../../../hooks/useWrittenAt.ts";
-import CommentReply from "./CommentReply";
+import userAvatar from "../../../../../assets/images/UserAvatar.png";
+import { useParams } from "react-router-dom";
+import { useFetchCommentReply } from "../../../../../hooks/useComment.ts";
 
 interface CommentProps {
   comment: CommentType;
@@ -19,6 +23,8 @@ interface CommentProps {
 
 const Comment: React.FC<CommentProps> = ({ comment }) => {
   const [replyClick, setReplyClick] = useState(false);
+  const { id } = useParams();
+  const { data } = useFetchCommentReply(String(id), String(comment.commentId));
 
   const handleReplyClick = () => {
     setReplyClick(!replyClick);
@@ -29,7 +35,11 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
       <CommentContainer>
         <CommentProfileContainer>
           <img
-            src={comment.userProfileImg}
+            src={
+              comment.userProfileImg !== null
+                ? comment.userProfileImg
+                : userAvatar
+            }
             alt={"comment_writer_profile_img"}
           />
           <CommentContentContainer>
@@ -39,13 +49,21 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
             </CommentInfoContainer>
             <CommentDescription>
               <p>{comment.commentContent}</p>
-              {!replyClick && <p onClick={handleReplyClick}>답글 쓰기</p>}
+              {!replyClick ? (
+                <p onClick={handleReplyClick}>
+                  {data?.replies.length === 0
+                    ? "답글 쓰기"
+                    : `${data?.replies.length}개의 답글 보기`}
+                </p>
+              ) : (
+                <p onClick={handleReplyClick}>답글 닫기</p>
+              )}
             </CommentDescription>
           </CommentContentContainer>
         </CommentProfileContainer>
         <DeleteCommentButton />
       </CommentContainer>
-      {replyClick && <CommentReply />}
+      {replyClick && <CommentReply commentId={comment.commentId} />}
     </>
   );
 };
