@@ -62,6 +62,7 @@ export const CommentDescription = styled.div`
     font-size: 14px;
     font-weight: 600;
   }
+
   p:nth-child(2) {
     margin: 0;
     color: #7d8fb3;

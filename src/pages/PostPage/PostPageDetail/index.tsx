@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { MdOutlineWbSunny } from "react-icons/md";
+import { AxiosResponse } from "axios";
 import { IoPartlySunnyOutline } from "react-icons/io5";
 import { LuCloudy } from "react-icons/lu";
 import { BsCloudRain } from "react-icons/bs";
 import { IoIosSnow } from "react-icons/io";
 import { queryClient } from "../../../react-query/queryClient.ts";
+import { queryKeys } from "../../../react-query/constants.ts";
 
 import {
   CommentButton,
@@ -21,12 +23,10 @@ import {
 } from "./PostPageDetail.styles.ts";
 
 import detailImg from "../../../assets/testImage/FakeImg-Post.png";
-import { queryKeys } from "../../../react-query/constants.ts";
 import {
   useFetchPostLikeState,
   useLikeMutation,
 } from "../../../hooks/usePost.ts";
-import { AxiosResponse } from "axios";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,7 +42,8 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
   const { mutate } = useLikeMutation(id as string);
 
   const data: AxiosResponse = queryClient.getQueryData([queryKeys.post, id])!;
-  const { postTitle, postContent, weather, postDate, likeCount } =
+
+  const { postTitle, postContent, weather, postDate, likeCount, commentCount } =
     data.data.data;
 
   let Icons;
@@ -132,7 +133,11 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
           )}
         </PostDetailDescContainer>
         <div>
-          <button onClick={handleCommentClick}>View all 100 comments</button>
+          <button onClick={handleCommentClick}>
+            {commentCount !== 0
+              ? `${commentCount}개의 댓글 보기`
+              : "댓글 작성하기"}
+          </button>
         </div>
         <p>{postDate.split("T")[0].replace(/-/g, ".")}</p>
       </PostDetailDesc>
