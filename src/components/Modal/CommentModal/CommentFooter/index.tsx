@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { CommentFooterContainer } from "./CommentFooter.styles.ts";
 import { useCommentMutation } from "../../../../hooks/useComment.ts";
 
 import userImg from "../../../../assets/testImage/Image.png";
 import { useFetchWriterInfo } from "../../../../hooks/usePost.ts";
+import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 
 interface CommentFooterProps {
   id?: string;
@@ -15,10 +16,19 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const [commentContent, setCommentContent] = useState("");
   const { mutate } = useCommentMutation(id as string, setCommentContent);
   const { data: userData } = useFetchWriterInfo(userId);
+  const commentRef = useRef<HTMLInputElement>(null);
+  const showCommentAlertModal = useModalStore(
+    (state) => state.showCommentAlertModal,
+  );
 
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (commentContent.trim() === "") {
+      commentRef.current?.focus();
+      showCommentAlertModal(true);
+      setTimeout(() => {
+        showCommentAlertModal(false);
+      }, 3000);
       return;
     }
     mutate(commentContent);
@@ -32,6 +42,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
     <CommentFooterContainer>
       <img src={userImg} alt={"user_image"} />
       <input
+        ref={commentRef}
         value={commentContent}
         onChange={handleCommentChange}
         type={"text"}
