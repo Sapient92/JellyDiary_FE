@@ -13,7 +13,7 @@ export interface User {
 export interface UserFeedInfo {
   followerCount: number;
   followingCount: number;
-  profileImg: [] | null;
+  profileImg: string | null;
   userDesc: string | null;
   userId: number;
   userName: string;
