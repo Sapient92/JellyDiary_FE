@@ -22,6 +22,7 @@ interface FeedIntroductionProps {
   setToggleFollowModal: React.Dispatch<React.SetStateAction<boolean>>;
   data: UserFeedInfo;
   postData: FeedPostType;
+  isLoginUser: boolean;
 }
 
 const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
@@ -29,6 +30,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   setToggleFollowModal,
   data,
   postData,
+  isLoginUser,
 }) => {
   const { mutate } = useFollowMutation(data.userId);
 
@@ -54,13 +56,16 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
         <UserStateContainer>
           <UserNicknameContainer>
             <p>{data.userName}</p>
-            <div>
-              <Button onClick={handleFollowClick} className={"follow"}>
-                {data.followStatus ? "언팔로우" : "팔로우"}
-              </Button>
-              <Button className={"send_message"}>메세지 보내기</Button>
-            </div>
+            {!isLoginUser && (
+              <div>
+                <Button onClick={handleFollowClick} className={"follow"}>
+                  {data.followStatus ? "언팔로우" : "팔로우"}
+                </Button>
+                <Button className={"send_message"}>메세지 보내기</Button>
+              </div>
+            )}
           </UserNicknameContainer>
+
           <UserDetailStateContainer>
             <p>{postData?.count}게시물</p>
             <p onClick={handleFollowerModalClick}>

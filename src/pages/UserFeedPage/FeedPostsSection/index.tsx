@@ -10,6 +10,7 @@ interface FeedPostSectionProps {
   postData: FeedPostType;
   postIsError: boolean;
   postError: Error | null;
+  isLoginUser: boolean;
 }
 
 const FeedPostSection: React.FC<FeedPostSectionProps> = ({
@@ -17,20 +18,27 @@ const FeedPostSection: React.FC<FeedPostSectionProps> = ({
   postData,
   postIsError,
   postError,
+  isLoginUser,
 }) => {
   if (postLoading) return <>로딩중...</>;
   if (postIsError) return <>{postError?.message}</>;
 
   return (
     <PostsSection>
-      {postData?.feeds.map(
-        (feed: FeedType) =>
-          feed.isPublic && (
+      {!isLoginUser
+        ? postData?.feeds.map(
+            (feed: FeedType) =>
+              feed.isPublic && (
+                <Link key={feed.postId} to={`/post/${feed.postId}`}>
+                  <FeedPost fakeImg={FakeCat1} />
+                </Link>
+              ),
+          )
+        : postData?.feeds.map((feed) => (
             <Link key={feed.postId} to={`/post/${feed.postId}`}>
               <FeedPost fakeImg={FakeCat1} />
             </Link>
-          ),
-      )}
+          ))}
     </PostsSection>
   );
 };
