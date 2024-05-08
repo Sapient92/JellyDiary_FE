@@ -5,7 +5,7 @@ import {
   CommentReplyDesc,
   CommentReplyWriterContainer,
 } from "./CommentReply.styled.ts";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   useCommentReplyMutation,
@@ -15,6 +15,8 @@ import { CommentType } from "../../../../../../types/commentType.ts";
 
 import userAvatar from "../../../../../../assets/images/UserAvatar.png";
 import useWrittenAt from "../../../../../../hooks/useWrittenAt.ts";
+import { useModalStore } from "../../../../../../store/modalStore/modalStore.ts";
+import AlertModal from "../../../../AlertModal";
 
 interface CommentReplyProps {
   commentId: number;
@@ -29,6 +31,7 @@ const TransformDate = (createdAt: string) => useWrittenAt(createdAt);
 
 const CommentReply: React.FC<CommentReplyProps> = ({ commentId }) => {
   const { id } = useParams();
+  const replyAlertModal = useModalStore((state) => state.replyAlertModal);
   const { isLoading, data, isError, error } = useFetchCommentReply(
     String(id),
     String(commentId),
@@ -39,6 +42,9 @@ const CommentReply: React.FC<CommentReplyProps> = ({ commentId }) => {
 
   return (
     <CommentReplyContainer>
+      {replyAlertModal && (
+        <AlertModal type={"replyAlert"}>답글을 작성해주세요.</AlertModal>
+      )}
       {data?.replies.length !== 0 &&
         data.replies.map((reply: CommentType) => (
           <CommentReplyContent key={reply.commentId}>
@@ -72,6 +78,10 @@ const CommentReplyInputForm: React.FC<CommentReplyInputForm> = ({
   const handleCommentReplyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentReply(e.target.value);
   };
+  const showReplyAlertModal = useModalStore(
+    (state) => state.showReplyAlertModal,
+  );
+  const replyRef = useRef<HTMLInputElement>(null);
 
   const { mutate } = useCommentReplyMutation(
     String(id),
@@ -81,12 +91,21 @@ const CommentReplyInputForm: React.FC<CommentReplyInputForm> = ({
 
   const handleReplyClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (commentReply.trim() === "") {
+      replyRef.current?.focus();
+      showReplyAlertModal(true);
+      setTimeout(() => {
+        showReplyAlertModal(false);
+      }, 3000);
+      return;
+    }
     mutate(commentReply);
   };
 
   return (
     <CommentFormContainer>
       <input
+        ref={replyRef}
         type={"text"}
         value={commentReply}
         onChange={handleCommentReplyChange}

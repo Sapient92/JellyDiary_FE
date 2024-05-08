@@ -9,6 +9,10 @@ interface ModalStoreProps {
   toggleConfirmDeleteModal: (el: boolean) => void;
   titleAlertModal: boolean;
   toggleTitleAlertModal: (el: boolean) => void;
+  commentAlertModal: boolean;
+  showCommentAlertModal: (el: boolean) => void;
+  replyAlertModal: boolean;
+  showReplyAlertModal: (el: boolean) => void;
 }
 
 export const useModalStore = create<ModalStoreProps>((set) => ({
@@ -16,6 +20,8 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   imgDupliAlertModal: false,
   confirmDeleteModal: false,
   titleAlertModal: false,
+  commentAlertModal: false,
+  replyAlertModal: false,
   toggleImageAlertModal: (el) =>
     set(() => ({
       imageAlertModal: el,
@@ -31,5 +37,13 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   toggleTitleAlertModal: (el) =>
     set(() => ({
       titleAlertModal: el,
+    })),
+  showCommentAlertModal: (el) =>
+    set(() => ({
+      commentAlertModal: el,
+    })),
+  showReplyAlertModal: (el) =>
+    set(() => ({
+      replyAlertModal: el,
     })),
 }));
