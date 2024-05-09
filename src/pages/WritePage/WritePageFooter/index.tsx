@@ -23,7 +23,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const { diaryId } = useParams();
   const { post, changeValue } = usePostInputStore((state) => state);
   const { postImgs } = useImgsStore((state) => state.writeImgs);
-  const { deleteImgIds, changeImgs } = useImgsStore((state) => state);
+  const { deleteImgIds } = useImgsStore((state) => state);
 
   const toggleTitleAlertModal = useModalStore(
     (state) => state.toggleTitleAlertModal,
@@ -32,9 +32,6 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data?.postImgs !== null) {
-      changeImgs(data?.postImgs);
-    }
     if (isPublic === false) {
       changeValue({ isPublic: false });
     }
@@ -57,6 +54,8 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       const diaryJson = JSON.stringify(post);
       const blob = new Blob([diaryJson], { type: "application/json" });
       formData.append("diaryPostCreateRequestDto", blob);
+      console.log(formData.get("postImgs"));
+      console.log(formData.get("diaryPostCreateRequestDto"));
       api
         .post(`/api/post/${diaryId}`, formData, {
           headers: {
@@ -67,29 +66,34 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
           res.status === 200 && navigate(`../../post/${res.data.data.postId}`);
         })
         .catch((err) => console.log(err));
-    } else if (data && postImgs?.length && postImgs !== null) {
+    } else if (data) {
       const formData = new FormData();
-      for (const img of postImgs) {
-        formData.append("postImgs", img);
-        const diaryJson = JSON.stringify(post);
-        const blob = new Blob([diaryJson], { type: "application/json" });
-        formData.append("diaryPostCreateRequestDto", blob);
-        const deleteImgsJson = JSON.stringify(deleteImgIds);
-        const imgIdsBlob = new Blob([deleteImgsJson], {
-          type: "application/json",
-        });
-        formData.append("deleteImageIds", imgIdsBlob);
-        api
-          .patch(`/api/post/${data.postId}`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => {
-            console.log(res);
-            res.status === 200 && navigate(`../../post/${data.postId}`);
-          });
+      if (postImgs?.length && postImgs !== null) {
+        for (const img of postImgs) {
+          formData.append("postImgs", img);
+        }
       }
+      const diaryJson = JSON.stringify(post);
+      const blob = new Blob([diaryJson], { type: "application/json" });
+      formData.append("diaryPostCreateRequestDto", blob);
+      const deleteImgsJson = JSON.stringify(deleteImgIds);
+      const imgIdsBlob = new Blob([deleteImgsJson], {
+        type: "application/json",
+      });
+      formData.append("deleteImageIds", imgIdsBlob);
+      console.log(formData.get("postImgs"));
+      console.log(formData.get("diaryPostCreateRequestDto"));
+      console.log(formData.get("deleteImageIds"));
+      api
+        .patch(`/api/post/${data.postId}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          res.status === 200 && navigate(`../../post/${data.postId}`);
+        });
     }
   };
 

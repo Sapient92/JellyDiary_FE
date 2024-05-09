@@ -1,13 +1,6 @@
 import styled from "styled-components";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-export const CommentReplyContainer = styled.div`
-  margin: 0 0 0 60px;
-  p {
-    margin: 0;
-  }
-`;
-
 export const DeleteCommentButton = styled(RiDeleteBinLine)`
   box-sizing: border-box;
   margin-left: 16px;
@@ -48,25 +41,5 @@ export const CommentReplyWriterContainer = styled.div`
     font-size: 10px;
     font-weight: 600;
     margin-left: 6px;
-  }
-`;
-
-export const CommentFormContainer = styled.form`
-  input {
-    width: 230px;
-    height: 20px;
-    border: none;
-    border-bottom: 1px solid gray;
-
-    &:focus {
-      outline: none;
-    }
-  }
-  button {
-    border: none;
-    background: none;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 600;
   }
 `;

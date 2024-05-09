@@ -42,8 +42,17 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
   const { mutate } = useLikeMutation(id as string);
 
   const data: AxiosResponse = queryClient.getQueryData([queryKeys.post, id])!;
-  const { postTitle, postContent, weather, postDate, likeCount, commentCount } =
-    data.data.data;
+  const {
+    postTitle,
+    postContent,
+    weather,
+    postDate,
+    likeCount,
+    commentCount,
+    postImgs,
+  } = data.data.data;
+
+  console.log(postImgs);
 
   let Icons;
   switch (weather) {

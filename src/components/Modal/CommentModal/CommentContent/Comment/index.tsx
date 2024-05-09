@@ -14,20 +14,23 @@ import {
   DeleteCommentButton,
 } from "./Comment.styles.ts";
 import userAvatar from "../../../../../assets/images/UserAvatar.png";
-import { useParams } from "react-router-dom";
-import { useFetchCommentReply } from "../../../../../hooks/useComment.ts";
 import useLoginUser from "../../../../../hooks/useLoginUser.ts";
 import { useModalStore } from "../../../../../store/modalStore/modalStore.ts";
 
 interface CommentProps {
   comment: CommentType;
   setDeleteCommentId: React.Dispatch<React.SetStateAction<number>>;
+  setDeleteReplyId: React.Dispatch<
+    React.SetStateAction<{ parentId: number; replyId: number }>
+  >;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
+const Comment: React.FC<CommentProps> = ({
+  comment,
+  setDeleteCommentId,
+  setDeleteReplyId,
+}) => {
   const [replyClick, setReplyClick] = useState(false);
-  const { id } = useParams();
-  const { data } = useFetchCommentReply(String(id), String(comment.commentId));
   const { isLoginUser } = useLoginUser(String(comment.userId));
   const showCommentDeleteModal = useModalStore(
     (state) => state.showCommentDeleteModal,
@@ -39,7 +42,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
 
   const handleCommentDeleteClick = () => {
     showCommentDeleteModal(true);
-    setDeleteCommentId(data.commentId);
+    setDeleteCommentId(comment.commentId);
   };
 
   return (
@@ -63,9 +66,9 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
               <p>{comment.commentContent}</p>
               {!replyClick ? (
                 <p onClick={handleReplyClick}>
-                  {data?.replies.length === 0
+                  {comment?.replyCount === 0
                     ? "답글 쓰기"
-                    : `${data?.replies.length}개의 답글 보기`}
+                    : `${comment?.replyCount}개의 답글 보기`}
                 </p>
               ) : (
                 <p onClick={handleReplyClick}>답글 닫기</p>
@@ -77,7 +80,12 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
           <DeleteCommentButton onClick={handleCommentDeleteClick} />
         )}
       </CommentContainer>
-      {replyClick && <CommentReply commentId={comment.commentId} />}
+      {replyClick && (
+        <CommentReply
+          commentId={comment.commentId}
+          setDeleteReplyId={setDeleteReplyId}
+        />
+      )}
     </>
   );
 };

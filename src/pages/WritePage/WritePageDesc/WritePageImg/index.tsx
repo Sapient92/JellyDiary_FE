@@ -14,8 +14,13 @@ import {
 } from "./WritePageImg.styles.ts";
 import { useImgsStore } from "../../../../store/imgsStore/imgsStore.ts";
 
+interface BeforeImgsProps {
+  diaryPostImg: string;
+  imgId: number;
+}
+
 interface WritePageImgProps {
-  postImgs?: File[] | null | undefined;
+  postImgs?: BeforeImgsProps[] | null | undefined;
 }
 
 const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
@@ -102,7 +107,8 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
   const handleImgDeleteClick = (id: number) => {
     const newPostList = postList.filter((post) => post.id !== id);
     setPostList(newPostList);
-    if (postImgs) {
+    const beforeImgsId = postImgs?.map((img) => img.imgId);
+    if (beforeImgsId?.includes(id)) {
       addedDeleteImgIds(id);
     }
   };
