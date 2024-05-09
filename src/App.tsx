@@ -21,7 +21,7 @@ function App() {
           <Route path={"/login"} element={<LoginPage />} />
           <Route path={"/userfeed/:userId"} element={<UserFeedPage />} />
           <Route path={"/post/:id"} element={<PostPage />} />
-          <Route path={"/write"} element={<WritePage />} />
+          <Route path={"/write/:diaryId"} element={<WritePage />} />
           <Route path={"/edit/:id"} element={<WritePage />} />
           <Route path={"/setting"} element={<SettingPage />} />
           <Route path={"/diary"} element={<DiaryPage />} />

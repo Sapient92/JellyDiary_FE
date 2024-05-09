@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../../components/Button";
 
@@ -20,6 +20,7 @@ interface WritePageFooterProps {
 }
 
 const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
+  const { diaryId } = useParams();
   const { post, changeValue } = usePostInputStore((state) => state);
   const { postImgs } = useImgsStore((state) => state.writeImgs);
   const { deleteImgIds, changeImgs } = useImgsStore((state) => state);
@@ -57,7 +58,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       const blob = new Blob([diaryJson], { type: "application/json" });
       formData.append("diaryPostCreateRequestDto", blob);
       api
-        .post("/api/post/5", formData, {
+        .post(`/api/post/${diaryId}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
