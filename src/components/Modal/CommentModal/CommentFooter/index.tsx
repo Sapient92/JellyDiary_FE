@@ -1,16 +1,17 @@
 import React, { useRef, useState } from "react";
 
-import { CommentFooterContainer } from "./CommentFooter.styles.ts";
+import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 import { useCommentMutation } from "../../../../hooks/useComment.ts";
+import { useFetchWriterInfo } from "../../../../hooks/usePost.ts";
 
 import userImg from "../../../../assets/testImage/Image.png";
-import { useFetchWriterInfo } from "../../../../hooks/usePost.ts";
-import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
-
+import { CommentFooterContainer } from "./CommentFooter.styles.ts";
 interface CommentFooterProps {
   id?: string;
   userId: number;
 }
+
+// 멘션 기능 구현할 때 useDebounce 사용해서 Debounce 반환 값을 api 요청으로 보내기
 
 const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const [commentContent, setCommentContent] = useState("");
