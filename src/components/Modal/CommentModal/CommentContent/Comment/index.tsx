@@ -16,6 +16,7 @@ import {
 import userAvatar from "../../../../../assets/images/UserAvatar.png";
 import { useParams } from "react-router-dom";
 import { useFetchCommentReply } from "../../../../../hooks/useComment.ts";
+import useLoginUser from "../../../../../hooks/useLoginUser.ts";
 
 interface CommentProps {
   comment: CommentType;
@@ -25,6 +26,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
   const [replyClick, setReplyClick] = useState(false);
   const { id } = useParams();
   const { data } = useFetchCommentReply(String(id), String(comment.commentId));
+  const { isLoginUser } = useLoginUser(String(comment.userId));
 
   const handleReplyClick = () => {
     setReplyClick(!replyClick);
@@ -61,7 +63,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
             </CommentDescription>
           </CommentContentContainer>
         </CommentProfileContainer>
-        <DeleteCommentButton />
+        {isLoginUser && <DeleteCommentButton />}
       </CommentContainer>
       {replyClick && <CommentReply commentId={comment.commentId} />}
     </>
