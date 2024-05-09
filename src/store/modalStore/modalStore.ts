@@ -15,6 +15,8 @@ interface ModalStoreProps {
   showReplyAlertModal: (el: boolean) => void;
   commentDeleteModal: boolean;
   showCommentDeleteModal: (el: boolean) => void;
+  replyDeleteModal: boolean;
+  showReplyDeleteModal: (el: boolean) => void;
 }
 
 export const useModalStore = create<ModalStoreProps>((set) => ({
@@ -25,6 +27,7 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   commentAlertModal: false,
   replyAlertModal: false,
   commentDeleteModal: false,
+  replyDeleteModal: false,
   toggleImageAlertModal: (el) =>
     set(() => ({
       imageAlertModal: el,
@@ -52,5 +55,9 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   showCommentDeleteModal: (el) =>
     set(() => ({
       commentDeleteModal: el,
+    })),
+  showReplyDeleteModal: (el) =>
+    set(() => ({
+      replyDeleteModal: el,
     })),
 }));

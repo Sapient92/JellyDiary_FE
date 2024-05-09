@@ -1,9 +1,6 @@
 import {
   CommentFormContainer,
   CommentReplyContainer,
-  CommentReplyContent,
-  CommentReplyDesc,
-  CommentReplyWriterContainer,
 } from "./CommentReply.styled.ts";
 import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,14 +9,15 @@ import {
   useFetchCommentReply,
 } from "../../../../../../hooks/useComment.ts";
 import { CommentType } from "../../../../../../types/commentType.ts";
-
-import userAvatar from "../../../../../../assets/images/UserAvatar.png";
-import useWrittenAt from "../../../../../../hooks/useWrittenAt.ts";
 import { useModalStore } from "../../../../../../store/modalStore/modalStore.ts";
 import AlertModal from "../../../../AlertModal";
+import Reply from "./Reply.tsx";
 
 interface CommentReplyProps {
   commentId: number;
+  setDeleteReplyId: React.Dispatch<
+    React.SetStateAction<{ parentId: number; replyId: number }>
+  >;
 }
 
 interface CommentReplyInputForm {
@@ -27,11 +25,12 @@ interface CommentReplyInputForm {
   commentId: number;
 }
 
-const TransformDate = (createdAt: string) => useWrittenAt(createdAt);
-
-const CommentReply: React.FC<CommentReplyProps> = ({ commentId }) => {
+const CommentReply: React.FC<CommentReplyProps> = ({
+  commentId,
+  setDeleteReplyId,
+}) => {
   const { id } = useParams();
-  const replyAlertModal = useModalStore((state) => state.replyAlertModal);
+  const { replyAlertModal } = useModalStore((state) => state);
   const { isLoading, data, isError, error } = useFetchCommentReply(
     String(id),
     String(commentId),
@@ -47,26 +46,14 @@ const CommentReply: React.FC<CommentReplyProps> = ({ commentId }) => {
       )}
       {data?.replies.length !== 0 &&
         data.replies.map((reply: CommentType) => (
-          <CommentReplyContent key={reply.commentId}>
-            <img
-              src={
-                reply.userProfileImg !== null
-                  ? reply.userProfileImg
-                  : userAvatar
-              }
-              alt={"userProfileImg"}
-            />
-            <CommentReplyDesc>
-              <CommentReplyWriterContainer>
-                <p>{reply.userName}</p>
-                <p>{TransformDate(reply.createdAt)}</p>
-              </CommentReplyWriterContainer>
-              <p>{reply.commentContent}</p>
-            </CommentReplyDesc>
-          </CommentReplyContent>
+          <Reply
+            key={reply.commentId}
+            reply={reply}
+            commentId={commentId}
+            setDeleteReplyId={setDeleteReplyId}
+          />
         ))}
       <CommentReplyInputForm id={id} commentId={commentId} />
-      {/*<DeleteCommentButton />*/}
     </CommentReplyContainer>
   );
 };

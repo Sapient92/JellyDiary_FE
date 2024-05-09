@@ -1,7 +1,7 @@
 import api from "../api";
 import { useEffect, useState } from "react";
 
-interface LoginUserResult {
+export interface LoginUserResult {
   isLoginUser: boolean;
   loading: boolean;
 }

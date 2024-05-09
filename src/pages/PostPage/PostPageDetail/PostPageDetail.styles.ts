@@ -9,9 +9,10 @@ export const PostPageDetailContainer = styled.div`
 
 export const PostDetailImgContainer = styled.div`
   background-color: white;
+
   img {
-    width: 612px;
-    height: 612px;
+    max-width: 612px;
+    max-height: 612px;
   }
 `;
 

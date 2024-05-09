@@ -66,15 +66,38 @@ export const useCommentReplyMutation = (
   return { mutate };
 };
 
-export const useCommentDeleteMutation = (postId: number, commentId: number) => {
-  const deleteComment = () => api.delete(`api/comment/${postId}/${commentId}`);
+export const useCommentDeleteMutation = (
+  postId: number,
+  commentId?: number,
+  replyId?: {
+    parentId: number;
+    replyId: number;
+  },
+) => {
+  const deleteComment = () => {
+    if (commentId) {
+      return api.delete(`api/comment/${postId}/${commentId}`);
+    } else {
+      return api.delete(`api/comment/${postId}/${replyId?.replyId}`);
+    }
+  };
 
   const { mutate } = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.comment, String(postId)],
-      });
+      if (commentId) {
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.comment, String(postId)],
+        });
+      } else if (replyId) {
+        queryClient.invalidateQueries({
+          queryKey: [
+            queryKeys.commentReply,
+            String(postId),
+            String(replyId.parentId),
+          ],
+        });
+      }
     },
   });
 

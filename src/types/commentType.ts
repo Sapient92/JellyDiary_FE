@@ -3,6 +3,7 @@ export interface CommentType {
   commentId: number;
   createdAt: string;
   userId: number;
+  replyCount: number;
   userName: string;
   userProfileImg: string;
   userTag: object[];

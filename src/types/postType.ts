@@ -18,6 +18,11 @@ export interface PostImgsType {
   postImgs: File[] | null;
 }
 
+interface BeforeImgsProps {
+  diaryPostImg: string;
+  imgId: number;
+}
+
 export interface PostType {
   createdAt: string;
   commentCount: number;
@@ -30,7 +35,7 @@ export interface PostType {
   postContent: string;
   postDate: string;
   postId: number;
-  postImgs: File[] | null;
+  postImgs: BeforeImgsProps[] | null;
   postTitle: string | null;
   shower: null | string;
   snack: null | string;
