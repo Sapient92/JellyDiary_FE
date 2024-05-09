@@ -12,24 +12,34 @@ import {
   CommentInfoContainer,
   CommentProfileContainer,
   DeleteCommentButton,
-} from "./Comment.styled.ts";
+} from "./Comment.styles.ts";
 import userAvatar from "../../../../../assets/images/UserAvatar.png";
 import { useParams } from "react-router-dom";
 import { useFetchCommentReply } from "../../../../../hooks/useComment.ts";
 import useLoginUser from "../../../../../hooks/useLoginUser.ts";
+import { useModalStore } from "../../../../../store/modalStore/modalStore.ts";
 
 interface CommentProps {
   comment: CommentType;
+  setDeleteCommentId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment }) => {
+const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   const [replyClick, setReplyClick] = useState(false);
   const { id } = useParams();
   const { data } = useFetchCommentReply(String(id), String(comment.commentId));
   const { isLoginUser } = useLoginUser(String(comment.userId));
+  const showCommentDeleteModal = useModalStore(
+    (state) => state.showCommentDeleteModal,
+  );
 
   const handleReplyClick = () => {
     setReplyClick(!replyClick);
+  };
+
+  const handleCommentDeleteClick = () => {
+    showCommentDeleteModal(true);
+    setDeleteCommentId(data.commentId);
   };
 
   return (
@@ -63,7 +73,9 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
             </CommentDescription>
           </CommentContentContainer>
         </CommentProfileContainer>
-        {isLoginUser && <DeleteCommentButton />}
+        {isLoginUser && (
+          <DeleteCommentButton onClick={handleCommentDeleteClick} />
+        )}
       </CommentContainer>
       {replyClick && <CommentReply commentId={comment.commentId} />}
     </>

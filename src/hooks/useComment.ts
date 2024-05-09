@@ -65,3 +65,18 @@ export const useCommentReplyMutation = (
 
   return { mutate };
 };
+
+export const useCommentDeleteMutation = (postId: number, commentId: number) => {
+  const deleteComment = () => api.delete(`api/comment/${postId}/${commentId}`);
+
+  const { mutate } = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.comment, String(postId)],
+      });
+    },
+  });
+
+  return { mutate };
+};
