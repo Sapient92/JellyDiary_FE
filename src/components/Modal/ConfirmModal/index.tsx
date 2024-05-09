@@ -14,8 +14,9 @@ interface ConfirmModalProps {
   confirm: string;
   cancel: string;
   closeModal: (el: boolean) => void;
-  id?: string;
+  id?: string | number;
   userId?: number;
+  commentId?: number;
 }
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
@@ -28,6 +29,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
 }) => {
   const navigate = useNavigate();
   const modalRef = useRef(null);
+
   useOnClickOutside(modalRef, () => {
     closeModal(false);
   });
@@ -35,6 +37,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   const handleCancelClick = () => {
     closeModal(false);
   };
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (confirm === "삭제") {

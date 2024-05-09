@@ -66,6 +66,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({ commentId }) => {
           </CommentReplyContent>
         ))}
       <CommentReplyInputForm id={id} commentId={commentId} />
+      {/*<DeleteCommentButton />*/}
     </CommentReplyContainer>
   );
 };
