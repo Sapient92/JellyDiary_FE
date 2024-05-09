@@ -10,6 +10,7 @@ export const useFetchPost = (id: string) =>
       return api.get(`/api/post/${id}`);
     },
     select: (r) => r.data.data,
+    enabled: !!id,
   });
 
 export const useFetchWriterInfo = (userId: number) =>
