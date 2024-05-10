@@ -3,13 +3,13 @@ import * as React from "react";
 import { FeedPostContainer } from "./FeedPost.styles.ts";
 
 interface FeedPostProps {
-  fakeImg: string;
+  postImg: string;
 }
 
-const FeedPost: React.FC<FeedPostProps> = ({ fakeImg }) => {
+const FeedPost: React.FC<FeedPostProps> = ({ postImg }) => {
   return (
     <FeedPostContainer>
-      <img src={fakeImg} alt={"feed_img"} />
+      <img src={postImg} alt={"postImg"} />
     </FeedPostContainer>
   );
 };

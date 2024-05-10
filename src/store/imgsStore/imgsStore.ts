@@ -11,22 +11,12 @@ interface useImgsStoreProps {
 export const useImgsStore = create<useImgsStoreProps>((set) => ({
   writeImgs: { postImgs: [] as File[] },
   changeImgs: (imgs: File[]) =>
-    set((prev) => {
-      if (prev.writeImgs.postImgs === null) {
-        return {
-          writeImgs: { ...prev.writeImgs, postImgs: imgs },
-        };
-      } else if (imgs) {
-        const newImgs = [...prev.writeImgs.postImgs, ...imgs];
-        return {
-          writeImgs: { ...prev.writeImgs, postImgs: newImgs },
-        };
-      } else {
-        return {
-          writeImgs: { ...prev.writeImgs },
-        };
-      }
-    }),
+    set((prev) => ({
+      writeImgs: {
+        ...prev.writeImgs,
+        postImgs: imgs,
+      },
+    })),
   deleteImgIds: [],
   addedDeleteImgIds: (id) =>
     set((prev) => ({

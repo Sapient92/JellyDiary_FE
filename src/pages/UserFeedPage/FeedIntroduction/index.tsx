@@ -33,7 +33,6 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   isLoginUser,
 }) => {
   const { mutate } = useFollowMutation(data.userId);
-
   const handleFollowModalClick = () => {
     setToggleFollowModal(true);
   };

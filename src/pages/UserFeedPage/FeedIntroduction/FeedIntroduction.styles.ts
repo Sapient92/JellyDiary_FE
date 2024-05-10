@@ -40,7 +40,21 @@ export const UserNicknameContainer = styled.div`
 export const UserDetailStateContainer = styled.div`
   display: flex;
 
-  p {
+  p:nth-child(1) {
+    color: #262626;
+    font-size: 16px;
+    margin-right: 40px;
+    cursor: default;
+  }
+
+  p:nth-child(2) {
+    color: #262626;
+    font-size: 16px;
+    margin-right: 40px;
+    cursor: pointer;
+  }
+
+  p:nth-child(3) {
     color: #262626;
     font-size: 16px;
     margin-right: 40px;

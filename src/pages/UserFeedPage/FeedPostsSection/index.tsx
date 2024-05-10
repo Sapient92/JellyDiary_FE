@@ -3,7 +3,6 @@ import React from "react";
 import { FeedPostType, FeedType } from "../../../types/feedType.ts";
 import { Link } from "react-router-dom";
 import FeedPost from "./FeedPost";
-import FakeCat1 from "../../../assets/testImage/FakeCat-1.png";
 
 interface FeedPostSectionProps {
   postLoading: boolean;
@@ -30,13 +29,13 @@ const FeedPostSection: React.FC<FeedPostSectionProps> = ({
             (feed: FeedType) =>
               feed.isPublic && (
                 <Link key={feed.postId} to={`/post/${feed.postId}`}>
-                  <FeedPost fakeImg={FakeCat1} />
+                  <FeedPost postImg={feed.postImg} />
                 </Link>
               ),
           )
         : postData?.feeds.map((feed) => (
             <Link key={feed.postId} to={`/post/${feed.postId}`}>
-              <FeedPost fakeImg={FakeCat1} />
+              <FeedPost postImg={feed.postImg} />
             </Link>
           ))}
     </PostsSection>

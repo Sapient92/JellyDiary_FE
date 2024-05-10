@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import PostPageEditModal from "./PostPageEditModal";
 
+import { useFetchWriterInfo } from "../../../hooks/usePost.ts";
+import useLoginUser from "../../../hooks/useLoginUser.ts";
 import { PostType } from "../../../types/postType.ts";
 
 import {
@@ -15,9 +17,7 @@ import {
   UserProfileContainer,
 } from "./PostPageHeader.styles.ts";
 
-import userImg from "../../../assets/testImage/FakeUser-2.png";
-import { useFetchWriterInfo } from "../../../hooks/usePost.ts";
-import useLoginUser from "../../../hooks/useLoginUser.ts";
+import userAvatar from "../../../assets/images/UserAvatar.png";
 
 interface PostPageHeaderProps {
   data: PostType;
@@ -35,7 +35,10 @@ const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
   return (
     <PostPageHeaderContainer>
       <UserProfileContainer>
-        <img src={userImg} alt={"feed_user_img"} />
+        <img
+          src={userData?.profileImg ? userData?.profileImg : userAvatar}
+          alt={"feed_user_img"}
+        />
         <LinkTag to={`../../userfeed/${userData?.userId}`}>
           <p>{userData?.userName}</p>
         </LinkTag>

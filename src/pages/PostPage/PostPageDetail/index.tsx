@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { AxiosResponse } from "axios";
 import { IoPartlySunnyOutline } from "react-icons/io5";
+import PostDetailImgs from "./PostDetailImgs";
 import { LuCloudy } from "react-icons/lu";
 import { BsCloudRain } from "react-icons/bs";
 import { IoIosSnow } from "react-icons/io";
@@ -21,8 +22,6 @@ import {
   SendButton,
   WeatherContainer,
 } from "./PostPageDetail.styles.ts";
-
-import detailImg from "../../../assets/testImage/FakeImg-Post.png";
 import {
   useFetchPostLikeState,
   useLikeMutation,
@@ -51,8 +50,6 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
     commentCount,
     postImgs,
   } = data.data.data;
-
-  console.log(postImgs);
 
   let Icons;
   switch (weather) {
@@ -97,7 +94,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
   return (
     <PostPageDetailContainer>
       <PostDetailImgContainer>
-        <img src={detailImg} alt={"post_img"} />
+        <PostDetailImgs postImgs={postImgs} />
       </PostDetailImgContainer>
       <PostDetailBtnContainer>
         <PostDetailBtnBox>

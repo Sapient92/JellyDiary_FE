@@ -27,15 +27,25 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
   const [postList, setPostList] = useState<
     { id: number; previewUrl: string; origin: File }[]
   >([]);
+  const [previewList, setPreviewList] = useState<
+    { id: number; previewUrl: string }[]
+  >([]);
   const changeImgs = useImgsStore((state) => state.changeImgs);
   const imgRef = useRef<HTMLInputElement>(null);
   const { toggleImageAlertModal, toggleImgDupliAlertModal } = useModalStore();
   const addedDeleteImgIds = useImgsStore((state) => state.addedDeleteImgIds);
 
   useEffect(() => {
-    const imgs = postList.map((img) => img.origin);
-    changeImgs(imgs);
-  }, [postList]);
+    if (postImgs) {
+      const previewList = postImgs.map((post) => {
+        return {
+          id: post.imgId,
+          previewUrl: post.diaryPostImg,
+        };
+      });
+      setPreviewList(previewList);
+    }
+  }, []);
 
   const handleUploadClick = () => {
     if (!imgRef.current) {
@@ -56,8 +66,9 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
           if (
             typeof fileReader.result === "string" &&
             !prevImg.includes(file.name) &&
-            postList.length + newFilesArray.length <= 5
+            previewList.length + newFilesArray.length <= 5
           ) {
+            changeImgs([file]);
             setPostList((prev) => [
               ...prev,
               {
@@ -66,6 +77,15 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
                 origin: file,
               },
             ]);
+            setPreviewList((prev) => {
+              return [
+                ...prev,
+                {
+                  id: file.lastModified,
+                  previewUrl: fileReader.result as string,
+                },
+              ];
+            });
           } else if (prevImg.includes(file.name)) {
             toggleImgDupliAlertModal(true);
             setTimeout(() => {
@@ -106,7 +126,11 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
 
   const handleImgDeleteClick = (id: number) => {
     const newPostList = postList.filter((post) => post.id !== id);
+    const newOriginList = newPostList.map((post) => post.origin);
+    changeImgs(newOriginList);
     setPostList(newPostList);
+    const newPreviewList = previewList.filter((post) => post.id !== id);
+    setPreviewList(newPreviewList);
     const beforeImgsId = postImgs?.map((img) => img.imgId);
     if (beforeImgsId?.includes(id)) {
       addedDeleteImgIds(id);
@@ -116,14 +140,16 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
   return (
     <WritePageImgContainer>
       <WritePageImgTitleContainer>
-        <p>사진({postList.length}/5)</p>
+        <p>사진({previewList.length}/5)</p>
         <p>오늘 하루를 사진으로 기록해요.</p>
       </WritePageImgTitleContainer>
       <WritePageImgContent>
-        {postList.length >= 2 && <span onClick={handleLeftClick}>{"<"}</span>}
+        {previewList.length >= 2 && (
+          <span onClick={handleLeftClick}>{"<"}</span>
+        )}
         <PreviewImgContainer id={"imgContainer"}>
-          {postList.length !== 0 &&
-            postList.map((post) => (
+          {previewList.length !== 0 &&
+            previewList.map((post) => (
               <PreviewImgBox key={post.id}>
                 <img src={post.previewUrl} alt={"uploadImg"} />
                 <ImgDeleteButton
@@ -132,7 +158,9 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
               </PreviewImgBox>
             ))}
         </PreviewImgContainer>
-        {postList.length >= 2 && <span onClick={handleRightClick}>{">"}</span>}
+        {previewList.length >= 2 && (
+          <span onClick={handleRightClick}>{">"}</span>
+        )}
         <input
           type={"file"}
           accept={"image/*"}

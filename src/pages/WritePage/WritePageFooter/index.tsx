@@ -54,8 +54,6 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       const diaryJson = JSON.stringify(post);
       const blob = new Blob([diaryJson], { type: "application/json" });
       formData.append("diaryPostCreateRequestDto", blob);
-      console.log(formData.get("postImgs"));
-      console.log(formData.get("diaryPostCreateRequestDto"));
       api
         .post(`/api/post/${diaryId}`, formData, {
           headers: {
@@ -68,22 +66,21 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
         .catch((err) => console.log(err));
     } else if (data) {
       const formData = new FormData();
-      if (postImgs?.length && postImgs !== null) {
+      if (postImgs !== null) {
         for (const img of postImgs) {
           formData.append("postImgs", img);
         }
       }
+      // post 객체 blob 변환 후 formData에 추가
       const diaryJson = JSON.stringify(post);
       const blob = new Blob([diaryJson], { type: "application/json" });
       formData.append("diaryPostCreateRequestDto", blob);
+      // // 지운 이미지 아이디 배열 blob 변환 후 formData에 추가
       const deleteImgsJson = JSON.stringify(deleteImgIds);
       const imgIdsBlob = new Blob([deleteImgsJson], {
         type: "application/json",
       });
       formData.append("deleteImageIds", imgIdsBlob);
-      console.log(formData.get("postImgs"));
-      console.log(formData.get("diaryPostCreateRequestDto"));
-      console.log(formData.get("deleteImageIds"));
       api
         .patch(`/api/post/${data.postId}`, formData, {
           headers: {
