@@ -12,6 +12,7 @@ export const EditModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  z-index: 10;
 
   p {
     font-size: 16px;

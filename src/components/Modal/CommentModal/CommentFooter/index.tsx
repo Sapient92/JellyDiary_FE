@@ -3,9 +3,10 @@ import React, { useRef, useState } from "react";
 import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 import { useCommentMutation } from "../../../../hooks/useComment.ts";
 import { useFetchWriterInfo } from "../../../../hooks/usePost.ts";
-
-import userImg from "../../../../assets/testImage/Image.png";
 import { CommentFooterContainer } from "./CommentFooter.styles.ts";
+
+import userAvatar from "../../../../assets/images/UserAvatar.png";
+
 interface CommentFooterProps {
   id?: string;
   userId: number;
@@ -41,7 +42,10 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
 
   return (
     <CommentFooterContainer>
-      <img src={userImg} alt={"user_image"} />
+      <img
+        src={userData?.profileImg ? userData?.profileImg : userAvatar}
+        alt={"user_image"}
+      />
       <input
         ref={commentRef}
         value={commentContent}
