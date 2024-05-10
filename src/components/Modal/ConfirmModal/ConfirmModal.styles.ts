@@ -12,6 +12,7 @@ export const ConfirmModalContainer = styled.div`
   background-color: white;
   position: absolute;
   top: 15%;
+  z-index: 10;
 `;
 
 export const ConfirmButtonContainer = styled.div`

@@ -23,7 +23,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const { diaryId } = useParams();
   const { post, changeValue } = usePostInputStore((state) => state);
   const { postImgs } = useImgsStore((state) => state.writeImgs);
-  const { deleteImgIds } = useImgsStore((state) => state);
+  const { deleteImgIds, addedImgs } = useImgsStore((state) => state);
 
   const toggleTitleAlertModal = useModalStore(
     (state) => state.toggleTitleAlertModal,
@@ -61,21 +61,29 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
           },
         })
         .then((res) => {
-          res.status === 200 && navigate(`../../post/${res.data.data.postId}`);
+          if (res.status === 200) {
+            navigate(`../../post/${res.data.data.postId}`);
+          }
         })
         .catch((err) => console.log(err));
     } else if (data) {
       const formData = new FormData();
-      if (postImgs !== null) {
-        for (const img of postImgs) {
+      if (addedImgs.addedImgs !== null && addedImgs.addedImgs.length !== 0) {
+        for (const img of addedImgs.addedImgs) {
           formData.append("postImgs", img);
         }
+      } else {
+        const newImgsJson = JSON.stringify([]);
+        const newImgsBlob = new Blob([newImgsJson], {
+          type: "application/json",
+        });
+        formData.append("postImgs", newImgsBlob);
       }
       // post 객체 blob 변환 후 formData에 추가
       const diaryJson = JSON.stringify(post);
       const blob = new Blob([diaryJson], { type: "application/json" });
       formData.append("diaryPostCreateRequestDto", blob);
-      // // 지운 이미지 아이디 배열 blob 변환 후 formData에 추가
+      // 지운 이미지 아이디 배열 blob 변환 후 formData에 추가
       const deleteImgsJson = JSON.stringify(deleteImgIds);
       const imgIdsBlob = new Blob([deleteImgsJson], {
         type: "application/json",
@@ -88,8 +96,9 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
           },
         })
         .then((res) => {
-          console.log(res);
-          res.status === 200 && navigate(`../../post/${data.postId}`);
+          if (res.status === 200) {
+            navigate(`../../post/${data.postId}`);
+          }
         });
     }
   };

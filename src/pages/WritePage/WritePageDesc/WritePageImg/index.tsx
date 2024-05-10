@@ -30,10 +30,11 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
   const [previewList, setPreviewList] = useState<
     { id: number; previewUrl: string }[]
   >([]);
-  const changeImgs = useImgsStore((state) => state.changeImgs);
   const imgRef = useRef<HTMLInputElement>(null);
   const { toggleImageAlertModal, toggleImgDupliAlertModal } = useModalStore();
-  const addedDeleteImgIds = useImgsStore((state) => state.addedDeleteImgIds);
+  const { addedDeleteImgIds, changeImgs, changeAddedImgs } = useImgsStore(
+    (state) => state,
+  );
 
   useEffect(() => {
     if (postImgs) {
@@ -68,7 +69,11 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
             !prevImg.includes(file.name) &&
             previewList.length + newFilesArray.length <= 5
           ) {
-            changeImgs([file]);
+            if (!postImgs) {
+              changeImgs([file]);
+            } else {
+              changeAddedImgs([file]);
+            }
             setPostList((prev) => [
               ...prev,
               {
@@ -127,13 +132,17 @@ const WritePageImg: React.FC<WritePageImgProps> = ({ postImgs }) => {
   const handleImgDeleteClick = (id: number) => {
     const newPostList = postList.filter((post) => post.id !== id);
     const newOriginList = newPostList.map((post) => post.origin);
-    changeImgs(newOriginList);
     setPostList(newPostList);
     const newPreviewList = previewList.filter((post) => post.id !== id);
     setPreviewList(newPreviewList);
     const beforeImgsId = postImgs?.map((img) => img.imgId);
     if (beforeImgsId?.includes(id)) {
       addedDeleteImgIds(id);
+    }
+    if (!postImgs) {
+      changeImgs(newOriginList, true);
+    } else if (postImgs && !beforeImgsId?.includes(id)) {
+      changeAddedImgs(newOriginList, true);
     }
   };
 
