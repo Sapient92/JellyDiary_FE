@@ -18,6 +18,10 @@ export interface PostImgsType {
   postImgs: File[] | null;
 }
 
+export interface AddedImgsType {
+  addedImgs: File[] | null;
+}
+
 interface BeforeImgsProps {
   diaryPostImg: string;
   imgId: number;

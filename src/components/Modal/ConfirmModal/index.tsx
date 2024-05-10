@@ -41,12 +41,12 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (confirm === "삭제") {
-      api
-        .delete(`/api/post/${id}`, { params: { postId: id } })
-        .then(
-          (res) =>
-            res.status === 200 && navigate(`../../../userfeed/${userId}`),
-        );
+      api.delete(`/api/post/${id}`, { params: { postId: id } }).then((res) => {
+        if (res.status === 200) {
+          navigate(`../../../userfeed/${userId}`);
+          closeModal(false);
+        }
+      });
     }
   };
 
