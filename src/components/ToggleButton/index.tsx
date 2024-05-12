@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { ToggleContainer } from "./ToggleButton.styles";
+import React, { useState } from 'react';
+import { ToggleContainer } from './ToggleButton.styles';
 
-const ToggleButton = () => {
-  const [isOn, setisOn] = useState(false);
+// Destructure `state` from props
+const ToggleButton = ({ state }: any) => {
+  const [isOn, setIsOn] = useState(state);
 
   const toggleHandler = () => {
-    setisOn(!isOn);
+    setIsOn(!isOn); // Correct function name for setting state
   };
 
   return (
-    <>
-      <ToggleContainer onClick={toggleHandler}>
-        <div
-          className={`toggle-container ${isOn ? "toggle--checked" : null}`}
-        />
-        <div className={`toggle-circle ${isOn ? "toggle--checked" : null}`} />
-      </ToggleContainer>
-    </>
+    <ToggleContainer onClick={toggleHandler}>
+      <div className={`toggle-container ${isOn ? 'toggle--checked' : ''}`}></div>
+      <div className={`toggle-circle ${isOn ? 'toggle--checked' : ''}`}></div>
+    </ToggleContainer>
   );
 };
 

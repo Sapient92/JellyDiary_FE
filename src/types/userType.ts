@@ -1,13 +1,17 @@
 export interface User {
+  userId: number;
   userName: string;
   userDesc: string;
-  userProfileImg: string;
-  alarmPostLike: boolean;
-  alarmComment: boolean;
-  alarmCreated: boolean;
-  alarmTag: boolean;
-  alarmNewFollower: boolean;
-  alarmDM: boolean;
+  profileImg: string;
+  authority: string;
+  userState: string;
+  notificationSetting: boolean;
+  postLike: boolean;
+  postComment: boolean;
+  postCreated: boolean;
+  commentTag: boolean;
+  newFollower: boolean;
+  dm: boolean;
 }
 
 export interface UserFeedInfo {

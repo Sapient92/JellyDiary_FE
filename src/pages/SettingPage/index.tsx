@@ -20,10 +20,11 @@ import {
 } from './SettingPage.styles';
 
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
+import useUser from '../../hooks/useUser';
 
 const SettingPage = () => {
   const scrollView = useRef<HTMLInputElement>(null);
-
+  const { user } = useUser();
   const onMoveToSelect = () => {
     if (scrollView.current !== undefined && scrollView.current !== null) {
       scrollView.current.scrollIntoView({ behavior: 'smooth' });
@@ -37,6 +38,10 @@ const SettingPage = () => {
     });
   };
 
+  if (!user) {
+    return <div>...</div>;
+  }
+
   return (
     <SettingPageContainer>
       <SettingLeftContent>
@@ -49,9 +54,9 @@ const SettingPage = () => {
         <UserInfo>
           <div>
             <span>Hello, </span>
-            <span>유저이름 </span>
+            <span>{user?.userName} </span>
           </div>
-          <div>유저이메일@gmail.com</div>
+          <div>{user?.userDesc}</div>
         </UserInfo>
         <SettingLeftNav>
           <div onClick={onMoveToTop}>내프로필</div>
@@ -65,7 +70,7 @@ const SettingPage = () => {
           <div>
             <AccountName>
               <div>계정 이름</div>
-              <input type="text" />
+              <input type="text" placeholder={user?.userName} />
               <CustomButton
                 text="중복 확인"
                 backgroundColor="blue"
@@ -79,7 +84,7 @@ const SettingPage = () => {
             </AccountName>
             <AccountName>
               <div>계정 소개</div>
-              <textarea />
+              <textarea placeholder={user?.userDesc} />
             </AccountName>
           </div>
           <ButtonContent>
@@ -95,43 +100,43 @@ const SettingPage = () => {
           <ToggleTitle>
             <h3>알림설정</h3>
             <ButtonContent>
-              <ToggleButton />
+              <ToggleButton state={user?.notificationSetting} />
             </ButtonContent>
           </ToggleTitle>
           <ToggleContent>
             <div>게시물 좋아요</div>
             <ButtonContent>
-              <ToggleButton />
+              <ToggleButton state={user?.postLike} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>게시물 댓글</div>
             <ButtonContent>
-              <ToggleButton />
+              <ToggleButton state={user?.postComment} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>게시물 생성</div>
             <ButtonContent>
-              <ToggleButton />
+              <ToggleButton state={user?.postCreated} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>언급</div>
             <ButtonContent>
-              <ToggleButton />
+              <ToggleButton state={user?.commentTag} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>새로운 팔로워</div>
             <ButtonContent>
-              <ToggleButton />
+              <ToggleButton state={user?.newFollower} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>메시지 요청(DM)</div>
             <ButtonContent>
-              <ToggleButton />
+              <ToggleButton state={user.dm} />
             </ButtonContent>
           </ToggleContent>
           <ButtonContent>

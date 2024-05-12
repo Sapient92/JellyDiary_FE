@@ -8,13 +8,12 @@ import { queryKeys } from '../react-query/constants';
 import { queryClient } from '../react-query/queryClient';
 
 async function getUser() {
-  const { data }: AxiosResponse<{ user: User }> = await api.get(`/api/users/profile`);
-
-  return data.user;
+  const { data }: AxiosResponse<{ data: User }> = await api.get(`/api/users/profile`);
+  return data.data;
 }
 const useUser = () => {
   const { data: user } = useQuery({
-    enabled: !!localStorage.getItem('access_token'),
+    enabled: !!queryKeys.user,
     queryKey: [queryKeys.user],
     queryFn: () => getUser(),
     staleTime: Infinity,
