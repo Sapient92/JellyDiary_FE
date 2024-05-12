@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 
 import CustomButton from '../../components/CustomButton';
@@ -21,10 +21,13 @@ import {
 
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 import useUser from '../../hooks/useUser';
+import api from '../../api';
 
 const SettingPage = () => {
   const scrollView = useRef<HTMLInputElement>(null);
   const { user } = useUser();
+  const [uploadedImage, setUploadedImage] = useState(imgSrc);
+
   const onMoveToSelect = () => {
     if (scrollView.current !== undefined && scrollView.current !== null) {
       scrollView.current.scrollIntoView({ behavior: 'smooth' });
@@ -38,6 +41,34 @@ const SettingPage = () => {
     });
   };
 
+  const updateProfileImage = async (file: File): Promise<void> => {
+    const formData = new FormData();
+    formData.append('newProfileImg', file);
+
+    try {
+      const response = await api.patch('/api/users/profile/image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('다이어리 프로필 수정 완료:', response.data.message);
+      } else {
+        console.error('프로필 이미지 업데이트 실패:', response.data.message);
+      }
+    } catch (error) {
+      console.error('서버와의 통신 중 오류 발생:', error);
+    }
+  };
+
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setUploadedImage(imageUrl);
+    updateProfileImage(file);
+  };
+
   if (!user) {
     return <div>...</div>;
   }
@@ -46,9 +77,21 @@ const SettingPage = () => {
     <SettingPageContainer>
       <SettingLeftContent>
         <UserImage>
-          <img src={imgSrc} alt="userImage" />
+          {user.profileImg && <img src={user.profileImg} alt="userImage" />}
+          {!user.profileImg && <img src={uploadedImage} alt="userImage" />}
           <div>
-            <MdEdit />
+            <label htmlFor="file">
+              <MdEdit />
+            </label>
+            <input
+              type={'file'}
+              name="file"
+              id="file"
+              accept={'image/*'}
+              multiple={false}
+              onChange={onChangeImage}
+              style={{ display: 'none' }}
+            />
           </div>
         </UserImage>
         <UserInfo>
