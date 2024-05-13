@@ -16,6 +16,7 @@ import {
 } from "./FeedIntroduction.styles.ts";
 
 import userAvatar from "../../../assets/images/UserAvatar.png";
+import { useNavigate } from "react-router-dom";
 
 interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,6 +33,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   postData,
   isLoginUser,
 }) => {
+  const navigate = useNavigate();
   const { mutate } = useFollowMutation(data.userId);
   const handleFollowModalClick = () => {
     setToggleFollowModal(true);
@@ -44,6 +46,11 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
   const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(data.followStatus);
+  };
+
+  const handleSendMessageClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    navigate(`../chat/${data.userId}`);
   };
 
   return (
@@ -67,7 +74,12 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
                 >
                   {data.followStatus ? "언팔로우" : "팔로우"}
                 </Button>
-                <Button className={"send_message"}>메세지 보내기</Button>
+                <Button
+                  className={"send_message"}
+                  onClick={handleSendMessageClick}
+                >
+                  메세지 보내기
+                </Button>
               </div>
             )}
           </UserNicknameContainer>

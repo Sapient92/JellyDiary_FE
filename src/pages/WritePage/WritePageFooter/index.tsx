@@ -72,12 +72,6 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
         for (const img of addedImgs.addedImgs) {
           formData.append("postImgs", img);
         }
-      } else {
-        const newImgsJson = JSON.stringify([]);
-        const newImgsBlob = new Blob([newImgsJson], {
-          type: "application/json",
-        });
-        formData.append("postImgs", newImgsBlob);
       }
       // post 객체 blob 변환 후 formData에 추가
       const diaryJson = JSON.stringify(post);
