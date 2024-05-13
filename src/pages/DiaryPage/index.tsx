@@ -27,6 +27,8 @@ import {
 
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 import api from '../../api';
+import useUser from '../../hooks/useUser';
+import { useNavigate } from 'react-router-dom';
 
 interface DiaryProps {
   diaryDescription: string;
@@ -55,6 +57,12 @@ const DiaryPage = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [events, setEvents] = useState([]);
   const [diaryData, setDiaryData] = useState<DiaryProps>([]);
+  const [diaryAuth, setDiaryAuth] = useState('');
+  const [diaryList, setDiaryList] = useState([]);
+  const [uploadedImage, setUploadedImage] = useState(imgSrc);
+
+  const { user } = useUser();
+  const navigate = useNavigate();
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
@@ -64,24 +72,66 @@ const DiaryPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      //   const response = await api.post('http://localhost:8080/api/diary', {
-      //     diaryName: '나의 여름 휴가',
-      //     diaryDescription: '그리스에서 보낸 여름 휴가에 대한 다이어리.',
-      //     diaryProfileImage: '이미지_URL',
-      //   });
-      const response = await api.get('http://localhost:8080/api/diary/profile/2');
-      console.log(response.data);
-      setDiaryData(response.data.data);
+      const response = await api.get('/api/diary/mydiaryList');
+      setDiaryList(response.data.data);
+      setDiaryData(diaryList[0]);
     };
     fetchData();
   }, []);
+  const updateProfileImage = async (file: File): Promise<void> => {
+    const formData = new FormData();
+    formData.append('newProfileImg', file);
+
+    try {
+      const response = await api.patch('', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('다이어리 프로필 수정 완료:', response.data.message);
+      } else {
+        console.error('프로필 이미지 업데이트 실패:', response.data.message);
+      }
+    } catch (error) {
+      console.error('서버와의 통신 중 오류 발생:', error);
+    }
+  };
+  const handleDiaryClick = async (id) => {
+    const response = await api.get(`/api/diary/profile/${id}`);
+    const auth = await api.get(`/api/diary/user/${id}`);
+
+    setDiaryData(response.data.data);
+    setDiaryAuth(auth.data.data.diaryRole);
+  };
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setUploadedImage(imageUrl);
+    updateProfileImage(file);
+  };
+  const hanldeWrite = (diaryId) => {
+    navigate(`/write/${diaryId}`);
+  };
   return (
     <DiaryPageContainer>
       <DiaryLeftContent>
         <UserImage>
-          <img src={imgSrc} alt="userImage" />
+          <img src={uploadedImage} alt="userImage" />
           <div>
-            <MdEdit />
+            <label htmlFor="file">
+              <MdEdit />
+            </label>
+            <input
+              type={'file'}
+              name="file"
+              id="file"
+              accept={'image/*'}
+              multiple={false}
+              onChange={onChangeImage}
+              style={{ display: 'none' }}
+            />
           </div>
         </UserImage>
         <UserInfo>
@@ -90,12 +140,16 @@ const DiaryPage = () => {
             <span>{diaryData?.diaryName} </span>
           </div>
           <div>{diaryData?.diaryDescription} </div>
-          <CustomButton
-            text="Edit Profile"
-            backgroundColor="gray"
-            disabled={false}
-            onClick={() => console.log('Edit Profile')}
-          />
+          {diaryAuth == 'CREATOR' ? (
+            <CustomButton
+              text="Edit Profile"
+              backgroundColor="blue"
+              disabled={false}
+              onClick={() => console.log('Edit Profile')}
+            />
+          ) : (
+            <div></div>
+          )}
         </UserInfo>
         <DiaryLeftNav>
           <div>
@@ -105,22 +159,12 @@ const DiaryPage = () => {
             </span>
           </div>
           <UserList>
-            <div>
-              <img src={imgSrc} alt="userImage" />
-              <div>유저 이름</div>
-            </div>
-            <div>
-              <img src={imgSrc} alt="userImage" />
-              <div>유저 이름</div>
-            </div>
-            <div>
-              <img src={imgSrc} alt="userImage" />
-              <div>유저 이름</div>
-            </div>
-            <div>
-              <img src={imgSrc} alt="userImage" />
-              <div>유저 이름</div>
-            </div>
+            {diaryList.map((diary) => (
+              <div key={diary.diaryId} onClick={() => handleDiaryClick(diary.diaryId)}>
+                <img src={diary.diaryProfileImage} alt="userImage" />
+                <div>{diary.diaryName}</div>
+              </div>
+            ))}
           </UserList>
           <AddUser>
             <div>
@@ -143,14 +187,7 @@ const DiaryPage = () => {
             myCustomButton: {
               text: '+',
               click: () => {
-                setEvents([
-                  ...events,
-                  {
-                    title: 'event',
-                    date: new Date().toISOString().substr(0, 10),
-                    color: '#ffffff',
-                  },
-                ]);
+                hanldeWrite(diaryData.diaryId);
               },
             },
           }}
