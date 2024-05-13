@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToggleContainer } from './ToggleButton.styles';
+interface ToggleButtonProps {
+  state: boolean;
+  onToggle?: (newState: boolean) => void; // Optional callback prop
+}
 
-// Destructure `state` from props
-const ToggleButton = ({ state }: any) => {
+const ToggleButton = ({ state, onToggle }: ToggleButtonProps) => {
   const [isOn, setIsOn] = useState(state);
 
+  useEffect(() => {
+    setIsOn(state);
+  }, [state]);
+
   const toggleHandler = () => {
-    setIsOn(!isOn); // Correct function name for setting state
+    const newState = !isOn;
+    setIsOn(newState);
+    onToggle?.(newState); // Call the callback with new state if provided
   };
 
   return (
@@ -16,5 +25,4 @@ const ToggleButton = ({ state }: any) => {
     </ToggleContainer>
   );
 };
-
 export default ToggleButton;
