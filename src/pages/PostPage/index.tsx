@@ -19,6 +19,7 @@ const PostPage = () => {
     (state) => state,
   );
   const { isLoading, data, isError, error } = useFetchPost(id as string);
+  console.log(data);
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>{error?.message}</>;

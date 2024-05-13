@@ -21,7 +21,6 @@ const FeedPostSection: React.FC<FeedPostSectionProps> = ({
 }) => {
   if (postLoading) return <>로딩중...</>;
   if (postIsError) return <>{postError?.message}</>;
-  console.log(postData);
 
   return (
     <PostsSection>
