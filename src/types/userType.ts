@@ -23,3 +23,10 @@ export interface UserFeedInfo {
   userName: string;
   followStatus: boolean;
 }
+
+export interface SearchUser {
+  isInvited: boolean;
+  profileImg: string | null;
+  userId: number;
+  userName: string;
+}

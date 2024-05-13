@@ -11,12 +11,13 @@ export const CommentFooterContainer = styled.form`
     width: 40px;
     height: 40px;
   }
-  input {
+  :nth-child(2) {
     border: 2px solid #f6f7f8;
     border-radius: 35px;
-    height: 40px;
+    height: 30px;
     width: 250px;
     padding-left: 10px;
+    padding-top: 10px;
     font-size: 14px;
 
     &::placeholder {
