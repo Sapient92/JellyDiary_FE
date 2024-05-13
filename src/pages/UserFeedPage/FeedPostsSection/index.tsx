@@ -21,6 +21,7 @@ const FeedPostSection: React.FC<FeedPostSectionProps> = ({
 }) => {
   if (postLoading) return <>로딩중...</>;
   if (postIsError) return <>{postError?.message}</>;
+  console.log(postData);
 
   return (
     <PostsSection>
@@ -29,13 +30,19 @@ const FeedPostSection: React.FC<FeedPostSectionProps> = ({
             (feed: FeedType) =>
               feed.isPublic && (
                 <Link key={feed.postId} to={`/post/${feed.postId}`}>
-                  <FeedPost postImg={feed.postImg} />
+                  <FeedPost
+                    postImg={feed.postImg}
+                    isMultiple={feed.postImgIsMultiple}
+                  />
                 </Link>
               ),
           )
         : postData?.feeds.map((feed) => (
             <Link key={feed.postId} to={`/post/${feed.postId}`}>
-              <FeedPost postImg={feed.postImg} />
+              <FeedPost
+                postImg={feed.postImg}
+                isMultiple={feed.postImgIsMultiple}
+              />
             </Link>
           ))}
     </PostsSection>
