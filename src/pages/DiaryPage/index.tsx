@@ -27,8 +27,9 @@ import {
 
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 import api from '../../api';
-import useUser from '../../hooks/useUser';
 import { useNavigate } from 'react-router-dom';
+import CreateDiaryModal from './DiaryWritePage';
+import UserImageList from './UserImageList';
 
 interface DiaryProps {
   diaryDescription: string;
@@ -60,14 +61,13 @@ const DiaryPage = () => {
   const [diaryAuth, setDiaryAuth] = useState('');
   const [diaryList, setDiaryList] = useState([]);
   const [uploadedImage, setUploadedImage] = useState(imgSrc);
-
-  const { user } = useUser();
+  const [chatList, setChatList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+    const postId = clickInfo.event._def.extendedProps.postId;
+    navigate(`/post/${postId}`);
   };
 
   useEffect(() => {
@@ -100,15 +100,40 @@ const DiaryPage = () => {
   };
   const updateEvents = async (id: number) => {
     const response = await api.get(`/api/post/postList/${id}`);
-    console.log(response.data);
+    return response;
   };
+  const transformEventData = (apiData) => {
+    return apiData.map((event) => ({
+      title: event.postTitle,
+      date: event.postDate,
+      extendedProps: {
+        postId: event.postId,
+        weather: event.weather,
+        writer: event.userId,
+        diaryId: event.diaryId,
+      },
+    }));
+  };
+
+  const fetchGroupChat = async (diaryId) => {
+    const response = await api.get(`/api/diary/user/list/${diaryId}`);
+    return response.data.data;
+  };
+
+  const filterNonSubscribers = (data) => {
+    if (!data) return [];
+    return data.filter((item) => item.diaryRole !== 'SUBSCRIBE').map((item) => item.userId);
+  };
+
   const handleDiaryClick = async (id) => {
     const response = await api.get(`/api/diary/profile/${id}`);
     const auth = await api.get(`/api/diary/user/${id}`);
-    const events = updateEvents(id);
-    console.log(events);
+    const events = await updateEvents(id);
+    const test = await fetchGroupChat(id);
+    setChatList(filterNonSubscribers(test));
     setDiaryData(response.data.data);
     setDiaryAuth(auth.data.data.diaryRole);
+    setEvents(transformEventData(events.data.data));
   };
   const onChangeImage = (e) => {
     const file = e.target.files[0];
@@ -118,6 +143,36 @@ const DiaryPage = () => {
   };
   const hanldeWrite = (diaryId) => {
     navigate(`/write/${diaryId}`);
+  };
+
+  const handleCreateDiary = async (diaryData) => {
+    try {
+      const formData = new FormData();
+      formData.append('diaryName', diaryData.diaryName);
+      formData.append('diaryDescription', diaryData.diaryDescription);
+      if (diaryData.diaryProfileImage !== 'path_to_default_image') {
+        formData.append('diaryProfileImage', diaryData.diaryProfileImage);
+      }
+
+      const response = await api.post('/api/diary', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        setDiaryList([...diaryList, response.data.data]);
+        setIsModalOpen(false);
+      } else {
+        console.error('Failed to create diary:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error creating diary:', error);
+    }
+  };
+
+  const handleClickGroupChat = (diaryId, diaryName) => {
+    navigate(`/chat/group/${diaryId}?roomName=${diaryName}`);
   };
   return (
     <DiaryPageContainer>
@@ -175,7 +230,7 @@ const DiaryPage = () => {
               ))
             )}
           </UserList>
-          <AddUser>
+          <AddUser onClick={() => setIsModalOpen(true)}>
             <div>
               <AiFillPlusCircle />
               <span> 다이어리 생성</span>
@@ -231,17 +286,15 @@ const DiaryPage = () => {
         )}
       </DiaryPageContent>
       <DiaryRightNav>
-        <BiChat />
-        <div>
-          <img onClick={() => console.log('삭제?')} src={imgSrc} alt="invitedUsers" />
-          <img src={imgSrc} alt="invitedUsers" />
-          <img src={imgSrc} alt="invitedUsers" />
-          <img src={imgSrc} alt="invitedUsers" />
-          <img src={imgSrc} alt="invitedUsers" />
-          <img src={imgSrc} alt="invitedUsers" />
-          <img src={imgSrc} alt="invitedUsers" />
-        </div>
+        <BiChat onClick={() => handleClickGroupChat(diaryData?.diaryId, diaryData?.diaryName)} />
+        <UserImageList userIds={chatList} />
       </DiaryRightNav>
+
+      <CreateDiaryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreateDiary}
+      />
     </DiaryPageContainer>
   );
 };
