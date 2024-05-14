@@ -12,6 +12,7 @@ import { queryKeys } from "../../../react-query/constants.ts";
 import {
   CommentButton,
   LikeButton,
+  LinkTag,
   NotLikeButton,
   PostDetailBtnBox,
   PostDetailBtnContainer,
@@ -113,7 +114,9 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
           </button>
           {!isLoginUser && (
             <button>
-              <SendButton />
+              <LinkTag to={`../../chat/${userId}`}>
+                <SendButton />
+              </LinkTag>
             </button>
           )}
         </PostDetailBtnBox>
