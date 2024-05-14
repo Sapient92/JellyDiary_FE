@@ -11,4 +11,5 @@ export const queryKeys = {
   deletePost: "deletePost",
   commentReply: "commentReply",
   searchUsers: "searchUsers",
+  chatList: "chatList",
 };
