@@ -17,6 +17,7 @@ export interface Content {
 
 const ChatPage = () => {
   const { userId } = useParams();
+  const { diaryId } = useParams();
   const [chatId, setChatId] = useState<number | null>(null);
   const [messages, setMessages] = useState<Content[]>([]);
   const [stompClient, setStompClient] = useState<Client | null>(null);
@@ -38,7 +39,7 @@ const ChatPage = () => {
         console.error("채팅방 생성 실패: ", e);
       }
     }
-    createRoom(undefined, userId);
+    createRoom(diaryId, userId);
   }, [userId]);
 
   useEffect(() => {
@@ -57,6 +58,9 @@ const ChatPage = () => {
         });
       };
     }
+    return () => {
+      client.deactivate();
+    };
   }, [chatId]);
 
   return (

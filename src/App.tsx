@@ -27,6 +27,7 @@ function App() {
           <Route path={"/diary"} element={<DiaryPage />} />
           <Route path={"/"} element={<SuggestedPage />} />
           <Route path={"/chat/:userId"} element={<ChatPage />} />
+          <Route path={"/chat/group/:diaryId"} element={<ChatPage />} />
           <Route path={"/test"} element={<DemoApp />} />
           <Route path={"*"} element={<NotFoundPage />} />
         </Route>
