@@ -98,10 +98,15 @@ const DiaryPage = () => {
       console.error('서버와의 통신 중 오류 발생:', error);
     }
   };
+  const updateEvents = async (id: number) => {
+    const response = await api.get(`/api/post/postList/${id}`);
+    console.log(response.data);
+  };
   const handleDiaryClick = async (id) => {
     const response = await api.get(`/api/diary/profile/${id}`);
     const auth = await api.get(`/api/diary/user/${id}`);
-
+    const events = updateEvents(id);
+    console.log(events);
     setDiaryData(response.data.data);
     setDiaryAuth(auth.data.data.diaryRole);
   };
@@ -159,12 +164,16 @@ const DiaryPage = () => {
             </span>
           </div>
           <UserList>
-            {diaryList.map((diary) => (
-              <div key={diary.diaryId} onClick={() => handleDiaryClick(diary.diaryId)}>
-                <img src={diary.diaryProfileImage} alt="userImage" />
-                <div>{diary.diaryName}</div>
-              </div>
-            ))}
+            {diaryList.length <= 0 ? (
+              <div>다이어리를 생성하세요✨</div>
+            ) : (
+              diaryList.map((diary) => (
+                <div key={diary.diaryId} onClick={() => handleDiaryClick(diary.diaryId)}>
+                  <img src={diary.diaryProfileImage} alt="userImage" />
+                  <div>{diary.diaryName}</div>
+                </div>
+              ))
+            )}
           </UserList>
           <AddUser>
             <div>
@@ -175,31 +184,51 @@ const DiaryPage = () => {
         </DiaryLeftNav>
       </DiaryLeftContent>
       <DiaryPageContent>
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: '',
-            center: 'prev,title,next',
-            right: 'myCustomButton',
-          }}
-          customButtons={{
-            myCustomButton: {
-              text: '+',
-              click: () => {
-                hanldeWrite(diaryData.diaryId);
+        {diaryAuth == 'CREATOR' ? (
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: '',
+              center: 'prev,title,next',
+              right: 'myCustomButton',
+            }}
+            customButtons={{
+              myCustomButton: {
+                text: '+',
+                click: () => {
+                  hanldeWrite(diaryData.diaryId);
+                },
               },
-            },
-          }}
-          events={events}
-          eventContent={renderEventContent}
-          eventClick={handleEventClick}
-          locales={allLocales}
-          locale="kr"
-          dayCellContent={(info) => {
-            return info.date.getDate();
-          }}
-        />
+            }}
+            events={events}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            locales={allLocales}
+            locale="kr"
+            dayCellContent={(info) => {
+              return info.date.getDate();
+            }}
+          />
+        ) : (
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: '',
+              center: 'prev,title,next',
+              right: '',
+            }}
+            events={events}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            locales={allLocales}
+            locale="kr"
+            dayCellContent={(info) => {
+              return info.date.getDate();
+            }}
+          />
+        )}
       </DiaryPageContent>
       <DiaryRightNav>
         <BiChat />
