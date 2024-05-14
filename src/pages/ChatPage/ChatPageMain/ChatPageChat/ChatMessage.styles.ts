@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const ChatMessageContainer = styled.div`
+export const ChatMessageContainer = styled.div<{ $isLoginUser: boolean }>`
   display: flex;
   align-items: center;
   margin-left: 6px;
   margin-top: 6px;
 `;
 
-export const ChatMessageImgBox = styled.div`
+export const ChatMessageImgBox = styled.div<{ $isLoginUser: boolean }>`
   img {
     width: 46px;
     height: 46px;
