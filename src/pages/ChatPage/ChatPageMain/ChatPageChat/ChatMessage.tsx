@@ -19,22 +19,21 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
   if (isLoginUser) {
     return (
-      <ChatMessageContainer>
-        <ChatMessageImgBox $isLoginUser={isLoginUser}>
-          <img src={userAvatar} />
-        </ChatMessageImgBox>
+      <ChatMessageContainer $isLoginUser={isLoginUser}>
         <ChatUserInfoContainer>
-          <p>{message.userName}</p>
           <MessageContainer>
             <p>{message.chatMessage}</p>
           </MessageContainer>
         </ChatUserInfoContainer>
+        <ChatMessageImgBox $isLoginUser={isLoginUser}>
+          <img src={userAvatar} />
+        </ChatMessageImgBox>
       </ChatMessageContainer>
     );
   } else {
     return (
-      <ChatMessageContainer>
-        <ChatMessageImgBox>
+      <ChatMessageContainer $isLoginUser={isLoginUser}>
+        <ChatMessageImgBox $isLoginUser={isLoginUser}>
           <img src={userAvatar} />
         </ChatMessageImgBox>
         <ChatUserInfoContainer>
