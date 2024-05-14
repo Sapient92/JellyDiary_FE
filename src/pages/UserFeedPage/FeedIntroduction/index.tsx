@@ -50,7 +50,7 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
 
   const handleSendMessageClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    navigate(`../chat/${data.userId}`);
+    navigate(`../chat/${data.userId}?roomName=${data?.userName}`);
   };
 
   return (

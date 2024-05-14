@@ -8,6 +8,7 @@ export const ChatUserSearchContainer = styled.div`
   padding: 0 32px 11px 32px;
   width: 100%;
   border-bottom: 1px solid #dbdbdb;
+
   input {
     width: 100%;
     margin-right: 6px;

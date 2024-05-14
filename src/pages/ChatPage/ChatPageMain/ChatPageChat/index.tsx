@@ -1,3 +1,11 @@
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Client } from "@stomp/stompjs";
+
+import { client } from "../../../../utils/StompClient.ts";
+
+import useLoginUser from "../../../../hooks/useLoginUser.ts";
+
 import {
   ChatContainer,
   ChatFlexContainer,
@@ -6,10 +14,6 @@ import {
 } from "./ChatPageChat.styles.ts";
 
 import sendBtn from "../../../../assets/button/SendBtn.png";
-import React, { useState } from "react";
-import { client } from "../../../../utils/StompClient.ts";
-import useLoginUser from "../../../../hooks/useLoginUser.ts";
-import { Client } from "@stomp/stompjs";
 
 interface ChatPageChat {
   chatId: number | null;
@@ -19,6 +23,19 @@ interface ChatPageChat {
 const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
   const [message, setMessage] = useState("");
   const { userData } = useLoginUser();
+  const [searchParams] = useSearchParams();
+  const roomName = searchParams.get("roomName");
+
+  // const { isLoading, data, isError, error } = useFetchChatHistory(
+  //   chatId as number,
+  // );
+
+  useEffect(() => {
+    return () => {
+      client.deactivate();
+      console.log("언마운트");
+    };
+  }, []);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -37,12 +54,13 @@ const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
     }
     setMessage("");
   };
-
+  // if (isLoading) return <>채팅을 불러오는 중 입니다...</>;
+  // if (isError) return <>{error?.message}</>;
   return (
     <ChatContainer>
       <ChatFlexContainer>
         <ChatHeader>
-          <p>Clementine</p>
+          <p>{roomName}</p>
         </ChatHeader>
       </ChatFlexContainer>
       <ChatFooter>
