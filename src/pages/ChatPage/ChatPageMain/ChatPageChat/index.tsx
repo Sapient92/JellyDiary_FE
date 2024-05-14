@@ -11,9 +11,13 @@ import {
   ChatFlexContainer,
   ChatFooter,
   ChatHeader,
+  ChatMessagesContainer,
 } from "./ChatPageChat.styles.ts";
 
 import sendBtn from "../../../../assets/button/SendBtn.png";
+import { useFetchChatHistory } from "../../../../hooks/useChatting.ts";
+import ChatMessage from "./ChatMessage.tsx";
+import { MessageType } from "../../../../types/chattingType.ts";
 
 interface ChatPageChat {
   chatId: number | null;
@@ -26,9 +30,14 @@ const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
   const [searchParams] = useSearchParams();
   const roomName = searchParams.get("roomName");
 
-  // const { isLoading, data, isError, error } = useFetchChatHistory(
-  //   chatId as number,
-  // );
+  const {
+    isLoading,
+    data: messageHistory,
+    isError,
+    error,
+  } = useFetchChatHistory(chatId as number);
+
+  console.log(messageHistory);
 
   useEffect(() => {
     return () => {
@@ -54,8 +63,8 @@ const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
     }
     setMessage("");
   };
-  // if (isLoading) return <>채팅을 불러오는 중 입니다...</>;
-  // if (isError) return <>{error?.message}</>;
+  if (isLoading) return <>채팅을 불러오는 중 입니다...</>;
+  if (isError) return <>{error?.message}</>;
   return (
     <ChatContainer>
       <ChatFlexContainer>
@@ -63,6 +72,12 @@ const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
           <p>{roomName}</p>
         </ChatHeader>
       </ChatFlexContainer>
+      <ChatMessagesContainer>
+        {messageHistory?.length !== 0 &&
+          messageHistory?.map((message: MessageType) => (
+            <ChatMessage key={message.chatMessageId} message={message} />
+          ))}
+      </ChatMessagesContainer>
       <ChatFooter>
         <input
           type={"text"}

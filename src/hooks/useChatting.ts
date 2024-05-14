@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "../react-query/constants.ts";
 import api from "../api";
+import { MessageType } from "../types/chattingType.ts";
 
 export const useFetchChatList = () =>
   useQuery({
@@ -12,5 +13,11 @@ export const useFetchChatList = () =>
 export const useFetchChatHistory = (chatRoomId: number) =>
   useQuery({
     queryKey: [queryKeys.chatHistory, chatRoomId],
-    queryFn: () => api.get(`/api/chat/${chatRoomId}`),
+    queryFn: () => api.get(`/api/chat/messages/${chatRoomId}`),
+    select: (data) => {
+      return data.data.data.sort(
+        (a: MessageType, b: MessageType) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+    },
   });
