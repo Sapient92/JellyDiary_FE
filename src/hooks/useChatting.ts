@@ -10,9 +10,10 @@ export const useFetchChatList = () =>
     select: (data) => data.data.data,
   });
 
-export const useFetchChatHistory = (chatRoomId: number) =>
+export const useFetchChatHistory = (chatRoomId: number | null) =>
   useQuery({
     queryKey: [queryKeys.chatHistory, chatRoomId],
+    enabled: !!chatRoomId,
     queryFn: () => api.get(`/api/chat/messages/${chatRoomId}`),
     select: (data) => {
       return data.data.data.sort(

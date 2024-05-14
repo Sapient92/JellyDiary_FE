@@ -1,14 +1,15 @@
 import {
-  ChatMessageContainer,
-  ChatMessageImgBox,
-  ChatUserInfoContainer,
-  MessageContainer,
+  ReceiverImgContainer,
+  ReceiverMessageContainer,
+  ReceiverMessageContent,
+  SenderMessageContainer,
+  SenderMessageContent,
 } from "./ChatMessage.styles.ts";
 import { MessageType } from "../../../../types/chattingType.ts";
 import React from "react";
+import useLoginUser from "../../../../hooks/useLoginUser.ts";
 
 import userAvatar from "../../../../assets/images/UserAvatar.png";
-import useLoginUser from "../../../../hooks/useLoginUser.ts";
 
 interface ChatMessageProps {
   message: MessageType;
@@ -19,30 +20,28 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
   if (isLoginUser) {
     return (
-      <ChatMessageContainer $isLoginUser={isLoginUser}>
-        <ChatUserInfoContainer>
-          <MessageContainer>
-            <p>{message.chatMessage}</p>
-          </MessageContainer>
-        </ChatUserInfoContainer>
-        <ChatMessageImgBox $isLoginUser={isLoginUser}>
-          <img src={userAvatar} />
-        </ChatMessageImgBox>
-      </ChatMessageContainer>
+      <SenderMessageContainer>
+        <SenderMessageContent>
+          <p>{message.chatMessage}</p>
+          <img
+            src={message.userProfileImg ? message.userProfileImg : userAvatar}
+          />
+        </SenderMessageContent>
+      </SenderMessageContainer>
     );
   } else {
     return (
-      <ChatMessageContainer $isLoginUser={isLoginUser}>
-        <ChatMessageImgBox $isLoginUser={isLoginUser}>
-          <img src={userAvatar} />
-        </ChatMessageImgBox>
-        <ChatUserInfoContainer>
+      <ReceiverMessageContainer>
+        <ReceiverImgContainer>
+          <img
+            src={message.userProfileImg ? message.userProfileImg : userAvatar}
+          />
+        </ReceiverImgContainer>
+        <ReceiverMessageContent>
           <p>{message.userName}</p>
-          <MessageContainer>
-            <p>{message.chatMessage}</p>
-          </MessageContainer>
-        </ChatUserInfoContainer>
-      </ChatMessageContainer>
+          <p>{message.chatMessage}</p>
+        </ReceiverMessageContent>
+      </ReceiverMessageContainer>
     );
   }
 };

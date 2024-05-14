@@ -22,9 +22,16 @@ import { MessageType } from "../../../../types/chattingType.ts";
 interface ChatPageChat {
   chatId: number | null;
   stompClient: Client | null;
+  setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
+  messages: MessageType[];
 }
 
-const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
+const ChatPageChat: React.FC<ChatPageChat> = ({
+  chatId,
+  stompClient,
+  setMessages,
+  messages,
+}) => {
   const [message, setMessage] = useState("");
   const { userData } = useLoginUser();
   const [searchParams] = useSearchParams();
@@ -35,9 +42,13 @@ const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
     data: messageHistory,
     isError,
     error,
-  } = useFetchChatHistory(chatId as number);
+  } = useFetchChatHistory(Number(chatId));
 
-  console.log(messageHistory);
+  useEffect(() => {
+    if (messageHistory) {
+      setMessages(messageHistory);
+    }
+  }, [messageHistory]);
 
   useEffect(() => {
     return () => {
@@ -73,9 +84,9 @@ const ChatPageChat: React.FC<ChatPageChat> = ({ chatId, stompClient }) => {
         </ChatHeader>
       </ChatFlexContainer>
       <ChatMessagesContainer>
-        {messageHistory?.length !== 0 &&
-          messageHistory?.map((message: MessageType) => (
-            <ChatMessage key={message.chatMessageId} message={message} />
+        {messages?.length !== 0 &&
+          messages?.map((message) => (
+            <ChatMessage key={message?.chatMessageId} message={message} />
           ))}
       </ChatMessagesContainer>
       <ChatFooter>

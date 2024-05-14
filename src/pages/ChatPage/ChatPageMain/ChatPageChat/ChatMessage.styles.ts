@@ -1,28 +1,56 @@
 import styled from "styled-components";
 
-export const ChatMessageContainer = styled.div<{ $isLoginUser: boolean }>`
+export const SenderMessageContainer = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
-  margin-left: 6px;
-  margin-top: 6px;
+  justify-content: end;
+  margin-top: 8px;
 `;
 
-export const ChatMessageImgBox = styled.div<{ $isLoginUser: boolean }>`
+export const SenderMessageContent = styled.div`
+  display: flex;
+  max-width: 250px;
+
+  p {
+    margin: 0;
+    background-color: white;
+    padding: 8px 6px;
+    border-radius: 8px;
+  }
+
   img {
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
   }
 `;
 
-export const ChatUserInfoContainer = styled.div`
-  margin-left: 8px;
+export const ReceiverMessageContainer = styled.div`
+  display: flex;
+  margin-top: 8px;
+`;
+
+export const ReceiverMessageContent = styled.div`
+  max-width: 250px;
+
   p:nth-child(1) {
     margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  p:nth-child(2) {
+    margin: 0;
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px 6px;
   }
 `;
 
-export const MessageContainer = styled.div`
-  background-color: white;
-  padding: 4px 8px 4px 8px;
-  border-radius: 6px;
+export const ReceiverImgContainer = styled.div`
+  img {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+  }
 `;
