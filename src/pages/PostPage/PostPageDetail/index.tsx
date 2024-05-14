@@ -26,6 +26,7 @@ import {
   useFetchPostLikeState,
   useLikeMutation,
 } from "../../../hooks/usePost.ts";
+import useLoginUser from "../../../hooks/useLoginUser.ts";
 
 interface PostPageDetailProps {
   setToggleCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -49,7 +50,9 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
     likeCount,
     commentCount,
     postImgs,
+    userId,
   } = data.data.data;
+  const { isLoginUser } = useLoginUser(userId);
 
   let Icons;
   switch (weather) {
@@ -108,9 +111,11 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
           <button>
             <CommentButton onClick={handleCommentClick} />
           </button>
-          <button>
-            <SendButton />
-          </button>
+          {!isLoginUser && (
+            <button>
+              <SendButton />
+            </button>
+          )}
         </PostDetailBtnBox>
         <WeatherContainer>{Icons ? <Icons /> : null}</WeatherContainer>
       </PostDetailBtnContainer>

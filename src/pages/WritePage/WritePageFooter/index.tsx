@@ -23,10 +23,12 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
   const { diaryId } = useParams();
   const { post, changeValue } = usePostInputStore((state) => state);
   const { postImgs } = useImgsStore((state) => state.writeImgs);
-  const { deleteImgIds, addedImgs } = useImgsStore((state) => state);
-
-  const toggleTitleAlertModal = useModalStore(
-    (state) => state.toggleTitleAlertModal,
+  const {
+    deleteImgIds,
+    addedImgs: { addedImgs },
+  } = useImgsStore((state) => state);
+  const { toggleTitleAlertModal, toggleImageAlertModal } = useModalStore(
+    (state) => state,
   );
   const { isPublic } = data || {};
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
 
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    // 글 제목 공백 문자인지 확인
     if (post.postTitle.trim() === "") {
       toggleTitleAlertModal(true);
       setTimeout(() => {
@@ -46,6 +49,19 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
       }, 3000);
       return;
     }
+    // 이미지 하나도 안 올렸는지 확인
+    if (
+      (!data && postImgs?.length === 0) ||
+      (data?.postImgs?.length === deleteImgIds.length &&
+        addedImgs?.length === 0)
+    ) {
+      toggleImageAlertModal(true);
+      setTimeout(() => {
+        toggleImageAlertModal(false);
+      }, 3000);
+      return;
+    }
+
     if (!data && postImgs?.length && postImgs !== null) {
       const formData = new FormData();
       for (const img of postImgs) {
@@ -68,8 +84,8 @@ const WritePageFooter: React.FC<WritePageFooterProps> = ({ data }) => {
         .catch((err) => console.log(err));
     } else if (data) {
       const formData = new FormData();
-      if (addedImgs.addedImgs !== null && addedImgs.addedImgs.length !== 0) {
-        for (const img of addedImgs.addedImgs) {
+      if (addedImgs !== null && addedImgs.length !== 0) {
+        for (const img of addedImgs) {
           formData.append("postImgs", img);
         }
       }
