@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IoChatbubblesOutline, IoPaw, IoPawOutline } from "react-icons/io5";
 import { BsSend } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 export const PostPageDetailContainer = styled.div`
   display: flex;
@@ -118,6 +119,7 @@ export const CommentButton = styled(IoChatbubblesOutline)`
 export const SendButton = styled(BsSend)`
   font-size: 26px;
   cursor: pointer;
+  color: black;
 `;
 
 export const WeatherContainer = styled.div`
@@ -126,4 +128,8 @@ export const WeatherContainer = styled.div`
   font-size: 26px;
   margin-right: 20px;
   color: #3ea9e5;
+`;
+
+export const LinkTag = styled(Link)`
+  text-decoration: none;
 `;
