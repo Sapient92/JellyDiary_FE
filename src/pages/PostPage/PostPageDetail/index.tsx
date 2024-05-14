@@ -53,9 +53,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
     postImgs,
     userId,
   } = data.data.data;
-  const {
-    data: { userName },
-  } = useFetchWriterInfo(userId);
+  const { data: userData } = useFetchWriterInfo(userId);
   const { isLoginUser } = useLoginUser(userId);
 
   let Icons;
@@ -117,7 +115,9 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
           </button>
           {!isLoginUser && (
             <button>
-              <LinkTag to={`../../chat/${userId}?roomName=${userName}`}>
+              <LinkTag
+                to={`../../chat/${userId}?roomName=${userData?.userName}`}
+              >
                 <SendButton />
               </LinkTag>
             </button>

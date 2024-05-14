@@ -7,3 +7,12 @@ export interface ChatType {
   diaryId: null | number;
   userId: null | number;
 }
+
+export interface MessageType {
+  chatMessage: string;
+  chatMessageId: number;
+  chatRoomId: string;
+  createdAt: string;
+  userId: string;
+  userName: string;
+}

@@ -29,6 +29,10 @@ export const ChatHeader = styled.div`
   }
 `;
 
+export const ChatMessagesContainer = styled.div`
+  height: 595px;
+`;
+
 export const ChatFooter = styled.form`
   padding: 0 26px 10px 26px;
   position: relative;
