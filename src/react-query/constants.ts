@@ -12,4 +12,6 @@ export const queryKeys = {
   commentReply: "commentReply",
   searchUsers: "searchUsers",
   chatList: "chatList",
+  chatDetail: "chatDetail",
+  chatHistory: "chatHistory",
 };

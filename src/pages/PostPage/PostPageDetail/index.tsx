@@ -25,6 +25,7 @@ import {
 } from "./PostPageDetail.styles.ts";
 import {
   useFetchPostLikeState,
+  useFetchWriterInfo,
   useLikeMutation,
 } from "../../../hooks/usePost.ts";
 import useLoginUser from "../../../hooks/useLoginUser.ts";
@@ -41,7 +42,6 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
   const [toggleSeeMore, setToggleSeeMore] = useState(false);
   const { data: likeState } = useFetchPostLikeState(id as string);
   const { mutate } = useLikeMutation(id as string);
-
   const data: AxiosResponse = queryClient.getQueryData([queryKeys.post, id])!;
   const {
     postTitle,
@@ -53,6 +53,9 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
     postImgs,
     userId,
   } = data.data.data;
+  const {
+    data: { userName },
+  } = useFetchWriterInfo(userId);
   const { isLoginUser } = useLoginUser(userId);
 
   let Icons;
@@ -114,7 +117,7 @@ const PostPageDetail: React.FC<PostPageDetailProps> = ({
           </button>
           {!isLoginUser && (
             <button>
-              <LinkTag to={`../../chat/${userId}`}>
+              <LinkTag to={`../../chat/${userId}?roomName=${userName}`}>
                 <SendButton />
               </LinkTag>
             </button>

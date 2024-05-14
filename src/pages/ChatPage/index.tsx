@@ -9,6 +9,7 @@ import { client } from "../../utils/StompClient.ts";
 import api from "../../api";
 
 import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
+import { useFetchChatList } from "../../hooks/useChatting.ts";
 
 export interface Content {
   chatMessage: string;
@@ -21,8 +22,12 @@ const ChatPage = () => {
   const [chatId, setChatId] = useState<number | null>(null);
   const [messages, setMessages] = useState<Content[]>([]);
   const [stompClient, setStompClient] = useState<Client | null>(null);
+  const { data: chatList } = useFetchChatList();
 
   useEffect(() => {
+    if (!diaryId && !userId) {
+      return;
+    }
     async function createRoom(diaryId?: string, userId?: string) {
       try {
         const response = diaryId
@@ -66,11 +71,12 @@ const ChatPage = () => {
   return (
     <ChatPageContainer>
       <ChatPageContent>
-        <ChatPageHeader userId={userId} />
+        <ChatPageHeader />
         <ChatPageMain
           messages={messages}
           chatId={chatId}
           stompClient={stompClient}
+          chatList={chatList}
         />
       </ChatPageContent>
     </ChatPageContainer>
