@@ -15,4 +15,5 @@ export interface MessageType {
   createdAt: string;
   userId: string;
   userName: string;
+  userProfileImg: null | string;
 }

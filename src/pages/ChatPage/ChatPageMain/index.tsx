@@ -1,12 +1,10 @@
 import React from "react";
 import { Client } from "@stomp/stompjs";
 
-import { Content } from "../index.tsx";
-
 import ChatPageUserList from "./ChatPageUserList";
 import ChatPageChat from "./ChatPageChat";
 
-import { ChatType } from "../../../types/chattingType.ts";
+import { ChatType, MessageType } from "../../../types/chattingType.ts";
 
 import { ChatMainContainer } from "./ChatPageMain.styles.ts";
 import { useParams } from "react-router-dom";
@@ -14,22 +12,30 @@ import { useParams } from "react-router-dom";
 interface ChatPageMainProps {
   chatId: number | null;
   stompClient: Client | null;
-  messages: Content[];
+  messages: MessageType[];
   chatList: ChatType[];
+  setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
 }
 
 const ChatPageMain: React.FC<ChatPageMainProps> = ({
   chatId,
   stompClient,
   messages,
+  setMessages,
   chatList,
 }) => {
   const { userId, diaryId } = useParams();
+
   return (
     <ChatMainContainer>
       <ChatPageUserList chatList={chatList} />
       {(userId || diaryId) && (
-        <ChatPageChat chatId={chatId} stompClient={stompClient} />
+        <ChatPageChat
+          messages={messages}
+          chatId={chatId}
+          stompClient={stompClient}
+          setMessages={setMessages}
+        />
       )}
     </ChatMainContainer>
   );
