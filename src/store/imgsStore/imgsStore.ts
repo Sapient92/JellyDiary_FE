@@ -40,7 +40,6 @@ export const useImgsStore = create<useImgsStoreProps>((set) => ({
   changeAddedImgs: (imgs: File[], isDelete) =>
     set((prev) => {
       if (prev.addedImgs.addedImgs?.length === 0) {
-        console.log("1");
         return {
           addedImgs: {
             ...prev.addedImgs,
@@ -48,14 +47,12 @@ export const useImgsStore = create<useImgsStoreProps>((set) => ({
           },
         };
       } else if (prev.addedImgs.addedImgs !== null && !isDelete) {
-        console.log("2");
         return {
           addedImgs: {
             addedImgs: [...prev.addedImgs.addedImgs, ...imgs],
           },
         };
       } else if (isDelete) {
-        console.log("3");
         return {
           addedImgs: {
             addedImgs: imgs,
