@@ -4,6 +4,8 @@ import {
   LeftClickButton,
   PostDetailImgsContainer,
   PostImgContainer,
+  PostImgNavigator,
+  PostImgNavigatorContainer,
   RightClickButton,
 } from "./PostDetailImgs.styles.ts";
 
@@ -30,6 +32,12 @@ const PostDetailImgs: React.FC<PostDetailImgsProps> = ({ postImgs }) => {
     }
   };
 
+  const handleNavigatorClick = (index: number) => {
+    if (postIndex !== index) {
+      setPostIndex(index);
+    }
+  };
+
   return (
     <PostDetailImgsContainer $postImgs={postImgs} $postIndex={postIndex}>
       <LeftClickButton onClick={handleLeftClick} />
@@ -37,6 +45,15 @@ const PostDetailImgs: React.FC<PostDetailImgsProps> = ({ postImgs }) => {
         <img src={postImgs[postIndex].diaryPostImg} alt={"postImg"} />
       </PostImgContainer>
       <RightClickButton onClick={handleRightClick} />
+      <PostImgNavigatorContainer>
+        {postImgs?.map((img, index) => (
+          <PostImgNavigator
+            key={img.imgId}
+            $isView={img.diaryPostImg === postImgs[postIndex].diaryPostImg}
+            onClick={() => handleNavigatorClick(index)}
+          ></PostImgNavigator>
+        ))}
+      </PostImgNavigatorContainer>
     </PostDetailImgsContainer>
   );
 };
