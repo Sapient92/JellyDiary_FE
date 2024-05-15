@@ -10,6 +10,7 @@ export const CommentFooterContainer = styled.form`
   img {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
   }
   :nth-child(2) {
     border: 2px solid #f6f7f8;

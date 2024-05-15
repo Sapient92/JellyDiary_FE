@@ -11,14 +11,16 @@ export const DeleteCommentButton = styled(RiDeleteBinLine)`
 export const CommentContainer = styled.li`
   display: flex;
   align-items: center;
+  margin: 12px 12px 12px 12px;
 
-  margin: 6px 8px 12px 8px;
   img {
-    margin: 0;
+    box-sizing: border-box;
+    margin: 0 6px 0 0;
     width: 40px;
     height: 40px;
     border-radius: 20px;
   }
+
   &:hover ${DeleteCommentButton} {
     visibility: visible;
   }
@@ -42,7 +44,7 @@ export const CommentInfoContainer = styled.div`
     margin: 0;
   }
   p:nth-child(1) {
-    margin: 0;
+    margin: 0 2px 0 0;
     font-size: 14px;
     font-weight: 800;
   }
