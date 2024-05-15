@@ -27,7 +27,8 @@ export const PostDetailImgsContainer = styled.div<{
     display: flex;
     align-items: center;
     position: relative;
-    background-color: #f5f5f5;
+    background-color: #f0f0f0;
+    height: 600px;
 
     &:hover {
         ${LeftClickButton} {
@@ -51,4 +52,21 @@ export const PostImgContainer = styled.div`
   img {
     max-height: 600px;
   }
+`;
+
+export const PostImgNavigatorContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const PostImgNavigator = styled.div<{ $isView: boolean }>`
+  margin: 0 2px 0 2px;
+  width: 8px;
+  height: 8px;
+  background-color: ${(props) => (props.$isView ? "gray" : "white")};
+  border-radius: 50%;
 `;
