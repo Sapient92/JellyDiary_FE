@@ -17,6 +17,7 @@ export const FeedIntroductionImg = styled.div`
   img {
     width: 150px;
     height: 150px;
+    border-radius: 50%;
   }
 `;
 

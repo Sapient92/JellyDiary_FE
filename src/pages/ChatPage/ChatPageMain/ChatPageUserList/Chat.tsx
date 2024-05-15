@@ -8,13 +8,14 @@ import {
 } from "./Chat.styles.ts";
 
 import userAvatar from "../../../../assets/images/UserAvatar.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ChatProps {
   chat: ChatType;
 }
 
 const Chat: React.FC<ChatProps> = ({ chat }) => {
+  const { userId, diaryId } = useParams();
   const navigate = useNavigate();
   const handleChatRoomClick = () => {
     if (chat?.userId) {
@@ -22,6 +23,10 @@ const Chat: React.FC<ChatProps> = ({ chat }) => {
     } else {
       navigate(`/chat/group/${chat.diaryId}?roomName=${chat.chatRoomName}`);
     }
+  };
+
+  const truncate = (str: string, n: number) => {
+    return str?.length > n ? str.substring(0, n - 1) + "..." : str;
   };
 
   return (
@@ -33,7 +38,11 @@ const Chat: React.FC<ChatProps> = ({ chat }) => {
       </ChatImgContainer>
       <ChatInfoContainer>
         <p>{chat?.chatRoomName}</p>
-        <p>{chat?.chatMessagePreview}</p>
+        {userId || diaryId ? (
+          <p>{truncate(chat?.chatMessagePreview, 25)}</p>
+        ) : (
+          <p>{truncate(chat?.chatMessagePreview, 85)}</p>
+        )}
       </ChatInfoContainer>
     </ChatContainer>
   );

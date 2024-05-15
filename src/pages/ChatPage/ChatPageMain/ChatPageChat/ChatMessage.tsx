@@ -1,3 +1,8 @@
+import React from "react";
+
+import { MessageType } from "../../../../types/chattingType.ts";
+import { useUserStore } from "../../../../store/userStore/userStore.ts";
+
 import {
   ReceiverImgContainer,
   ReceiverMessageContainer,
@@ -5,9 +10,6 @@ import {
   SenderMessageContainer,
   SenderMessageContent,
 } from "./ChatMessage.styles.ts";
-import { MessageType } from "../../../../types/chattingType.ts";
-import React from "react";
-import useLoginUser from "../../../../hooks/useLoginUser.ts";
 
 import userAvatar from "../../../../assets/images/UserAvatar.png";
 
@@ -16,9 +18,9 @@ interface ChatMessageProps {
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
-  const { isLoginUser } = useLoginUser(message.userId);
+  const loginUserId = useUserStore((state) => state.loginUserId);
 
-  if (isLoginUser) {
+  if (loginUserId === Number(message.userId)) {
     return (
       <SenderMessageContainer>
         <SenderMessageContent>

@@ -1,5 +1,7 @@
 import api from "../api";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../react-query/constants.ts";
 
 interface User {
   authority: string;
@@ -46,3 +48,10 @@ const useLoginUser = (id?: string): LoginUserResult => {
 };
 
 export default useLoginUser;
+
+export const useFetchLoginUser = () =>
+  useQuery({
+    queryKey: [queryKeys.loginUser],
+    queryFn: () => api.get("/api/users/profile"),
+    select: (data) => data.data.data,
+  });

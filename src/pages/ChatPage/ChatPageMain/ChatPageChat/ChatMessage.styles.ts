@@ -22,6 +22,7 @@ export const SenderMessageContent = styled.div`
     width: 40px;
     height: 40px;
     margin-right: 10px;
+    border-radius: 50%;
   }
 `;
 

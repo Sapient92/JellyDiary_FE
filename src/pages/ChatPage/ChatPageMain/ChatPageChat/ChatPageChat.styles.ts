@@ -23,14 +23,16 @@ export const ChatHeader = styled.div`
   align-items: center;
 
   p {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 20px;
     font-size: 22px;
     font-weight: 600;
   }
 `;
 
 export const ChatMessagesContainer = styled.div`
+  max-height: 595px;
   height: 595px;
+  overflow-y: auto;
 `;
 
 export const ChatFooter = styled.form`
@@ -45,6 +47,7 @@ export const ChatFooter = styled.form`
     box-sizing: border-box;
     border-radius: 60px;
     padding-left: 18px;
+    padding-right: 46px;
   }
 
   button {
