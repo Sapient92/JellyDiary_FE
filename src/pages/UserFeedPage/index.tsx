@@ -21,6 +21,7 @@ const UserFeedPage: FC = () => {
   const { isLoading, data, isError, error } = useFetchUserFeed(
     userId as string,
   );
+
   const {
     isLoading: postLoading,
     data: postData,

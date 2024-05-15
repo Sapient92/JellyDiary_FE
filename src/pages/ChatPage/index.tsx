@@ -46,7 +46,7 @@ const ChatPage = () => {
       }
     }
     createRoom(diaryId, userId);
-  }, [userId]);
+  }, [userId, diaryId]);
 
   useEffect(() => {
     if (chatId) {

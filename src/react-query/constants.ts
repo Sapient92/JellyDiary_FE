@@ -1,5 +1,6 @@
 export const queryKeys = {
   user: "user",
+  loginUser: "loginUser",
   userFeed: "userFeed",
   userFeedPost: "userFeedPost",
   post: "post",

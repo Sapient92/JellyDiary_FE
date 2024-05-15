@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Client } from "@stomp/stompjs";
+import { useParams } from "react-router-dom";
 
 import ChatPageUserList from "./ChatPageUserList";
 import ChatPageChat from "./ChatPageChat";
 
+import { useFetchLoginUser } from "../../../hooks/useLoginUser.ts";
 import { ChatType, MessageType } from "../../../types/chattingType.ts";
+import { useUserStore } from "../../../store/userStore/userStore.ts";
 
 import { ChatMainContainer } from "./ChatPageMain.styles.ts";
-import { useParams } from "react-router-dom";
 
 interface ChatPageMainProps {
   chatId: number | null;
@@ -25,6 +27,14 @@ const ChatPageMain: React.FC<ChatPageMainProps> = ({
   chatList,
 }) => {
   const { userId, diaryId } = useParams();
+  const { data } = useFetchLoginUser();
+  const setLoginUserId = useUserStore((state) => state.setLoginUserId);
+
+  useEffect(() => {
+    if (data) {
+      setLoginUserId(data?.userId);
+    }
+  }, [data]);
 
   return (
     <ChatMainContainer>

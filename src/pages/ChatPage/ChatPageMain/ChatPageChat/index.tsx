@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
 
@@ -36,6 +36,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   const { userData } = useLoginUser();
   const [searchParams] = useSearchParams();
   const roomName = searchParams.get("roomName");
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const {
     isLoading,
@@ -51,9 +52,30 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   }, [messageHistory]);
 
   useEffect(() => {
+    const scrollableElement = messagesContainerRef?.current;
+    const scrollToBottom = () => {
+      if (
+        scrollableElement &&
+        scrollableElement.scrollHeight > scrollableElement.clientHeight
+      ) {
+        scrollableElement.scrollTop =
+          scrollableElement.scrollHeight - scrollableElement.clientHeight;
+      }
+    };
+    scrollToBottom();
+
+    const observer = new MutationObserver(scrollToBottom);
+    if (scrollableElement) {
+      observer.observe(scrollableElement, { childList: true, subtree: true });
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [messagesContainerRef?.current]);
+
+  useEffect(() => {
     return () => {
       client.deactivate();
-      console.log("언마운트");
     };
   }, []);
 
@@ -83,7 +105,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
           <p>{roomName}</p>
         </ChatHeader>
       </ChatFlexContainer>
-      <ChatMessagesContainer>
+      <ChatMessagesContainer ref={messagesContainerRef}>
         {messages?.length !== 0 &&
           messages?.map((message) => (
             <ChatMessage key={message?.chatMessageId} message={message} />

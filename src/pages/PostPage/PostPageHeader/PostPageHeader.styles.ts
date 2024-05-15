@@ -19,6 +19,7 @@ export const UserProfileContainer = styled.div`
   img {
     width: 42px;
     height: 42px;
+    border-radius: 50%;
   }
 `;
 
