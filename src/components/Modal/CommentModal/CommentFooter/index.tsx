@@ -37,15 +37,19 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
     String(postData.diaryId),
     debouncedWord,
   );
+
   useEffect(() => {
     const userName = searchUser?.map((data: SearchUser) => {
+      const id = data.userId + 1;
       return {
-        id: String(data.userId),
+        id,
         display: data.userName,
       };
     });
-    setSearchUsers(userName);
-  }, [searchUser, debouncedWord]);
+    if (userName?.length !== 0 && userName) {
+      setSearchUsers((prev) => [...prev, ...userName]);
+    }
+  }, [searchUser]);
 
   const handlePostClick = (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault();
@@ -92,7 +96,14 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
         placeholder={`${userData.userName}님에게 댓글 추가`}
         onKeyDown={handleEnterPrevent}
       >
-        <Mention trigger={"@"} data={searchUsers} />
+        <Mention
+          trigger={"@"}
+          data={
+            searchUsers?.length > 0
+              ? searchUsers
+              : [{ id: "0", display: "검색된 유저가 없습니다." }]
+          }
+        />
       </MentionsInput>
       <button onClick={handlePostClick}>post</button>
     </CommentFooterContainer>
