@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
 
 import { client } from "../../../../utils/StompClient.ts";
@@ -17,13 +17,13 @@ import {
 import sendBtn from "../../../../assets/button/SendBtn.png";
 import { useFetchChatHistory } from "../../../../hooks/useChatting.ts";
 import ChatMessage from "./ChatMessage.tsx";
-import { MessageType } from "../../../../types/chattingType.ts";
+import { MessageListType } from "../../../../types/chattingType.ts";
 
 interface ChatPageChat {
   chatId: number | null;
   stompClient: Client | null;
-  setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
-  messages: MessageType[];
+  setMessages: React.Dispatch<React.SetStateAction<MessageListType[]>>;
+  messages: MessageListType[];
 }
 
 const ChatPageChat: React.FC<ChatPageChat> = ({
@@ -32,24 +32,62 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   setMessages,
   messages,
 }) => {
+  const { userId, diaryId } = useParams();
   const [message, setMessage] = useState("");
   const { userData } = useLoginUser();
   const [searchParams] = useSearchParams();
   const roomName = searchParams.get("roomName");
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const firstItemRef = useRef<HTMLDivElement | null>(null);
+  const [page, setPage] = useState(0);
 
   const {
     isLoading,
     data: messageHistory,
     isError,
     error,
-  } = useFetchChatHistory(Number(chatId));
+  } = useFetchChatHistory(Number(chatId), page, 20);
 
   useEffect(() => {
     if (messageHistory) {
-      setMessages(messageHistory);
+      setMessages([...messageHistory.chatMessageList]);
     }
   }, [messageHistory]);
+
+  // IntersectionObserver
+  useEffect(() => {
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && messageHistory?.hasNext) {
+          console.log("First Items is visible");
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: messagesContainerRef?.current,
+      rootMargin: "0px",
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
+
+    const currentRef = firstItemRef?.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [messageHistory?.hasNext]);
 
   useEffect(() => {
     const scrollableElement = messagesContainerRef?.current;
@@ -96,8 +134,10 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
     }
     setMessage("");
   };
+
   if (isLoading) return <>채팅을 불러오는 중 입니다...</>;
   if (isError) return <>{error?.message}</>;
+
   return (
     <ChatContainer>
       <ChatFlexContainer>
@@ -107,8 +147,13 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
       </ChatFlexContainer>
       <ChatMessagesContainer ref={messagesContainerRef}>
         {messages?.length !== 0 &&
-          messages?.map((message) => (
-            <ChatMessage key={message?.chatMessageId} message={message} />
+          messages?.map((message, index) => (
+            <div
+              key={message?.chatMessageId}
+              ref={index === 0 ? firstItemRef : null}
+            >
+              <ChatMessage message={message} />
+            </div>
           ))}
       </ChatMessagesContainer>
       <ChatFooter>

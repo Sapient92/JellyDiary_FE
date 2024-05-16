@@ -10,7 +10,7 @@ import api from "../../api";
 
 import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
 import { useFetchChatList } from "../../hooks/useChatting.ts";
-import { MessageType } from "../../types/chattingType.ts";
+import { MessageListType } from "../../types/chattingType.ts";
 
 export interface Content {
   chatMessage: string;
@@ -21,7 +21,7 @@ const ChatPage = () => {
   const { userId } = useParams();
   const { diaryId } = useParams();
   const [chatId, setChatId] = useState<number | null>(null);
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [messages, setMessages] = useState<MessageListType[]>([]);
   const [stompClient, setStompClient] = useState<Client | null>(null);
   const { data: chatList } = useFetchChatList();
 

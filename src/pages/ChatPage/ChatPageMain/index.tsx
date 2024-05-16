@@ -6,7 +6,7 @@ import ChatPageUserList from "./ChatPageUserList";
 import ChatPageChat from "./ChatPageChat";
 
 import { useFetchLoginUser } from "../../../hooks/useLoginUser.ts";
-import { ChatType, MessageType } from "../../../types/chattingType.ts";
+import { ChatType, MessageListType } from "../../../types/chattingType.ts";
 import { useUserStore } from "../../../store/userStore/userStore.ts";
 
 import { ChatMainContainer } from "./ChatPageMain.styles.ts";
@@ -14,9 +14,9 @@ import { ChatMainContainer } from "./ChatPageMain.styles.ts";
 interface ChatPageMainProps {
   chatId: number | null;
   stompClient: Client | null;
-  messages: MessageType[];
+  messages: MessageListType[];
   chatList: ChatType[];
-  setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
+  setMessages: React.Dispatch<React.SetStateAction<MessageListType[]>>;
 }
 
 const ChatPageMain: React.FC<ChatPageMainProps> = ({
