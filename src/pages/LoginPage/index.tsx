@@ -31,10 +31,6 @@ const LoginPage = () => {
           <img src={login_G} />
           <span>Google 로그인 </span>
         </LoginButton>
-        <LoginButton>
-          <img src={login_F} />
-          <span> Facebook 로그인</span>
-        </LoginButton>
       </LoginPageContent>
     </LoginPageContainer>
   );
