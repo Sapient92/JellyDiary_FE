@@ -8,7 +8,7 @@ export interface ChatType {
   userId: null | number;
 }
 
-export interface MessageType {
+export interface MessageListType {
   chatMessage: string;
   chatMessageId: number;
   chatRoomId: string;
@@ -16,4 +16,10 @@ export interface MessageType {
   userId: string;
   userName: string;
   userProfileImg: null | string;
+}
+
+export interface MessageType {
+  chatMessageList: MessageListType[];
+  hasNext: boolean;
+  hasPrevious: boolean;
 }

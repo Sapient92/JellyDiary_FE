@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MessageType } from "../../../../types/chattingType.ts";
+import { MessageListType } from "../../../../types/chattingType.ts";
 import { useUserStore } from "../../../../store/userStore/userStore.ts";
 
 import {
@@ -14,7 +14,7 @@ import {
 import userAvatar from "../../../../assets/images/UserAvatar.png";
 
 interface ChatMessageProps {
-  message: MessageType;
+  message: MessageListType;
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
