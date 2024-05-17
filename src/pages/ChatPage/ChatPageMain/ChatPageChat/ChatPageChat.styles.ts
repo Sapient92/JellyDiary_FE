@@ -64,5 +64,5 @@ export const ChatFooter = styled.form`
 
 export const NextFetchTarget = styled.div`
   width: 100%;
-  height: 6px;
+  height: 10px;
 `;
