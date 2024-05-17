@@ -1,5 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
+export const LogoContainer = styled.div`
+  height: 100px;
+  img {
+    height: 100px;
+  }
+`;
 export const LoginPageContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -34,5 +40,21 @@ export const LoginButton = styled.div`
   &:hover {
     cursor: pointer;
     background-color: #ccc;
+  }
+`;
+
+export const ContractContent = styled.div`
+  color: gray;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  vertical-align: middle;
+  div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;

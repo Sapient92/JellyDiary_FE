@@ -10,6 +10,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import useUser from '../../../hooks/useUser.ts';
 
+import logo from '../../../assets/images/logo.png';
+
 const Header = () => {
   const navigate = useNavigate();
   // const handleLogout = () => {
@@ -27,7 +29,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <LogoContainer to={'/'}>
-        <button>로고</button>
+        <img src={logo} />
       </LogoContainer>
       <RightButtonContainer>
         <HeaderRightButton title={'큰 SNS'} name={'bigSns'} />
