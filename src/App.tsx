@@ -12,6 +12,7 @@ import ChatPage from './pages/ChatPage';
 import DiaryPage from './pages/DiaryPage';
 import DemoApp from './pages/DiaryPage/DiaryTestPage.tsx';
 import LoginPage from './pages/LoginPage/index.tsx';
+import SignInPage from './pages/LoginPage/SigninPage/index.tsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Layout />}>
           <Route path={'/login'} element={<LoginPage />} />
+          <Route path={'/signin'} element={<SignInPage />} />
           <Route path={'/userfeed/:userId'} element={<UserFeedPage />} />
           <Route path={'/post/:id'} element={<PostPage />} />
           <Route path={'/write/:diaryId'} element={<WritePage />} />

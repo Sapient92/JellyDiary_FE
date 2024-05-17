@@ -27,6 +27,9 @@ export const LogoContainer = styled(Link)`
     height: 40px;
     font-size: 20px;
   }
+  img {
+    height: 100px;
+  }
 `;
 export const RightButtonContainer = styled.div`
   display: flex;
