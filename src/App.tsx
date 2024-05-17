@@ -20,6 +20,7 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Layout />}>
           <Route path={'/login'} element={<LoginPage />} />
+          {/* <Route path={'/'} element={<LoginPage />} /> */}
           <Route path={'/signin'} element={<SignInPage />} />
           <Route path={'/userfeed/:userId'} element={<UserFeedPage />} />
           <Route path={'/post/:id'} element={<PostPage />} />

@@ -20,14 +20,16 @@ const categryToRoute = {
   dm: 'chat',
 };
 
-const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name }) => {
+const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name, userId }) => {
   const { categories, changeCategory } = useCategoriesStore((state) => state);
   const navigate = useNavigate();
 
   const handleCategoryClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const routePath = categryToRoute[name];
-
+    let routePath = categryToRoute[name];
+    if (name === 'myFeed' && userId) {
+      routePath = `${routePath}/${userId}`;
+    }
     if (categories[name]) {
       return;
     }
