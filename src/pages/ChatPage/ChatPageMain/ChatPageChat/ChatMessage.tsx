@@ -37,6 +37,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         <ReceiverImgContainer>
           <img
             src={message.userProfileImg ? message.userProfileImg : userAvatar}
+            alt={"userProfileImg"}
           />
         </ReceiverImgContainer>
         <ReceiverMessageContent>

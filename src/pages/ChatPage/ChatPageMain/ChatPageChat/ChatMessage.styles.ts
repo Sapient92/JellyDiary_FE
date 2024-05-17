@@ -54,5 +54,6 @@ export const ReceiverImgContainer = styled.div`
     height: 40px;
     margin-left: 10px;
     margin-right: 10px;
+    border-radius: 50%;
   }
 `;

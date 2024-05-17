@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
 
-import { client } from "../../../../utils/StompClient.ts";
+import ChatMessage from "./ChatMessage.tsx";
 
+import { client } from "../../../../utils/StompClient.ts";
 import useLoginUser from "../../../../hooks/useLoginUser.ts";
+import { useFetchChatHistory } from "../../../../hooks/useChatting.ts";
+import { MessageListType } from "../../../../types/chattingType.ts";
 
 import {
   ChatContainer,
@@ -16,9 +19,6 @@ import {
 } from "./ChatPageChat.styles.ts";
 
 import sendBtn from "../../../../assets/button/SendBtn.png";
-import { useFetchChatHistory } from "../../../../hooks/useChatting.ts";
-import ChatMessage from "./ChatMessage.tsx";
-import { MessageListType } from "../../../../types/chattingType.ts";
 
 interface ChatPageChat {
   chatId: number | null;
@@ -34,14 +34,14 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   messages,
 }) => {
   const [message, setMessage] = useState("");
+  const [scrollHeight, setScrollHeight] = useState(0);
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const { userData } = useLoginUser();
   const [searchParams] = useSearchParams();
   const roomName = searchParams.get("roomName");
   const messageEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const firstItemRef = useRef<HTMLDivElement | null>(null);
   const topRef = useRef<HTMLDivElement | null>(null);
-  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const {
     isLoading,
@@ -58,11 +58,50 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   }, []);
 
   useEffect(() => {
-    if (initialLoadComplete) {
+    if (messageHistory) {
+      const sortedMessage = [...messageHistory].sort(
+        (a: MessageListType, b: MessageListType) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+
+      const isDifferent =
+        sortedMessage.length !== messages.length ||
+        sortedMessage.some(
+          (message, index) => message.createdAt !== messages[index]?.createdAt,
+        );
+
+      if (isDifferent) {
+        if (!initialLoadComplete) {
+          setMessages(() => [...sortedMessage]);
+          setInitialLoadComplete(true);
+        } else {
+          setMessages(() => [...sortedMessage]);
+        }
+      }
+    }
+  }, [messageHistory]);
+
+  useEffect(() => {
+    if (!messagesContainerRef) return;
+    if (
+      messagesContainerRef.current &&
+      messages.length === messageHistory?.length
+    ) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight - scrollHeight;
+      setScrollHeight(messagesContainerRef.current.scrollHeight);
+    }
+    if (messages.length > (messageHistory ? messageHistory?.length : 0)) {
+      messageEndRef.current?.scrollIntoView({ behavior: "instant" });
+    }
+  }, [messages?.length]);
+
+  useEffect(() => {
+    if (initialLoadComplete && !isFetching) {
       const options = {
         root: messagesContainerRef?.current,
         rootMargin: "0px",
-        threshold: 0.5,
+        threshold: 0.1,
       };
 
       const fetchCallback: IntersectionObserverCallback = (
@@ -71,8 +110,8 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
       ) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && hasNextPage) {
-            fetchNextPage?.();
             observer.unobserve(entry.target);
+            fetchNextPage?.();
           }
         });
       };
@@ -90,44 +129,13 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
         }
       };
     }
-  }, [
-    initialLoadComplete,
-    messageHistory,
-    hasNextPage,
-    fetchNextPage,
-    topRef,
-    messages,
-  ]);
-
-  useEffect(() => {
-    if (messageHistory) {
-      const sortedMessage = [...messageHistory].sort(
-        (a: MessageListType, b: MessageListType) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-      );
-
-      const isDifferent =
-        sortedMessage.length !== messages.length ||
-        sortedMessage.some(
-          (message, index) => message.createdAt !== messages[index]?.createdAt,
-        );
-
-      if (isDifferent) {
-        if (!initialLoadComplete) {
-          setMessages(sortedMessage);
-          setInitialLoadComplete(true);
-        } else {
-          setMessages(sortedMessage);
-        }
-      }
-    }
-  }, [messageHistory]);
+  }, [messageHistory, topRef.current]);
 
   useEffect(() => {
     if (initialLoadComplete) {
       messageEndRef.current?.scrollIntoView({ behavior: "instant" });
     }
-  }, [initialLoadComplete, messages]);
+  }, [initialLoadComplete]);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -162,11 +170,8 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
           <NextFetchTarget ref={topRef}></NextFetchTarget>
         )}
         {messages?.length !== 0 &&
-          messages?.map((message, index) => (
-            <div
-              key={message?.chatMessageId}
-              ref={index === 0 ? firstItemRef : null}
-            >
+          messages?.map((message) => (
+            <div key={message?.chatMessageId}>
               <ChatMessage message={message} />
             </div>
           ))}
