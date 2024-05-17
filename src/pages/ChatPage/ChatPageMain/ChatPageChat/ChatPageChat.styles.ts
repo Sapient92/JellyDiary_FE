@@ -33,6 +33,7 @@ export const ChatMessagesContainer = styled.div`
   max-height: 595px;
   height: 595px;
   overflow-y: auto;
+  padding: 0 0 10px 0;
 `;
 
 export const ChatFooter = styled.form`
@@ -59,4 +60,9 @@ export const ChatFooter = styled.form`
     padding: 0;
     cursor: pointer;
   }
+`;
+
+export const NextFetchTarget = styled.div`
+  width: 100%;
+  height: 6px;
 `;
