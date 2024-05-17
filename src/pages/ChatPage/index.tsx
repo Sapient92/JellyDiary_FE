@@ -53,7 +53,6 @@ const ChatPage = () => {
       setStompClient(client);
       client.activate();
       client.onConnect = () => {
-        console.log("WebSocket 연결이 열렸습니다.");
         const address = diaryId
           ? `/topic/group/${chatId}`
           : `/queue/private/${chatId}`;
@@ -68,7 +67,8 @@ const ChatPage = () => {
       };
     }
     return () => {
-      client.deactivate();
+      console.log("채팅방 종료");
+      client.deactivate?.();
     };
   }, [chatId]);
 

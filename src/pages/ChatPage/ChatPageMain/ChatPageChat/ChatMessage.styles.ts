@@ -21,7 +21,7 @@ export const SenderMessageContent = styled.div`
   img {
     width: 40px;
     height: 40px;
-    margin-right: 10px;
+    margin: 0 10px 0 10px;
     border-radius: 50%;
   }
 `;
@@ -53,5 +53,6 @@ export const ReceiverImgContainer = styled.div`
     width: 40px;
     height: 40px;
     margin-left: 10px;
+    margin-right: 10px;
   }
 `;

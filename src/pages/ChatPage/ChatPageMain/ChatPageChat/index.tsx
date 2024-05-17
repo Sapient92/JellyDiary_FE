@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
 
 import { client } from "../../../../utils/StompClient.ts";
@@ -12,6 +12,7 @@ import {
   ChatFooter,
   ChatHeader,
   ChatMessagesContainer,
+  NextFetchTarget,
 } from "./ChatPageChat.styles.ts";
 
 import sendBtn from "../../../../assets/button/SendBtn.png";
@@ -32,90 +33,101 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   setMessages,
   messages,
 }) => {
-  const { userId, diaryId } = useParams();
   const [message, setMessage] = useState("");
   const { userData } = useLoginUser();
   const [searchParams] = useSearchParams();
   const roomName = searchParams.get("roomName");
+  const messageEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const firstItemRef = useRef<HTMLDivElement | null>(null);
-  const [page, setPage] = useState(0);
+  const topRef = useRef<HTMLDivElement | null>(null);
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const {
     isLoading,
     data: messageHistory,
     isError,
     error,
-  } = useFetchChatHistory(Number(chatId), page, 20);
+    hasNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useFetchChatHistory(20, Number(chatId));
+
+  useEffect(() => {
+    setInitialLoadComplete(false);
+  }, []);
+
+  useEffect(() => {
+    if (initialLoadComplete) {
+      const options = {
+        root: messagesContainerRef?.current,
+        rootMargin: "0px",
+        threshold: 0.5,
+      };
+
+      const fetchCallback: IntersectionObserverCallback = (
+        entries,
+        observer,
+      ) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && hasNextPage) {
+            fetchNextPage?.();
+            observer.unobserve(entry.target);
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(fetchCallback, options);
+      const currentRef = topRef?.current;
+
+      if (currentRef) {
+        observer.observe(currentRef);
+      }
+
+      return () => {
+        if (currentRef) {
+          observer.unobserve(currentRef);
+        }
+      };
+    }
+  }, [
+    initialLoadComplete,
+    messageHistory,
+    hasNextPage,
+    fetchNextPage,
+    topRef,
+    messages,
+  ]);
 
   useEffect(() => {
     if (messageHistory) {
-      setMessages([...messageHistory.chatMessageList]);
+      const sortedMessage = [...messageHistory].sort(
+        (a: MessageListType, b: MessageListType) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+
+      const isDifferent =
+        sortedMessage.length !== messages.length ||
+        sortedMessage.some(
+          (message, index) => message.createdAt !== messages[index]?.createdAt,
+        );
+
+      if (isDifferent) {
+        if (!initialLoadComplete) {
+          setMessages(sortedMessage);
+          setInitialLoadComplete(true);
+        } else {
+          setMessages(sortedMessage);
+        }
+      }
     }
   }, [messageHistory]);
 
-  // IntersectionObserver
   useEffect(() => {
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && messageHistory?.hasNext) {
-          console.log("First Items is visible");
-          setPage((prevPage) => prevPage + 1);
-        }
-      });
-    };
-
-    const observerOptions = {
-      root: messagesContainerRef?.current,
-      rootMargin: "0px",
-      threshold: 0.1,
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions,
-    );
-
-    const currentRef = firstItemRef?.current;
-
-    if (currentRef) {
-      observer.observe(currentRef);
+    if (initialLoadComplete) {
+      messageEndRef.current?.scrollIntoView({ behavior: "instant" });
     }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [messageHistory?.hasNext]);
-
-  useEffect(() => {
-    const scrollableElement = messagesContainerRef?.current;
-    const scrollToBottom = () => {
-      if (
-        scrollableElement &&
-        scrollableElement.scrollHeight > scrollableElement.clientHeight
-      ) {
-        scrollableElement.scrollTop =
-          scrollableElement.scrollHeight - scrollableElement.clientHeight;
-      }
-    };
-    scrollToBottom();
-
-    const observer = new MutationObserver(scrollToBottom);
-    if (scrollableElement) {
-      observer.observe(scrollableElement, { childList: true, subtree: true });
-    }
-    return () => {
-      observer.disconnect();
-    };
-  }, [messagesContainerRef?.current]);
-
-  useEffect(() => {
-    return () => {
-      client.deactivate();
-    };
-  }, []);
+  }, [initialLoadComplete, messages]);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -146,6 +158,9 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
         </ChatHeader>
       </ChatFlexContainer>
       <ChatMessagesContainer ref={messagesContainerRef}>
+        {!isFetching && hasNextPage && (
+          <NextFetchTarget ref={topRef}></NextFetchTarget>
+        )}
         {messages?.length !== 0 &&
           messages?.map((message, index) => (
             <div
@@ -155,6 +170,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
               <ChatMessage message={message} />
             </div>
           ))}
+        <div ref={messageEndRef}></div>
       </ChatMessagesContainer>
       <ChatFooter>
         <input

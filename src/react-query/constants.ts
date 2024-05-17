@@ -15,4 +15,5 @@ export const queryKeys = {
   chatList: "chatList",
   chatDetail: "chatDetail",
   chatHistory: "chatHistory",
+  chatPaginated: "chatPaginated",
 };
