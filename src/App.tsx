@@ -5,7 +5,7 @@ import Layout from './components/layout';
 import UserFeedPage from './pages/UserFeedPage';
 import PostPage from './pages/PostPage';
 import WritePage from './pages/WritePage';
-import SettingPage from './pages/CreateDiaryModal/index.tsx';
+import SettingPage from './pages/SettingPage/index.tsx';
 import NotFoundPage from './pages/NotFoundPage';
 import SuggestedPage from './pages/SuggestedPage';
 import ChatPage from './pages/ChatPage';

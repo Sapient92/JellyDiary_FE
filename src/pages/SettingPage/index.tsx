@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 
 import CustomButton from '../../components/CustomButton';
@@ -41,6 +41,40 @@ const SettingPage = () => {
     dm,
     toggleSetting,
   } = useNotificationStore((state) => state);
+
+  const [settings, setSettings] = useState({
+    notificationSetting,
+    postLike,
+    postComment,
+    postCreated,
+    commentTag,
+    newFollower,
+    dm,
+  });
+  useEffect(() => {
+    if (user) {
+      setSettings({
+        notificationSetting: user.notificationSetting,
+        postLike: user.postLike,
+        postComment: user.postComment,
+        postCreated: user.postCreated,
+        commentTag: user.commentTag,
+        newFollower: user.newFollower,
+        dm: user.dm,
+      });
+    }
+  }, [user]);
+  useEffect(() => {
+    setSettings({
+      notificationSetting,
+      postLike,
+      postComment,
+      postCreated,
+      commentTag,
+      newFollower,
+      dm,
+    });
+  }, [notificationSetting, postLike, postComment, postCreated, commentTag, newFollower, dm]);
 
   const onMoveToSelect = () => {
     if (scrollView.current !== undefined && scrollView.current !== null) {
@@ -101,6 +135,7 @@ const SettingPage = () => {
 
       if (response.status === 200) {
         console.log('Profile description updated successfully.');
+        window.location.reload();
       } else {
         console.log('Failed to update profile description:', response.status);
       }
@@ -138,16 +173,35 @@ const SettingPage = () => {
     setIsButtonDisabled(true);
   };
 
-  const updateSettings = () => {
-    console.log('Current State:', {
-      notificationSetting,
-      postLike,
-      postComment,
-      postCreated,
-      commentTag,
-      newFollower,
-      dm,
-    });
+  const updateSettings = async () => {
+    try {
+      const response = await api.patch('/api/users/profile/notifications', settings);
+      if (response.status === 200) {
+        console.log('Settings updated successfully.');
+      } else {
+        console.error('Failed to update settings:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error updating settings:', error);
+    }
+  };
+  const handleToggle = (settingName) => {
+    if (settingName === 'notificationSetting' && !settings.notificationSetting) {
+      setSettings({
+        notificationSetting: false,
+        postLike: false,
+        postComment: false,
+        postCreated: false,
+        commentTag: false,
+        newFollower: false,
+        dm: false,
+      });
+    } else {
+      setSettings((prevSettings) => ({
+        ...prevSettings,
+        [settingName]: !prevSettings[settingName],
+      }));
+    }
   };
   if (!user) {
     return <div>...</div>;
@@ -217,7 +271,7 @@ const SettingPage = () => {
             <CustomButton
               text="저장"
               backgroundColor="blue"
-              disabled={false}
+              disabled={!IsButtonDisabled}
               onClick={() => updateProfileDesc(userName, userDesc)}
             />
           </ButtonContent>
@@ -227,46 +281,54 @@ const SettingPage = () => {
             <h3>알림설정</h3>
             <ButtonContent>
               <ToggleButton
-                state={notificationSetting}
-                toggle={() => toggleSetting('notificationSetting')}
+                state={settings.notificationSetting}
+                toggle={() => handleToggle('notificationSetting')}
               />
             </ButtonContent>
           </ToggleTitle>
-          {user.notificationSetting ? <div>알림을 켜주세요</div> : <div>hi</div>}
           <ToggleContent>
             <div>게시물 좋아요</div>
             <ButtonContent>
-              <ToggleButton state={user?.postLike} />
+              <ToggleButton state={settings.postLike} toggle={() => handleToggle('postLike')} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>게시물 댓글</div>
             <ButtonContent>
-              <ToggleButton state={user?.postComment} />
+              <ToggleButton
+                state={settings.postComment}
+                toggle={() => handleToggle('postComment')}
+              />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>게시물 생성</div>
             <ButtonContent>
-              <ToggleButton state={user?.postCreated} />
+              <ToggleButton
+                state={settings.postCreated}
+                toggle={() => handleToggle('postCreated')}
+              />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>언급</div>
             <ButtonContent>
-              <ToggleButton state={user?.commentTag} />
+              <ToggleButton state={settings.commentTag} toggle={() => handleToggle('commentTag')} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>새로운 팔로워</div>
             <ButtonContent>
-              <ToggleButton state={user?.newFollower} />
+              <ToggleButton
+                state={settings.newFollower}
+                toggle={() => handleToggle('newFollower')}
+              />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
             <div>메시지 요청(DM)</div>
             <ButtonContent>
-              <ToggleButton state={user.dm} />
+              <ToggleButton state={settings.dm} toggle={() => handleToggle('dm')} />
             </ButtonContent>
           </ToggleContent>
           <ButtonContent>
