@@ -2,11 +2,22 @@ import React from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import api from '../../../api/index.ts';
-import { PostsSection } from './SuggestedPostsSection.styles.ts';
+import { PostsSection, PostWrap } from './SuggestedPostsSection.styles.ts';
+import SuggestedPost from './SuggestedPost/index.tsx';
+
+interface snsListProps {
+  userId: number;
+  userName: string;
+  userProfileImg: string;
+  postId: number;
+  postImg: string;
+  diaryId: number;
+  diaryProfileImage: string;
+  like: boolean;
+}
 
 const fetchJellyDiaries = async ({ pageParam = 5 }) => {
   const response = await api.get(`/api/jellyDiary?size=5&lastPostId=${pageParam}`);
-  console.log(response.data.data.snsList[0]);
   return {
     items: response.data.data.snsList,
     lastPostId: response.data.data.snsList[0]?.postId,
@@ -36,20 +47,17 @@ const SuggestedPostsSection = () => {
 
   return (
     <PostsSection>
-      <div>
-        {data.pages.map((page, index) => (
-          <div key={index}>
-            {page.items.map((item) => (
-              <div key={item.postId}>
-                <img src={item.postImg} alt={item.postId} />
-                <p>{item.userId}</p>
-              </div>
-            ))}
-          </div>
-        ))}
-        <div ref={ref} style={{ height: 1 }} />
-        {isFetchingNextPage && <div>Loading more...</div>}
-      </div>
+      {data.pages.map((page, pageIndex) => (
+        <React.Fragment key={pageIndex}>
+          {page.items.map((item: snsListProps) => (
+            <PostWrap key={item.postId}>
+              <SuggestedPost item={item} />
+            </PostWrap>
+          ))}
+        </React.Fragment>
+      ))}
+      <div ref={ref} style={{ height: 1 }} />
+      {isFetchingNextPage && <div>Loading more...</div>}
     </PostsSection>
   );
 };

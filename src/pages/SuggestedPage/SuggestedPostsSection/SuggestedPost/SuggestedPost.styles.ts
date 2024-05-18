@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { IoPaw, IoPawOutline } from 'react-icons/io5';
+import styled from 'styled-components';
 
 export const SuggestedPostContainer = styled.article`
   margin: 9px;
@@ -38,8 +39,19 @@ export const UserButton = styled.div`
 
 export const PawButton = styled.div`
   position: absolute;
-  margin-top: -2rem;
+  margin-top: -3rem;
   margin-left: 1rem;
   cursor: pointer;
   font-size: large;
+`;
+export const NotLikeButton = styled(IoPawOutline)`
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+`;
+
+export const LikeButton = styled(IoPaw)`
+  font-size: 30px;
+  color: hotpink;
+  cursor: pointer;
 `;

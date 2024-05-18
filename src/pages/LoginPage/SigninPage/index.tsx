@@ -9,16 +9,16 @@ const SignInPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await api.get('/api/users/profile');
-      console.log(response.data);
+      const response = await api.post('/api/signin');
+
+      localStorage.setItem('Authorization', response.data.data.authorization);
       return response.data;
     };
-    console.log('test');
     fetchData();
   });
   setTimeout(() => {
     navigate('/');
-  }, 30000);
+  }, 3000);
 
   return <div>...</div>;
 };

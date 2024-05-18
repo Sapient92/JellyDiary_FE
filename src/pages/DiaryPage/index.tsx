@@ -27,7 +27,7 @@ import {
 
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 import api from '../../api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CreateDiaryModal from './DiaryWritePage';
 import UserImageList from './UserImageList';
 
@@ -55,6 +55,8 @@ function renderEventContent(eventInfo: EventContentArg) {
 }
 
 const DiaryPage = () => {
+  const { id } = useParams();
+
   const [isOpen, setIsOpen] = useState(true);
   const [events, setEvents] = useState([]);
   const [diaryData, setDiaryData] = useState<DiaryProps>([]);
@@ -73,8 +75,9 @@ const DiaryPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await api.get('/api/diary/mydiaryList');
+      const data = await api.get(`/api/diary/profile/${id}`);
       setDiaryList(response.data.data);
-      setDiaryData(diaryList[0]);
+      setDiaryData(data.data.data);
     };
     fetchData();
   }, []);
@@ -134,6 +137,7 @@ const DiaryPage = () => {
     setDiaryData(response.data.data);
     setDiaryAuth(auth.data.data.diaryRole);
     setEvents(transformEventData(events.data.data));
+    navigate(`/diary/${id}`);
   };
   const onChangeImage = (e) => {
     const file = e.target.files[0];
