@@ -26,6 +26,7 @@ const Header = () => {
     navigate('/setting');
   };
   const { user } = useUser();
+
   return (
     <HeaderContainer>
       <LogoContainer to={'/'}>

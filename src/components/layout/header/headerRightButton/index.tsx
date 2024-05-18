@@ -27,6 +27,10 @@ const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name, userId }) 
   const handleCategoryClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     let routePath = categryToRoute[name];
+
+    if (name === 'smallSns' && userId) {
+      routePath = `${routePath}/${userId}`;
+    }
     if (name === 'myFeed' && userId) {
       routePath = `${routePath}/${userId}`;
     }

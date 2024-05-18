@@ -75,7 +75,19 @@ const DiaryPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await api.get('/api/diary/mydiaryList');
+      if (!id) {
+        navigate(`/diary/${response.data.data[0].diaryId}`);
+        window.location.reload();
+      }
       const data = await api.get(`/api/diary/profile/${id}`);
+
+      const auth = await api.get(`/api/diary/user/${id}`);
+      const events = await updateEvents(id);
+      const test = await fetchGroupChat(id);
+      setChatList(filterNonSubscribers(test));
+      setDiaryData(response.data.data);
+      setDiaryAuth(auth.data.data.diaryRole);
+      setEvents(transformEventData(events.data.data));
       setDiaryList(response.data.data);
       setDiaryData(data.data.data);
     };
