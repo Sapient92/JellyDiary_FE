@@ -50,7 +50,6 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
     error,
     hasNextPage,
     fetchNextPage,
-    isFetching,
   } = useFetchChatHistory(20, Number(chatId));
 
   useEffect(() => {
@@ -97,21 +96,27 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   }, [messages?.length]);
 
   useEffect(() => {
-    if (initialLoadComplete && !isFetching) {
+    if (initialLoadComplete && hasNextPage) {
       const options = {
         root: messagesContainerRef?.current,
         rootMargin: "0px",
         threshold: 0.1,
       };
 
+      let timeoutId: NodeJS.Timeout | null;
       const fetchCallback: IntersectionObserverCallback = (
         entries,
         observer,
       ) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && hasNextPage) {
+          if (entry.isIntersecting && hasNextPage && !timeoutId) {
             observer.unobserve(entry.target);
-            fetchNextPage?.();
+            fetchNextPage?.().then(() => {
+              timeoutId = setTimeout(() => {
+                currentRef && observer.observe(currentRef);
+                timeoutId = null;
+              }, 500);
+            });
           }
         });
       };
@@ -129,7 +134,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
         }
       };
     }
-  }, [messageHistory, topRef.current]);
+  }, [topRef?.current, hasNextPage]);
 
   useEffect(() => {
     if (initialLoadComplete) {
@@ -166,11 +171,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
         </ChatHeader>
       </ChatFlexContainer>
       <ChatMessagesContainer ref={messagesContainerRef}>
-        {hasNextPage ? (
-          <NextFetchTarget ref={topRef}></NextFetchTarget>
-        ) : (
-          <NextFetchTarget>마지막 채팅 입니다.</NextFetchTarget>
-        )}
+        {hasNextPage && <NextFetchTarget ref={topRef}></NextFetchTarget>}
         {messages?.length !== 0 &&
           messages?.map((message) => (
             <div key={message?.chatMessageId}>

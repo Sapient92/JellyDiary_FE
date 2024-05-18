@@ -13,6 +13,7 @@ export const useFetchChatHistory = (size: number, chatRoomId: number) => {
   const { isLoading, data, ...rest } = useInfiniteQuery({
     queryKey: [queryKeys.chatPaginated, size, chatRoomId],
     enabled: !!chatRoomId,
+    staleTime: 50000000000000,
     queryFn: ({ pageParam }) => {
       return api.get(
         `/api/chat/messages?page=${pageParam}&size=${size}&chatRoomId=${chatRoomId}`,

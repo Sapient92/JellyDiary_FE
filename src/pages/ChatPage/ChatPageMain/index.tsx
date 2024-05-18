@@ -3,13 +3,13 @@ import { Client } from "@stomp/stompjs";
 import { useParams } from "react-router-dom";
 
 import ChatPageUserList from "./ChatPageUserList";
-import ChatPageChat from "./ChatPageChat";
 
 import { useFetchLoginUser } from "../../../hooks/useLoginUser.ts";
 import { ChatType, MessageListType } from "../../../types/chattingType.ts";
 import { useUserStore } from "../../../store/userStore/userStore.ts";
 
 import { ChatMainContainer } from "./ChatPageMain.styles.ts";
+import ChatPageChat from "./ChatPageChat";
 
 interface ChatPageMainProps {
   chatId: number | null;

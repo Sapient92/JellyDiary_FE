@@ -33,6 +33,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8",
     "websocket": "^1.0.35",
+    "why-did-you-render": "^1.0.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
