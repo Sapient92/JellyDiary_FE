@@ -16,7 +16,7 @@ const api = axios.create(config);
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('Authorization');
-    if (token && config.url !== '/reissue' && config.url !== '/login') {
+    if (token && config.url !== '/signin' && config.url !== '/login') {
       config.headers['Authorization'] = token;
     }
     return config;
@@ -35,16 +35,16 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      if (originalRequest.url !== '/login') {
+      if (originalRequest.url !== '/reisue') {
         if (!isTokenRefreshing) {
           isTokenRefreshing = true;
           return await api
-            .post('/reissue')
+            .post('/signin')
             .then((res) => {
               if (res.status === 200) {
-                api.defaults.headers.common['Authorization'] = res.headers.Authorization;
-                originalRequest.headers['Authorization'] = res.headers.Authorization;
-                localStorage.setItem('Authorization', res.headers.Authorization);
+                api.defaults.headers.common['Authorization'] = res.data.authorization;
+                originalRequest.headers['Authorization'] = res.data.authorization;
+                localStorage.setItem('Authorization', res.data.authorization);
                 originalRequest._retry = false;
                 if (originalRequest.method === 'post') {
                   return api.post(originalRequest.url, originalRequest.data);
