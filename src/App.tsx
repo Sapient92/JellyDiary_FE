@@ -28,6 +28,7 @@ function App() {
           <Route path={'/edit/:id'} element={<WritePage />} />
           <Route path={'/setting'} element={<SettingPage />} />
           <Route path={'/diary/:id'} element={<DiaryPage />} />
+          <Route path={'/diary'} element={<DiaryPage />} />
           <Route path={'/'} element={<SuggestedPage />} />
           <Route path={'/chat'} element={<ChatPage />} />
           <Route path={'/chat/:userId'} element={<ChatPage />} />
