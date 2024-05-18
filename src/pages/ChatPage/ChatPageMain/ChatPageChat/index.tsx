@@ -166,8 +166,10 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
         </ChatHeader>
       </ChatFlexContainer>
       <ChatMessagesContainer ref={messagesContainerRef}>
-        {!isFetching && hasNextPage && (
+        {hasNextPage ? (
           <NextFetchTarget ref={topRef}></NextFetchTarget>
+        ) : (
+          <NextFetchTarget>마지막 채팅 입니다.</NextFetchTarget>
         )}
         {messages?.length !== 0 &&
           messages?.map((message) => (

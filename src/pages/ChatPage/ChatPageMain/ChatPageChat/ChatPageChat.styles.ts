@@ -65,4 +65,8 @@ export const ChatFooter = styled.form`
 export const NextFetchTarget = styled.div`
   width: 100%;
   height: 10px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
