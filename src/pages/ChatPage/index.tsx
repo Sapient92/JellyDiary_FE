@@ -4,13 +4,13 @@ import { useParams } from "react-router-dom";
 
 import ChatPageHeader from "./ChatPageHeader";
 import ChatPageMain from "./ChatPageMain";
-
-import { client } from "../../utils/StompClient.ts";
 import api from "../../api";
 
-import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
+import { client } from "../../utils/StompClient.ts";
 import { useFetchChatList } from "../../hooks/useChatting.ts";
 import { MessageListType } from "../../types/chattingType.ts";
+
+import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
 
 export interface Content {
   chatMessage: string;
