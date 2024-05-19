@@ -10,13 +10,12 @@ import { Mention, MentionsInput, SuggestionDataItem } from "react-mentions";
 import { useFetchSearchUser } from "../../../../hooks/useSearchUser.ts";
 import { SearchUser } from "../../../../types/userType.ts";
 import { useDebounce } from "../../../../hooks/useDebounce.ts";
+import mentionStyle from "./defaultStyle.ts";
 
 interface CommentFooterProps {
   id?: string;
   userId: number;
 }
-
-// 멘션 기능 구현할 때 useDebounce 사용해서 Debounce 반환 값을 api 요청으로 보내기
 
 const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const [commentContent, setCommentContent] = useState("");
@@ -47,7 +46,9 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
       };
     });
     if (userName?.length !== 0 && userName) {
-      setSearchUsers((prev) => [...prev, ...userName]);
+      setSearchUsers(userName);
+    } else {
+      setSearchUsers([{ id: "0", display: "검색된 유저가 없습니다." }]);
     }
   }, [searchUser]);
 
@@ -90,6 +91,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
         alt={"user_image"}
       />
       <MentionsInput
+        style={mentionStyle}
         inputRef={commentRef}
         value={commentContent}
         onChange={handleCommentChange}
