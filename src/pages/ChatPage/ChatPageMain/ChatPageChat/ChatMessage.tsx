@@ -12,6 +12,7 @@ import {
 } from "./ChatMessage.styles.ts";
 
 import userAvatar from "../../../../assets/images/UserAvatar.png";
+import UseWrittenAt from "../../../../hooks/useWrittenAt.ts";
 
 interface ChatMessageProps {
   message: MessageListType;
@@ -23,6 +24,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   if (loginUserId === Number(message.userId)) {
     return (
       <SenderMessageContainer>
+        <p>{UseWrittenAt(message.createdAt)}</p>
         <SenderMessageContent>
           <p>{message.chatMessage}</p>
           <img
@@ -44,6 +46,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           <p>{message.userName}</p>
           <p>{message.chatMessage}</p>
         </ReceiverMessageContent>
+        <p>{UseWrittenAt(message.createdAt)}</p>
       </ReceiverMessageContainer>
     );
   }

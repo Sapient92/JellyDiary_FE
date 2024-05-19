@@ -4,7 +4,15 @@ export const SenderMessageContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
+  align-items: center;
   margin-top: 8px;
+  p {
+    background: none;
+    font-weight: bolder;
+    font-size: 10px;
+    margin-right: 6px;
+    color: #7d8fb3;
+  }
 `;
 
 export const SenderMessageContent = styled.div`
@@ -15,7 +23,10 @@ export const SenderMessageContent = styled.div`
     margin: 0;
     background-color: white;
     padding: 8px 6px;
+    font-size: 16px;
     border-radius: 8px;
+    font-weight: normal;
+    color: black;
   }
 
   img {
@@ -28,7 +39,16 @@ export const SenderMessageContent = styled.div`
 
 export const ReceiverMessageContainer = styled.div`
   display: flex;
+  align-items: center;
   margin-top: 8px;
+
+  p {
+    background: none;
+    font-weight: bolder;
+    font-size: 10px;
+    margin-left: 6px;
+    color: #7d8fb3;
+  }
 `;
 
 export const ReceiverMessageContent = styled.div`
@@ -38,10 +58,14 @@ export const ReceiverMessageContent = styled.div`
     margin: 0;
     font-size: 14px;
     font-weight: bold;
+    color: black;
   }
 
   p:nth-child(2) {
     margin: 0;
+    color: black;
+    font-size: 16px;
+    font-weight: normal;
     background-color: white;
     border-radius: 8px;
     padding: 8px 6px;
