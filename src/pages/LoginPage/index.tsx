@@ -30,7 +30,7 @@ const LoginPage = () => {
         <LogoContainer>
           <img src={logo} />
         </LogoContainer>
-        <LoginButton>
+        <LoginButton onClick={() => handleLogin('kakao')}>
           <img src={login_K} />
         </LoginButton>
         <img src={login_Line} />
