@@ -26,6 +26,10 @@ export const CommentFooterContainer = styled.form`
     }
   }
 
+  :nth-child(2) {
+    border: none;
+  }
+
   button {
     border: none;
     background: none;

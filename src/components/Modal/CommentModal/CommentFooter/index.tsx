@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 import { useCommentMutation } from "../../../../hooks/useComment.ts";
@@ -6,22 +6,26 @@ import { useFetchPost, useFetchWriterInfo } from "../../../../hooks/usePost.ts";
 import { CommentFooterContainer } from "./CommentFooter.styles.ts";
 
 import userAvatar from "../../../../assets/images/UserAvatar.png";
-import { Mention, MentionsInput, SuggestionDataItem } from "react-mentions";
+import { Mention, MentionItem, MentionsInput } from "react-mentions";
 import { useFetchSearchUser } from "../../../../hooks/useSearchUser.ts";
-import { SearchUser } from "../../../../types/userType.ts";
 import { useDebounce } from "../../../../hooks/useDebounce.ts";
 import mentionStyle from "./defaultStyle.ts";
+import { useTagsStore } from "../../../../store/tagStore/tagStore.ts";
 
 interface CommentFooterProps {
   id?: string;
   userId: number;
 }
 
+interface tagUserProps {
+  isInvited: boolean;
+  profileImg: string | null;
+  userId: number;
+  userName: string;
+}
+
 const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const [commentContent, setCommentContent] = useState("");
-  const [searchUsers, setSearchUsers] = useState<SuggestionDataItem[] | []>([
-    { id: "0", display: "검색된 유저가 없습니다." },
-  ]);
   const [searchWord, setSearchWord] = useState("");
   const { mutate } = useCommentMutation(id as string, setCommentContent);
   const { data: userData } = useFetchWriterInfo(userId);
@@ -29,28 +33,17 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const showCommentAlertModal = useModalStore(
     (state) => state.showCommentAlertModal,
   );
+  const { setUserTag } = useTagsStore((state) => state);
   const debouncedWord = useDebounce(searchWord, 500);
   const { data: postData } = useFetchPost(id as string);
-
   const { data: searchUser } = useFetchSearchUser(
     String(postData.diaryId),
     debouncedWord,
   );
 
-  useEffect(() => {
-    const userName = searchUser?.map((data: SearchUser) => {
-      const id = data.userId + 1;
-      return {
-        id,
-        display: data.userName,
-      };
-    });
-    if (userName?.length !== 0 && userName) {
-      setSearchUsers(userName);
-    } else {
-      setSearchUsers([{ id: "0", display: "검색된 유저가 없습니다." }]);
-    }
-  }, [searchUser]);
+  const parseMentions = (text: string) => {
+    return text.replace(/@\[([^\]]+)]\((\d+)\)/g, "@$1");
+  };
 
   const handlePostClick = (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault();
@@ -62,12 +55,16 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
       }, 3000);
       return;
     }
-    mutate(commentContent);
+
+    const formattedContent = parseMentions(commentContent);
+    mutate(formattedContent);
   };
 
   const handleCommentChange = (
     _e: { target: { value: string } },
     newValue: string,
+    _newPlainTextValue: string,
+    mentions: MentionItem[],
   ) => {
     setCommentContent(newValue);
     const match = newValue.match(/@(\s*[\w가-힣ㄱ-ㅎㅏ-ㅣ]+)/g);
@@ -75,6 +72,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
       const searchWord = match.map((m) => m.replace(/@\s*/, ""));
       setSearchWord(searchWord[0]);
     }
+    setUserTag(mentions);
   };
 
   const handleEnterPrevent = (e: React.KeyboardEvent) => {
@@ -101,10 +99,17 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
         <Mention
           trigger={"@"}
           data={
-            searchUsers?.length > 0
-              ? searchUsers
-              : [{ id: "0", display: "검색된 유저가 없습니다." }]
+            searchUser?.map((user: tagUserProps) => ({
+              id: String(user.userId),
+              display: user.userName,
+            })) || []
           }
+          markup="@[__display__](__id__)"
+          displayTransform={(_id, display) => `@${display}`}
+          style={{
+            color: "blue",
+            visibility: "hidden",
+          }}
         />
       </MentionsInput>
       <button onClick={handlePostClick}>post</button>
