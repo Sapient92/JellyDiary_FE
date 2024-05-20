@@ -2,23 +2,29 @@ export default {
   control: {
     fontSize: 14,
     fontWeight: "normal",
-    height: 35,
-    width: 270,
+    height: 20,
+    borderBottom: "1px solid gray",
+    zIndex: 10,
   },
 
   "&multiLine": {
+    width: 230,
     control: {
       fontFamily: "monospace",
       borderRadius: "35px",
+      borderBottom: "1px solid gray;",
     },
+
     highlighter: {
-      padding: 9,
+      padding: 0,
       border: "1px solid transparent",
     },
+
+    borderBottom: "1px solid gray",
     input: {
-      padding: "8px 6px 0 9px",
-      border: "2px solid silver",
-      borderRadius: "35px",
+      padding: "0 6px 0 0",
+      border: "none",
+      outline: "none",
     },
   },
 
@@ -32,7 +38,6 @@ export default {
     highlighter: {
       padding: 9,
       border: "2px solid transparent",
-      color: "red",
     },
     input: {
       padding: 9,
@@ -58,7 +63,6 @@ export default {
       padding: "3px 6px",
       width: 140,
       borderRadius: 5,
-      // borderBottom: "1px solid rgba(0,0,0,0.15)",
       "&focused": {
         backgroundColor: "#cee4e5",
       },

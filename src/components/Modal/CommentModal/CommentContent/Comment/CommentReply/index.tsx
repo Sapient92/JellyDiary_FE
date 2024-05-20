@@ -12,6 +12,12 @@ import { CommentType } from "../../../../../../types/commentType.ts";
 import { useModalStore } from "../../../../../../store/modalStore/modalStore.ts";
 import AlertModal from "../../../../AlertModal";
 import Reply from "./Reply.tsx";
+import { useDebounce } from "../../../../../../hooks/useDebounce.ts";
+import { useFetchPost } from "../../../../../../hooks/usePost.ts";
+import { useFetchSearchUser } from "../../../../../../hooks/useSearchUser.ts";
+import { Mention, MentionItem, MentionsInput } from "react-mentions";
+import { useTagsStore } from "../../../../../../store/tagStore/tagStore.ts";
+import mentionStyle from "./defaultStyle.ts";
 
 interface CommentReplyProps {
   commentId: number;
@@ -23,6 +29,13 @@ interface CommentReplyProps {
 interface CommentReplyInputForm {
   id?: string;
   commentId: number;
+}
+
+interface tagUserProps {
+  isInvited: boolean;
+  profileImg: string | null;
+  userId: number;
+  userName: string;
 }
 
 const CommentReply: React.FC<CommentReplyProps> = ({
@@ -63,22 +76,45 @@ const CommentReplyInputForm: React.FC<CommentReplyInputForm> = ({
   commentId,
 }) => {
   const [commentReply, setCommentReply] = useState("");
-  const handleCommentReplyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCommentReply(e.target.value);
-  };
+  const [searchWord, setSearchWord] = useState("");
   const showReplyAlertModal = useModalStore(
     (state) => state.showReplyAlertModal,
   );
+  const { setUserTag } = useTagsStore((state) => state);
   const replyRef = useRef<HTMLInputElement>(null);
-
+  const debouncedWord = useDebounce(searchWord, 500);
+  const { data: postData } = useFetchPost(id as string);
+  const { data: searchUser } = useFetchSearchUser(
+    String(postData.diaryId),
+    debouncedWord,
+  );
   const { mutate } = useCommentReplyMutation(
     String(id),
     String(commentId),
     setCommentReply,
   );
 
-  const handleReplyClick = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const parseMentions = (text: string) => {
+    return text.replace(/@\[([^\]]+)]\((\d+)\)/g, "@$1");
+  };
+
+  const handleCommentReplyChange = (
+    _e: { target: { value: string } },
+    newValue: string,
+    _newPlainTextValue: string,
+    mentions: MentionItem[],
+  ) => {
+    setCommentReply(newValue);
+    const match = newValue.match(/@(\s*[\w가-힣ㄱ-ㅎㅏ-ㅣ]+)/g);
+    if (match) {
+      const searchWord = match.map((m) => m.replace(/@\s*/, ""));
+      setSearchWord(searchWord[0]);
+    }
+    setUserTag(mentions);
+  };
+
+  const handleReplyClick = (e?: React.FormEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
     if (commentReply.trim() === "") {
       replyRef.current?.focus();
       showReplyAlertModal(true);
@@ -87,17 +123,44 @@ const CommentReplyInputForm: React.FC<CommentReplyInputForm> = ({
       }, 3000);
       return;
     }
-    mutate(commentReply);
+
+    const formattedContent = parseMentions(commentReply);
+    mutate(formattedContent);
+  };
+
+  const handleEnterPrevent = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleReplyClick();
+    }
   };
 
   return (
     <CommentFormContainer>
-      <input
-        ref={replyRef}
-        type={"text"}
+      <MentionsInput
+        className={"custom-mentions-input"}
+        style={mentionStyle}
+        inputRef={replyRef}
         value={commentReply}
         onChange={handleCommentReplyChange}
-      />
+        onKeyDown={handleEnterPrevent}
+      >
+        <Mention
+          style={{
+            backgroundColor: "lightGray",
+            borderRadius: "4px",
+          }}
+          trigger={"@"}
+          data={
+            searchUser?.map((user: tagUserProps) => ({
+              id: String(user.userId),
+              display: user.userName,
+            })) || []
+          }
+          markup="@[__display__](__id__)"
+          displayTransform={(_id, display) => `@${display}`}
+        />
+      </MentionsInput>
       <button onClick={handleReplyClick}>답글 쓰기</button>
     </CommentFormContainer>
   );

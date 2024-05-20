@@ -4,6 +4,8 @@ export const CommentDeleteModalContainer = styled.div`
   border: 1px solid #c4c4c4;
   border-radius: 6px;
   padding: 20px;
+  z-index: 10;
+
   p {
     margin: 0;
     font-size: 20px;
