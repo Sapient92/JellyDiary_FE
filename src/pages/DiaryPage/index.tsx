@@ -64,7 +64,7 @@ const DiaryPage = () => {
       setDiaryData(response.data.data);
       setDiaryAuth(auth?.data.data.diaryRole);
       setAuthData(auth?.data.data);
-      setEvents(transformEventData(events.data.data));
+      setEvents(transformEventData(events));
       setDiaryList(response.data.data);
       setDiaryData(data.data.data);
       setUploadedImage(data.data.data.diaryProfileImage);
@@ -96,7 +96,13 @@ const DiaryPage = () => {
 
   const updateEvents = async (id: any) => {
     const response = await api.get(`/api/post/postList/${id}`);
-    return response;
+    const publicEvents = await response.data.data.filter((event: any) => event.isPublic);
+
+    if (diaryAuth === 'CREATOR' || diaryAuth === 'READ' || diaryAuth === 'WRITE') {
+      return response.data.data;
+    } else {
+      return publicEvents;
+    }
   };
 
   const transformEventData = (apiData: any) => {
@@ -134,7 +140,7 @@ const DiaryPage = () => {
     setDiaryData(response.data.data);
     setDiaryAuth(auth.data.data.diaryRole);
     setAuthData(auth.data.data);
-    setEvents(transformEventData(events.data.data));
+    setEvents(transformEventData(events));
     navigate(`/diary/${id}`);
   };
 
@@ -211,6 +217,34 @@ const DiaryPage = () => {
   const renderContentByAuth = () => {
     switch (diaryAuth) {
       case 'CREATOR':
+        return (
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: '',
+              center: 'prev,title,next',
+              right: 'myCustomButton',
+            }}
+            customButtons={{
+              myCustomButton: {
+                text: '+',
+                click: () => {
+                  hanldeWrite(diaryData?.diaryId);
+                },
+              },
+            }}
+            events={events}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            locales={allLocales}
+            locale="kr"
+            dayCellContent={(info) => {
+              return info.date.getDate();
+            }}
+          />
+        );
+      case 'WRITE':
         return (
           <FullCalendar
             plugins={[dayGridPlugin]}

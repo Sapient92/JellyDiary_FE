@@ -174,16 +174,6 @@ const DiaryEditPage = () => {
     const response = await api.get(`/api/diary/user/list/${id}`);
     setDiaryUserList(response.data.data);
   };
-  const handleEdit = async () => {
-    try {
-      const response = await api.patch(`/api/diary/user/list/${id}`);
-      if (response.status === 200) {
-        console.log(response.data.message);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleDelete = async (userId: number) => {
     try {
@@ -207,6 +197,7 @@ const DiaryEditPage = () => {
       diaryRole: updatedRoles[diaryUserId],
     }));
 
+    console.log(rolesToUpdate);
     try {
       const response = await api.patch(`/api/diary/user/list/${id}`, rolesToUpdate);
 
@@ -308,7 +299,7 @@ const DiaryEditPage = () => {
             <UserList
               diaryUserList={diaryUserList}
               onRoleChange={handleRoleChange}
-              onEdit={handleEdit}
+              onEdit={handleSaveRoles}
               onDelete={handleDelete}
             />
           </div>
