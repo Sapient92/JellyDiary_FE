@@ -19,29 +19,13 @@ const ListContent = styled.div`
 function renderEventContent(eventInfo: EventContentArg) {
   const { title, extendedProps } = eventInfo.event;
   const isPublic = extendedProps.isPublic;
-  const diaryAuth = extendedProps.diaryAuth;
 
-  // 제목이 다섯 글자를 초과하는 경우 ...으로 표시
-  const shouldDisplayEvent = () => {
-    if (diaryAuth === 'CREATOR' || diaryAuth === 'WRITE' || diaryAuth === 'READ') {
-      return true;
-    }
-    return isPublic;
-  };
-  return shouldDisplayEvent() ? (
+  return (
     <ListContent>
-      {isPublic === false ? (
-        <b>
-          <MdLockOutline />
-        </b>
-      ) : (
-        <b>
-          <MdLockOpen />
-        </b>
-      )}
+      <b>{isPublic === false ? <MdLockOutline /> : <MdLockOpen />}</b>
       <a>{title.length > 5 ? `${title.slice(0, 5)}...` : title}</a>
     </ListContent>
-  ) : null;
+  );
 }
 
 export default renderEventContent;

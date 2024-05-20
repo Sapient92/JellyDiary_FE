@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { LuSearch } from 'react-icons/lu';
 import styled from 'styled-components';
 import api from '../../../../api';
-
+import fakeImg from '../../../../assets/images/UserAvatar.png';
 // 모달 스타일링
 const ModalBackground = styled.div`
   position: fixed;
@@ -64,6 +64,20 @@ const ResultItem = styled.div`
   &:hover {
     background-color: #f0f0f0;
   }
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 `;
 
 const Modal = ({ id, isOpen, onClose }: any) => {
@@ -118,6 +132,7 @@ const Modal = ({ id, isOpen, onClose }: any) => {
   };
 
   const handleInviteClick = (participant: any) => {
+    console.log(participant.isInvited);
     inviteUser(participant);
   };
 
@@ -138,15 +153,15 @@ const Modal = ({ id, isOpen, onClose }: any) => {
           {results.map((participant: any) => (
             <ResultItem key={participant.userId} onClick={() => handleResultClick(participant)}>
               <div>
-                <img src={participant.profileImg} alt={participant.userId} />
+                <img src={participant.profileImg || fakeImg} alt={participant.userId} />
                 {participant.userName}
                 {participant.isInvited}
               </div>
               <button
                 onClick={() => handleInviteClick(participant)}
-                disabled={participant.isInvited}
+                disabled={participant.isInvited === true}
               >
-                {participant.isInvited ? '초대 완료' : '초대하기'}
+                {participant.isInvited == true ? '초대 완료' : '초대하기'}
               </button>
             </ResultItem>
           ))}
