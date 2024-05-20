@@ -6,7 +6,10 @@ import ChatMessage from "./ChatMessage.tsx";
 
 import { client } from "../../../../utils/StompClient.ts";
 import useLoginUser from "../../../../hooks/useLoginUser.ts";
-import { useFetchChatHistory } from "../../../../hooks/useChatting.ts";
+import {
+  useChatListMutation,
+  useFetchChatHistory,
+} from "../../../../hooks/useChatting.ts";
 import { MessageListType } from "../../../../types/chattingType.ts";
 
 import {
@@ -42,6 +45,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
   const messageEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement | null>(null);
+  const { mutate } = useChatListMutation();
 
   const {
     isLoading,
@@ -158,6 +162,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
       });
     }
     setMessage("");
+    mutate();
   };
 
   if (isLoading) return <>채팅을 불러오는 중 입니다...</>;

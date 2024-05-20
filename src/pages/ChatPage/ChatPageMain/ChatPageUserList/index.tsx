@@ -14,14 +14,21 @@ interface ChatPageUserList {
 
 const ChatPageUserList: React.FC<ChatPageUserList> = ({ chatList }) => {
   const { userId, diaryId } = useParams();
+  const sortedChatList = chatList?.sort(
+    (a: ChatType, b: ChatType) =>
+      new Date(b.createdAt ? b.createdAt : 0).getTime() -
+      new Date(a.createdAt ? a.createdAt : 0).getTime(),
+  );
 
-  if (chatList?.length === 0) {
+  if (sortedChatList?.length === 0) {
     return <p>채팅방이 존재하지 않습니다.</p>;
   } else {
     return (
       <ChatUserListContainer $isChatting={!!userId || !!diaryId}>
         <ChatPageUserSearch />
-        {chatList?.map((chat) => <Chat key={chat.chatRoomId} chat={chat} />)}
+        {sortedChatList?.map((chat) => (
+          <Chat key={chat.chatRoomId} chat={chat} />
+        ))}
       </ChatUserListContainer>
     );
   }
