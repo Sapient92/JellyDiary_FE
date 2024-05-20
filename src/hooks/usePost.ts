@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "../api";
 import { queryKeys } from "../react-query/constants.ts";
 import { queryClient } from "../react-query/queryClient.ts";
+import { DiaryMemberType } from "../types/postType.ts";
 
 export const useFetchPost = (id: string) =>
   useQuery({
@@ -49,7 +50,15 @@ export const useLikeMutation = (id: string) => {
   return { mutate };
 };
 
-export const useDeletePost = (id: string) =>
-  api
-    .delete(`/api/post/${id}`, { params: { postId: id } })
-    .then((res) => console.log(res));
+// export const useDeletePost = (id: string) =>
+//   api
+//     .delete(`/api/post/${id}`, { params: { postId: id } })
+//     .then((res) => console.log(res));
+
+export const useFetchDiaryMember = (diaryId: number) =>
+  useQuery({
+    queryKey: [queryKeys.diaryMember, diaryId],
+    queryFn: () => api.get(`api/diary/user/list/${diaryId}`),
+    select: (data) =>
+      data.data.data?.map((data: DiaryMemberType) => data.userId),
+  });

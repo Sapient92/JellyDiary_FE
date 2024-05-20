@@ -51,3 +51,11 @@ export interface PostType {
   weather: null | string;
   weight: null | string;
 }
+
+export interface DiaryMemberType {
+  diaryId: number;
+  diaryRole: string;
+  diaryUserId: number;
+  isInvited: null;
+  userId: number;
+}
