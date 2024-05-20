@@ -2,7 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import Chat from "./Chat.tsx";
-import ChatPageUserSearch from "./ChatPageUserSearch";
 
 import { ChatType } from "../../../../types/chattingType.ts";
 
@@ -25,7 +24,6 @@ const ChatPageUserList: React.FC<ChatPageUserList> = ({ chatList }) => {
   } else {
     return (
       <ChatUserListContainer $isChatting={!!userId || !!diaryId}>
-        <ChatPageUserSearch />
         {sortedChatList?.map((chat) => (
           <Chat key={chat.chatRoomId} chat={chat} />
         ))}
