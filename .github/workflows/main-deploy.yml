@@ -44,7 +44,7 @@ jobs:
             --region ap-northeast-2 \
             dist s3://jellydiary.life \
             
-      - name: Invalidate files
+      - name: Cloudfront invalidation
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} \
