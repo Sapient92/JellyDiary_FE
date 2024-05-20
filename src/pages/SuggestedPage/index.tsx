@@ -1,5 +1,3 @@
-import React from 'react';
-
 import SuggestedNavbar from './SuggestedNavbar';
 import SuggestedPostsSection from './SuggestedPostsSection';
 

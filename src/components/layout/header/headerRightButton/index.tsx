@@ -2,15 +2,16 @@ import * as React from 'react';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useCategoriesStore } from '../../../../store/categoriesStore/categoriesStore.ts';
+import { useCategoriesStore } from '../../../../store/categoriesStore/categoriesStore';
 
-import { ButtonContainer, CheckedButton } from './HeaderRightButton.styles.ts';
+import { ButtonContainer, CheckedButton } from './HeaderRightButton.styles';
 
 import SelectButton from '../../../../assets/button/HeaderSelectButton.png';
 
 type HeaderRightButtonProps = {
   title: string;
-  name: string;
+  name: keyof typeof categryToRoute;
+  userId?: string;
 };
 
 const categryToRoute = {
@@ -18,7 +19,7 @@ const categryToRoute = {
   smallSns: 'diary',
   myFeed: 'userfeed',
   dm: 'chat',
-};
+} as const;
 
 const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name, userId }) => {
   const { categories, changeCategory } = useCategoriesStore((state) => state);
@@ -26,28 +27,25 @@ const HeaderRightButton: FC<HeaderRightButtonProps> = ({ title, name, userId }) 
 
   const handleCategoryClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    let routePath = categryToRoute[name];
+    let routePath: any = categryToRoute[name];
 
-    if (name === 'smallSns' && userId) {
+    if ((name === 'smallSns' || name === 'myFeed') && userId) {
       routePath = `${routePath}/${userId}`;
     }
-    if (name === 'myFeed' && userId) {
-      routePath = `${routePath}/${userId}`;
+
+    if (!categories[name]) {
+      changeCategory(name);
+      navigate(`/${routePath}`);
     }
-    if (categories[name]) {
-      return;
-    }
-    changeCategory(name);
-    navigate(`/${routePath}`);
   };
 
   return (
     <ButtonContainer onClick={handleCategoryClick}>
-      <button id={'big_sns_btn'}>
-        <img src={SelectButton} alt={'SelectButton'} />
+      <button id="big_sns_btn">
+        <img src={SelectButton} alt="SelectButton" />
         {categories[name] && <CheckedButton />}
       </button>
-      <label htmlFor={'big_sns_btn'}>{title}</label>
+      <label htmlFor="big_sns_btn">{title}</label>
     </ButtonContainer>
   );
 };

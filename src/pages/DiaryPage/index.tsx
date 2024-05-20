@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { BiChat } from 'react-icons/bi';
 import { AiFillPlusCircle } from 'react-icons/ai';
-import { MdEdit, MdLockOpen, MdLockOutline } from 'react-icons/md';
-import { EventClickArg, EventContentArg } from '@fullcalendar/core';
+import { MdEdit } from 'react-icons/md';
+import { EventClickArg } from '@fullcalendar/core';
 import allLocales from '@fullcalendar/core/locales-all';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
@@ -17,7 +17,6 @@ import {
   DiaryLeftNav,
   UserList,
   AddUser,
-  ListContent,
   DiaryRightNav,
 } from './DiaryPage.styles';
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
@@ -26,23 +25,21 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CreateDiaryModal from './DiaryWritePage/index';
 import UserImageList from './UserImageList';
 import renderEventContent from './RenderEventContent';
-
-interface DiaryProps {
-  diaryDescription: string;
-  diaryName: string;
-  diaryProfileImage: string;
-}
+import useUser from '../../hooks/useUser';
 
 const DiaryPage = () => {
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(true);
   const [events, setEvents] = useState([]);
-  const [diaryData, setDiaryData] = useState<DiaryProps>([]);
+  const [diaryData, setDiaryData] = useState<any>();
   const [diaryAuth, setDiaryAuth] = useState('');
-  const [diaryList, setDiaryList] = useState([]);
+  const [authData, setAuthData] = useState<any>([]);
+  const [diaryList, setDiaryList] = useState<any>([]);
   const [uploadedImage, setUploadedImage] = useState('');
   const [chatList, setChatList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(false);
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const handleEventClick = (clickInfo: EventClickArg) => {
@@ -58,12 +55,15 @@ const DiaryPage = () => {
         window.location.reload();
       }
       const data = await api.get(`/api/diary/profile/${id}`);
-      const auth = await api.get(`/api/diary/user/${id}`);
+      const auth = await api.get(`/api/diary/user/${id}`).catch(() => {
+        setIsNotFound(true);
+      });
       const events = await updateEvents(id);
       const test = await fetchGroupChat(id);
       setChatList(filterNonSubscribers(test));
       setDiaryData(response.data.data);
-      setDiaryAuth(auth.data.data.diaryRole);
+      setDiaryAuth(auth?.data.data.diaryRole);
+      setAuthData(auth?.data.data);
       setEvents(transformEventData(events.data.data));
       setDiaryList(response.data.data);
       setDiaryData(data.data.data);
@@ -72,7 +72,7 @@ const DiaryPage = () => {
     fetchData();
   }, [id]);
 
-  const updateProfileImage = async (diaryId, file: File): Promise<void> => {
+  const updateProfileImage = async (diaryId: any, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('diaryProfileImage', file);
 
@@ -94,13 +94,13 @@ const DiaryPage = () => {
     }
   };
 
-  const updateEvents = async (id: number) => {
+  const updateEvents = async (id: any) => {
     const response = await api.get(`/api/post/postList/${id}`);
     return response;
   };
 
-  const transformEventData = (apiData) => {
-    return apiData.map((event) => ({
+  const transformEventData = (apiData: any) => {
+    return apiData.map((event: any) => ({
       title: event.postTitle,
       date: event.postDate,
       extendedProps: {
@@ -113,17 +113,19 @@ const DiaryPage = () => {
     }));
   };
 
-  const fetchGroupChat = async (diaryId) => {
+  const fetchGroupChat = async (diaryId: any) => {
     const response = await api.get(`/api/diary/user/list/${diaryId}`);
     return response.data.data;
   };
 
-  const filterNonSubscribers = (data) => {
+  const filterNonSubscribers = (data: any) => {
     if (!data) return [];
-    return data.filter((item) => item.diaryRole !== 'SUBSCRIBE').map((item) => item.userId);
+    return data
+      .filter((item: any) => item.diaryRole !== 'SUBSCRIBE')
+      .map((item: any) => item.userId);
   };
 
-  const handleDiaryClick = async (id) => {
+  const handleDiaryClick = async (id: any) => {
     const response = await api.get(`/api/diary/profile/${id}`);
     const auth = await api.get(`/api/diary/user/${id}`);
     const events = await updateEvents(id);
@@ -131,22 +133,23 @@ const DiaryPage = () => {
     setChatList(filterNonSubscribers(test));
     setDiaryData(response.data.data);
     setDiaryAuth(auth.data.data.diaryRole);
+    setAuthData(auth.data.data);
     setEvents(transformEventData(events.data.data));
     navigate(`/diary/${id}`);
   };
 
-  const onChangeImage = (e) => {
+  const onChangeImage = (e: any) => {
     const file = e.target.files[0];
     const imageUrl = URL.createObjectURL(file);
     setUploadedImage(imageUrl);
     updateProfileImage(id, file);
   };
 
-  const hanldeWrite = (diaryId) => {
+  const hanldeWrite = (diaryId: any) => {
     navigate(`/write/${diaryId}`);
   };
 
-  const handleCreateDiary = async (diaryData) => {
+  const handleCreateDiary = async (diaryData: any) => {
     const formData = new FormData();
     const diaryJson = JSON.stringify({
       diaryName: diaryData.diaryName,
@@ -178,9 +181,32 @@ const DiaryPage = () => {
     }
   };
 
-  const handleClickGroupChat = (diaryId, diaryName) => {
+  const handleClickGroupChat = (diaryId: any, diaryName: any) => {
     navigate(`/chat/group/${diaryId}?roomName=${diaryName}`);
   };
+
+  const handleInviteUser = async () => {
+    const response = await api.patch(`/api/diary/user/${authData?.diaryUserId}`);
+    if (response.status === 200) {
+      window.location.reload();
+    }
+  };
+  if (isNotFound) {
+    const fetchData = async () => {
+      const response = await api.get('/api/diary/mydiaryList');
+      if (!id) {
+        navigate(`/diary/${response.data.data[0].diaryId}`);
+        window.location.reload();
+      }
+      const data = await api.get(`/api/diary/profile/${id}`);
+
+      setDiaryData(response.data.data);
+      setDiaryList(response.data.data);
+      setDiaryData(data.data.data);
+      setUploadedImage(data.data.data.diaryProfileImage);
+    };
+    fetchData();
+  }
 
   const renderContentByAuth = () => {
     switch (diaryAuth) {
@@ -198,7 +224,7 @@ const DiaryPage = () => {
               myCustomButton: {
                 text: '+',
                 click: () => {
-                  hanldeWrite(diaryData.diaryId);
+                  hanldeWrite(diaryData?.diaryId);
                 },
               },
             }}
@@ -233,20 +259,64 @@ const DiaryPage = () => {
           />
         );
       case 'SUBSCRIBE':
-        return <div>구독자 전용 콘텐츠를 준비 중입니다.</div>;
+        return (
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: '',
+              center: 'prev,title,next',
+              right: '',
+            }}
+            events={events}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            locales={allLocales}
+            locale="kr"
+            dayCellContent={(info) => {
+              return info.date.getDate();
+            }}
+          />
+        );
       default:
-        return <div>권한이 없습니다.</div>;
+        return (
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: '',
+              center: 'prev,title,next',
+              right: '',
+            }}
+            events={events}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            locales={allLocales}
+            locale="kr"
+            dayCellContent={(info) => {
+              return info.date.getDate();
+            }}
+          />
+        );
     }
   };
   const handleEditProfile = () => {
     navigate(`/diary/edit/${id}`);
   };
 
+  const handleSubscribe = async () => {
+    const response = await api.post(`/api/diary/user`, {
+      diaryId: id,
+      userId: user?.userId,
+    });
+    console.log(response.data.data);
+    window.location.reload();
+  };
   return (
     <DiaryPageContainer>
       <DiaryLeftContent>
         <UserImage>
-          <img src={uploadedImage} alt="userImage" />
+          <img src={uploadedImage || imgSrc} alt="userImage" />
           <div>
             <label htmlFor="file">
               <MdEdit />
@@ -278,6 +348,27 @@ const DiaryPage = () => {
           ) : (
             <div></div>
           )}
+          {authData?.isInvited === false ? (
+            <CustomButton
+              text="초대 승인"
+              backgroundColor="green"
+              disabled={false}
+              onClick={handleInviteUser}
+            />
+          ) : (
+            <div>{authData?.diaryRole}</div>
+          )}
+          {diaryAuth === 'SUBSCRIBE' ||
+          diaryAuth === 'CREATOR' ||
+          diaryAuth === 'READ' ||
+          diaryAuth === 'WRITE' ? null : (
+            <CustomButton
+              text="구독 하기"
+              backgroundColor="blue"
+              disabled={false}
+              onClick={handleSubscribe}
+            />
+          )}
         </UserInfo>
         <DiaryLeftNav>
           <div>
@@ -290,9 +381,9 @@ const DiaryPage = () => {
             {diaryList.length <= 0 ? (
               <div>다이어리를 생성하세요✨</div>
             ) : (
-              diaryList.map((diary) => (
+              diaryList.map((diary: any) => (
                 <div key={diary.diaryId} onClick={() => handleDiaryClick(diary.diaryId)}>
-                  <img src={diary.diaryProfileImage} alt="userImage" />
+                  <img src={diary.diaryProfileImage || imgSrc} alt="userImage" />
                   <div>{diary.diaryName}</div>
                 </div>
               ))
@@ -307,11 +398,12 @@ const DiaryPage = () => {
         </DiaryLeftNav>
       </DiaryLeftContent>
       <DiaryPageContent>{renderContentByAuth()}</DiaryPageContent>
-      <DiaryRightNav>
-        <BiChat onClick={() => handleClickGroupChat(diaryData?.diaryId, diaryData?.diaryName)} />
-        <UserImageList userIds={chatList} />
-      </DiaryRightNav>
-
+      {diaryAuth === 'CREATOR' || diaryAuth === 'READ' || diaryAuth === 'WRITE' ? (
+        <DiaryRightNav>
+          <BiChat onClick={() => handleClickGroupChat(diaryData?.diaryId, diaryData?.diaryName)} />
+          <UserImageList userIds={chatList} />
+        </DiaryRightNav>
+      ) : null}
       <CreateDiaryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

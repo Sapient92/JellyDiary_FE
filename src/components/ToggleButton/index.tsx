@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ToggleContainer } from './ToggleButton.styles';
 interface ToggleButtonProps {
   state: boolean;

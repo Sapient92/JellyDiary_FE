@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 
 import CustomButton from '../../components/CustomButton';
@@ -33,16 +33,8 @@ const SettingPage = () => {
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
   const [userName, setUserName] = useState('');
   const [userDesc, setUserDesc] = useState('');
-  const {
-    notificationSetting,
-    postLike,
-    postComment,
-    postCreated,
-    commentTag,
-    newFollower,
-    dm,
-    toggleSetting,
-  } = useNotificationStore((state) => state);
+  const { notificationSetting, postLike, postComment, postCreated, commentTag, newFollower, dm } =
+    useNotificationStore((state) => state);
 
   const [settings, setSettings] = useState({
     notificationSetting,
@@ -141,7 +133,7 @@ const SettingPage = () => {
       } else {
         console.log('Failed to update profile description:', response.status);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
@@ -158,20 +150,21 @@ const SettingPage = () => {
     }
   };
 
-  const onChangeImage = (e) => {
+  const onChangeImage = (e: any) => {
     const file = e.target.files[0];
     const imageUrl = URL.createObjectURL(file);
     setUploadedImage(imageUrl);
     updateProfileImage(file);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     setUserName(e.target.value);
     setIsButtonDisabled(!e.target.value);
   };
 
-  const checkUserName = async (userName) => {
+  const checkUserName = async (userName: string) => {
     const response = await fetchUserProfile(userName);
+    console.log(response);
     setIsButtonDisabled(true);
   };
 
@@ -187,7 +180,7 @@ const SettingPage = () => {
       console.error('Error updating settings:', error);
     }
   };
-  const handleToggle = (settingName) => {
+  const handleToggle = (settingName: string) => {
     if (settingName === 'notificationSetting' && !settings.notificationSetting) {
       setSettings({
         notificationSetting: false,
@@ -199,7 +192,7 @@ const SettingPage = () => {
         dm: false,
       });
     } else {
-      setSettings((prevSettings) => ({
+      setSettings((prevSettings: any) => ({
         ...prevSettings,
         [settingName]: !prevSettings[settingName],
       }));

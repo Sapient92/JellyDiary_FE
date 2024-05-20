@@ -8,15 +8,15 @@ export const PostsSection = styled.section`
 
   /* Adjust the number of columns based on screen size */
   @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr); // 4 columns on large screens
+    grid-template-columns: repeat(3, 1fr); // 4 columns on large screens
   }
 
   @media (min-width: 992px) and (max-width: 1199px) {
-    grid-template-columns: repeat(3, 1fr); // 3 columns on medium-large screens
+    grid-template-columns: repeat(2, 1fr); // 3 columns on medium-large screens
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
-    grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
+    grid-template-columns: repeat(1, 1fr); // 2 columns on medium screens
   }
 
   @media (max-width: 767px) {
