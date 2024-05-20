@@ -44,7 +44,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const parseMentions = (text: string) => {
     return text.replace(/@\[([^\]]+)]\((\d+)\)/g, "@$1");
   };
-
+  // 댓글 게시하기
   const handlePostClick = (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault();
     if (commentContent.trim() === "") {
@@ -97,6 +97,10 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
         onKeyDown={handleEnterPrevent}
       >
         <Mention
+          style={{
+            backgroundColor: "lightGray",
+            borderRadius: "4px",
+          }}
           trigger={"@"}
           data={
             searchUser?.map((user: tagUserProps) => ({
@@ -106,10 +110,6 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
           }
           markup="@[__display__](__id__)"
           displayTransform={(_id, display) => `@${display}`}
-          style={{
-            color: "blue",
-            visibility: "hidden",
-          }}
         />
       </MentionsInput>
       <button onClick={handlePostClick}>post</button>

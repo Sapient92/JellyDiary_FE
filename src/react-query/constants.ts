@@ -16,4 +16,5 @@ export const queryKeys = {
   chatDetail: "chatDetail",
   chatHistory: "chatHistory",
   chatPaginated: "chatPaginated",
+  diaryMember: "diaryMember",
 };

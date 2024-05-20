@@ -10,5 +10,4 @@ export const useFetchSearchUser = (diaryId: string, params: string) =>
     select: (data) => {
       return data.data.data;
     },
-    enabled: params !== "",
   });

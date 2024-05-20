@@ -12,23 +12,6 @@ export const CommentFooterContainer = styled.form`
     height: 40px;
     border-radius: 50%;
   }
-  :nth-child(2) {
-    border: 2px solid #f6f7f8;
-    border-radius: 35px;
-    height: 30px;
-    width: 250px;
-    padding-left: 10px;
-    padding-top: 10px;
-    font-size: 14px;
-
-    &::placeholder {
-      color: #8e8e8e;
-    }
-  }
-
-  :nth-child(2) {
-    border: none;
-  }
 
   button {
     border: none;

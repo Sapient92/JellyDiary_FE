@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import PostPageHeader from "./PostPageHeader";
@@ -11,6 +11,8 @@ import { useFetchPost } from "../../hooks/usePost.ts";
 import { useModalStore } from "../../store/modalStore/modalStore.ts";
 
 import { PostPageContainer, PostPageContent } from "./PostPage.styles.ts";
+import { useFetchLoginUser } from "../../hooks/useLoginUser.ts";
+import { useUserStore } from "../../store/userStore/userStore.ts";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -19,6 +21,14 @@ const PostPage = () => {
     (state) => state,
   );
   const { isLoading, data, isError, error } = useFetchPost(id as string);
+  const { data: loginUser } = useFetchLoginUser();
+  const setLoginUserId = useUserStore((state) => state.setLoginUserId);
+
+  useEffect(() => {
+    if (loginUser) {
+      setLoginUserId(loginUser?.userId);
+    }
+  }, [loginUser]);
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>{error?.message}</>;
