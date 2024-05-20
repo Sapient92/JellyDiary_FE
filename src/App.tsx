@@ -13,6 +13,7 @@ import DiaryPage from './pages/DiaryPage';
 import DemoApp from './pages/DiaryPage/DiaryTestPage.tsx';
 import LoginPage from './pages/LoginPage/index.tsx';
 import SignInPage from './pages/LoginPage/SigninPage/index.tsx';
+import DiaryEditPage from './pages/DiaryPage/DiaryEditPage/index.tsx';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path={'/setting'} element={<SettingPage />} />
           <Route path={'/diary/:id'} element={<DiaryPage />} />
           <Route path={'/diary'} element={<DiaryPage />} />
+          <Route path={'/diary/edit/:id'} element={<DiaryEditPage />} />
           <Route path={'/'} element={<SuggestedPage />} />
           <Route path={'/chat'} element={<ChatPage />} />
           <Route path={'/chat/:userId'} element={<ChatPage />} />

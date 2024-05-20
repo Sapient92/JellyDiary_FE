@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DiaryPageContainer = styled.div`
   display: flex;
@@ -34,9 +34,9 @@ export const DiaryPageContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #3ea9e5;
+    border: 1px solid #3ea9e5;
     border-radius: 2px;
-    background-color: transparent;
+    background-color: white;
     color: #6b7a99;
     b {
       background-color: #3ea9e5;

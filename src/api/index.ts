@@ -27,7 +27,21 @@ api.interceptors.request.use(
 );
 
 let isTokenRefreshing = false;
+let refreshSubscribers = [];
 
+const onRrefreshed = (token) => {
+  refreshSubscribers.map((callback) => callback(token));
+};
+
+const addRefreshSubscriber = (callback) => {
+  refreshSubscribers.push(callback);
+};
+// 쿠키에서 특정 쿠키를 가져오는 함수
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+};
 api.interceptors.response.use(
   (response) => {
     return response;
@@ -35,39 +49,50 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      if (originalRequest.url !== '/reisue') {
+      if (originalRequest.url !== '/signin') {
         if (!isTokenRefreshing) {
           isTokenRefreshing = true;
-          return await api
-            .post('/signin')
-            .then((res) => {
-              if (res.status === 200) {
-                api.defaults.headers.common['Authorization'] = res.data.authorization;
-                originalRequest.headers['Authorization'] = res.data.authorization;
-                localStorage.setItem('Authorization', res.data.authorization);
-                originalRequest._retry = false;
-                if (originalRequest.method === 'post') {
-                  return api.post(originalRequest.url, originalRequest.data);
-                } else if (originalRequest.method === 'get') {
-                  return api.get(originalRequest.url, {
-                    params: originalRequest.params,
-                  });
-                } else if (originalRequest.method === 'put') {
-                  return api.put(originalRequest.url, originalRequest.data);
-                } else if (originalRequest.method === 'delete') {
-                  return api.delete(originalRequest.url);
-                } else if (originalRequest.method === 'patch') {
-                  return api.patch(originalRequest.url);
+          originalRequest._retry = true;
+
+          return new Promise((resolve, reject) => {
+            const refreshToken = getCookie('refresh'); // 쿠키에서 리프레시 토큰을 가져옴
+
+            api
+              .post('/api/signin', null, {
+                headers: {
+                  refresh: refreshToken,
+                },
+              })
+              .then((res) => {
+                if (res.status === 200) {
+                  const newToken = res.data.authorization;
+                  localStorage.setItem('Authorization', newToken);
+                  api.defaults.headers.common['Authorization'] = newToken;
+                  originalRequest.headers['Authorization'] = newToken;
+
+                  onRrefreshed(newToken);
+                  refreshSubscribers = [];
+
+                  resolve(api(originalRequest));
+                } else {
+                  reject(error);
                 }
-              }
-            })
-            .catch((error) => {
-              console.log('토큰 재발급 실패', error);
-              return Promise.reject(error);
-            })
-            .finally(() => {
-              isTokenRefreshing = false;
+              })
+              .catch((error) => {
+                console.log('토큰 재발급 실패', error);
+                reject(error);
+              })
+              .finally(() => {
+                isTokenRefreshing = false;
+              });
+          });
+        } else {
+          return new Promise((resolve) => {
+            addRefreshSubscriber((newToken) => {
+              originalRequest.headers['Authorization'] = newToken;
+              resolve(api(originalRequest));
             });
+          });
         }
       }
     }
