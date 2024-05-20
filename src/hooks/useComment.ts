@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "../api";
 import { queryKeys } from "../react-query/constants.ts";
 import { queryClient } from "../react-query/queryClient.ts";
+import { useTagsStore } from "../store/tagStore/tagStore.ts";
 
 export const useFetchComment = (id: string) =>
   useQuery({
@@ -14,10 +15,12 @@ export const useCommentMutation = (
   id: string,
   setCommentContent: React.Dispatch<React.SetStateAction<string>>,
 ) => {
+  const { userTag } = useTagsStore((state) => state);
   const addComment = (commentContent: string) => {
+    const tagId = userTag?.map((user) => user.id);
     const request = {
       commentContent,
-      userTag: [],
+      userTag: tagId,
     };
     return api.post(`/api/comment/${id}`, request);
   };
