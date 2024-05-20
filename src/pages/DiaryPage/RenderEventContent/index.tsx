@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdLockOutline, MdLockOpen } from 'react-icons/md';
 import { EventContentArg } from '@fullcalendar/core';
 import styled, { css } from 'styled-components';
@@ -7,7 +6,7 @@ const ListContent = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-  ${(props) =>
+  ${(props: any) =>
     props.isPublic
       ? css`
           color: #6b7a99; /* 공개 이벤트의 색상 */
@@ -20,24 +19,29 @@ const ListContent = styled.div`
 function renderEventContent(eventInfo: EventContentArg) {
   const { title, extendedProps } = eventInfo.event;
   const isPublic = extendedProps.isPublic;
+  const diaryAuth = extendedProps.diaryAuth;
 
   // 제목이 다섯 글자를 초과하는 경우 ...으로 표시
-  const displayTitle = title.length > 5 ? `${title.substring(0, 5)}...` : title;
-
-  return (
-    <ListContent isPublic={isPublic}>
-      {isPublic ? (
-        <b>
-          <MdLockOpen />
-        </b>
-      ) : (
+  const shouldDisplayEvent = () => {
+    if (diaryAuth === 'CREATOR' || diaryAuth === 'WRITE' || diaryAuth === 'READ') {
+      return true;
+    }
+    return isPublic;
+  };
+  return shouldDisplayEvent() ? (
+    <ListContent>
+      {isPublic === false ? (
         <b>
           <MdLockOutline />
         </b>
+      ) : (
+        <b>
+          <MdLockOpen />
+        </b>
       )}
-      <a>{displayTitle}</a>
+      <a>{title.length > 5 ? `${title.slice(0, 5)}...` : title}</a>
     </ListContent>
-  );
+  ) : null;
 }
 
 export default renderEventContent;

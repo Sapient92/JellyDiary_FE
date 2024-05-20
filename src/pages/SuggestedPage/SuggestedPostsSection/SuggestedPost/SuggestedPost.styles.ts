@@ -5,6 +5,7 @@ export const SuggestedPostContainer = styled.article`
   margin: 9px;
   box-shadow: 1px 4px 4px 1px rgba(0, 0, 0, 0.2);
   position: relative;
+
   img {
     width: 292px;
     height: 292px;

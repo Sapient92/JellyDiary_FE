@@ -1,8 +1,7 @@
 // Modal.js
-import React from 'react';
 import { ModalContainer, ModalContent } from './Modal.styles';
 
-const Modal = ({ show, onClose, onDiary, onUserPage }) => {
+const Modal = ({ show, onClose, onDiary, onUserPage }: any) => {
   if (!show) {
     return null;
   }

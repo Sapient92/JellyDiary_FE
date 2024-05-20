@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   LogoContainer,
   LoginPageContainer,
@@ -13,7 +11,6 @@ import login_K from '../../assets/button/Login_K.png';
 import login_N from '../../assets/button/Login_N.png';
 import login_G from '../../assets/button/Login_G.png';
 import login_Line from '../../assets/button/Login_Line.png';
-import { useNavigate } from 'react-router-dom';
 
 const BaseURL = import.meta.env.VITE_BASE_URL;
 

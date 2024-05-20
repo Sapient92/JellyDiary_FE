@@ -1,4 +1,3 @@
-import React from 'react';
 import NotFound from '../../assets/images/NotFound.png';
 import { NotFoundPageContainer, NotFoundPageContent } from './NotFoundPage.styles';
 

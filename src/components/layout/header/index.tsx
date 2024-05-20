@@ -1,4 +1,3 @@
-import React from 'react';
 import HeaderRightButton from './headerRightButton';
 
 import {
@@ -35,7 +34,7 @@ const Header = () => {
       <RightButtonContainer>
         <HeaderRightButton title={'큰 SNS'} name={'bigSns'} />
         <HeaderRightButton title={'작은 SNS'} name={'smallSns'} />
-        <HeaderRightButton title={'내 피드'} name={'myFeed'} userId={user?.userId} />
+        {user && <HeaderRightButton title={'내 피드'} name={'myFeed'} userId={user.userId + ''} />}
         <HeaderRightButton title={'DM'} name={'dm'} />
         {!user && <div onClick={() => navigate('/login')}>로그인</div>}
         {/* <div onClick={() => navigate('/login')}>로그인</div> */}

@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 import {
   SuggestedPostContainer,
   SuggestedPostHeader,
-  UserButton,
   NotLikeButton,
   LikeButton,
   PawButton,
 } from './SuggestedPost.styles.ts';
 
-import fakeImg from '../../../../assets/testImage/suggestedPostImage.png';
+import fakeImg from '../../../../assets/images/UserAvatar.png';
 import { useNavigate } from 'react-router-dom';
 import { useFetchPostLikeState, useLikeMutation } from '../../../../hooks/usePost.ts';
 import Modal from './Modal/index.tsx';
@@ -21,6 +20,7 @@ interface snsListProps {
   postId: number;
   postImg: string;
   diaryId: number;
+  diaryName: string;
   diaryProfileImage: string;
   like: boolean;
 }
@@ -28,10 +28,9 @@ interface Props {
   item: snsListProps;
 }
 const SuggestedPost = (item: Props) => {
-  const [like, setLike] = useState(false);
   const navigate = useNavigate();
-  const { mutate } = useLikeMutation(item.item.postId as string);
-  const { data: likeState } = useFetchPostLikeState(item.item.postId as string);
+  const { mutate } = useLikeMutation(item.item.postId + '');
+  const { data: likeState } = useFetchPostLikeState(item.item.postId + '');
   const [showModal, setShowModal] = useState(false);
 
   const handleLikeClick = (e: React.MouseEvent<SVGElement>) => {
@@ -54,10 +53,6 @@ const SuggestedPost = (item: Props) => {
     setShowModal(false);
     navigate(`/userfeed/${item.item.userId}`); // navigate to the user page
   };
-  const handleUserButton = () => {
-    navigate(`/userFeed/${item.item.userId}`);
-  };
-
   const handlePostImg = () => {
     navigate(`/post/${item.item.postId}`);
   };
@@ -65,10 +60,9 @@ const SuggestedPost = (item: Props) => {
     <SuggestedPostContainer>
       <SuggestedPostHeader>
         <div onClick={handleDiaryButton}>
-          <img src={item.item.diaryProfileImage} alt="profile_img" />
-          <div>{item.item.diaryId}</div>
+          <img src={item.item.diaryProfileImage || fakeImg} alt="profile_img" />
+          <div>{item.item.diaryName}</div>
         </div>
-
         <Modal
           show={showModal}
           onClose={handleCloseModal}

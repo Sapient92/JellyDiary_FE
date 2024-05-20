@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { AiFillPlusCircle } from 'react-icons/ai';
-import { LuFileSearch, LuSearch } from 'react-icons/lu';
+import { useState } from 'react';
+import { LuSearch } from 'react-icons/lu';
 import styled from 'styled-components';
 import api from '../../../../api';
 
@@ -67,12 +66,11 @@ const ResultItem = styled.div`
   }
 `;
 
-const Modal = ({ id, isOpen, onClose }) => {
+const Modal = ({ id, isOpen, onClose }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
-  const [isInvited, setIsInvited] = useState(false);
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e: any) => {
     const value = e.target.value;
     setSearchTerm(value);
 
@@ -92,7 +90,7 @@ const Modal = ({ id, isOpen, onClose }) => {
     }
   };
 
-  const handleResultClick = (participant) => {
+  const handleResultClick = (participant: any) => {
     console.log(`참여자 추가: ${participant.name}`);
     // 여기에 참여자 추가 로직을 추가합니다.
     onClose();
@@ -102,7 +100,7 @@ const Modal = ({ id, isOpen, onClose }) => {
     return null;
   }
 
-  const inviteUser = async (participant) => {
+  const inviteUser = async (participant: any) => {
     try {
       const response = await api.post('/api/diary/user', {
         diaryId: id,
@@ -111,7 +109,6 @@ const Modal = ({ id, isOpen, onClose }) => {
 
       if (response.status === 201) {
         console.log('다이어리 유저 생성 완료:', response.data);
-        setIsInvited(true); // 초대 완료 상태로 업데이트
       } else {
         console.error('다이어리 유저 생성 실패:', response.status);
       }
@@ -120,7 +117,7 @@ const Modal = ({ id, isOpen, onClose }) => {
     }
   };
 
-  const handleInviteClick = (participant) => {
+  const handleInviteClick = (participant: any) => {
     inviteUser(participant);
   };
 
@@ -138,7 +135,7 @@ const Modal = ({ id, isOpen, onClose }) => {
           <LuSearch size={20} />
         </div>
         <SearchResult>
-          {results.map((participant) => (
+          {results.map((participant: any) => (
             <ResultItem key={participant.userId} onClick={() => handleResultClick(participant)}>
               <div>
                 <img src={participant.profileImg} alt={participant.userId} />

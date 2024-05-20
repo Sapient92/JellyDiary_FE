@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { MdEdit } from 'react-icons/md';
@@ -19,11 +19,10 @@ import {
 } from './DiaryEditPage.styles';
 
 import imgSrc from '../../../assets/testImage/suggestedPostImage.png';
-import useUser from '../../../hooks/useUser';
 import api from '../../../api';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import Modal from './UserFindModal'; // 위에서 만든 모달 컴포넌트를 import
-
+import UserList from './UserList';
 interface DiaryProps {
   chatRoomId: number;
   diaryDescription: string;
@@ -35,13 +34,14 @@ interface DiaryProps {
 const DiaryEditPage = () => {
   const { id } = useParams();
   const scrollView = useRef<HTMLInputElement>(null);
-  const { user } = useUser();
-  const [diaryData, setDiaryData] = useState<DiaryProps>([]);
+  const [diaryData, setDiaryData] = useState<DiaryProps>();
   const [uploadedImage, setUploadedImage] = useState(imgSrc);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [userName, setUserName] = useState('');
   const [userDesc, setUserDesc] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [diaryUserList, setDiaryUserList] = useState([]);
+  const [updatedRoles, setUpdatedRoles] = useState([]);
 
   const navigate = useNavigate();
 
@@ -97,9 +97,10 @@ const DiaryEditPage = () => {
   };
   useEffect(() => {
     fetchDiaryProfile();
+    fetchDiaryUsers();
   }, []);
 
-  const isValidString = (str) => {
+  const isValidString = (str: any) => {
     return str && str.trim() !== '';
   };
   const updateProfileDesc = async (diaryName: string, diaryDescription: string) => {
@@ -120,7 +121,7 @@ const DiaryEditPage = () => {
       } else {
         console.log('Failed to update profile description:', response.status);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
@@ -137,20 +138,20 @@ const DiaryEditPage = () => {
     }
   };
 
-  const onChangeImage = (e) => {
+  const onChangeImage = (e: any) => {
     const file = e.target.files[0];
     const imageUrl = URL.createObjectURL(file);
     setUploadedImage(imageUrl);
     updateProfileImage(file);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { value } = e.target;
     setUserName(value);
     setIsButtonDisabled(!isValidString(value));
   };
 
-  const handleDescriptionChange = (e) => {
+  const handleDescriptionChange = (e: any) => {
     const { value } = e.target;
     setUserDesc(value);
     setIsButtonDisabled(!isValidString(value));
@@ -162,9 +163,6 @@ const DiaryEditPage = () => {
       navigate('/diary');
     }
   };
-  const handleUsersAllow = () => {
-    console.log('user');
-  };
   const handleUserAdd = () => {
     setIsModalOpen(true);
   };
@@ -172,6 +170,58 @@ const DiaryEditPage = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  const fetchDiaryUsers = async () => {
+    const response = await api.get(`/api/diary/user/list/${id}`);
+    setDiaryUserList(response.data.data);
+  };
+  const handleEdit = async () => {
+    try {
+      const response = await api.patch(`/api/diary/user/list/${id}`);
+      if (response.status === 200) {
+        console.log(response.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDelete = async (userId: number) => {
+    try {
+      await api.delete(`/api/diary/user/${userId}`);
+      setDiaryUserList(diaryUserList.filter((user: any) => user?.diaryUserId !== userId));
+    } catch (error) {
+      console.error('Failed to delete user:', error);
+    }
+  };
+
+  const handleRoleChange = (diaryUserId: any, newRole: any) => {
+    setUpdatedRoles((prevRoles: any) => ({
+      ...prevRoles,
+      [diaryUserId]: newRole,
+    }));
+  };
+
+  const handleSaveRoles = async () => {
+    const rolesToUpdate = Object.keys(updatedRoles).map((diaryUserId: any) => ({
+      diaryUserId: parseInt(diaryUserId),
+      diaryRole: updatedRoles[diaryUserId],
+    }));
+
+    try {
+      const response = await api.patch(`/api/diary/user/list/${id}`, rolesToUpdate);
+
+      if (response.status === 200) {
+        console.log('Roles updated successfully');
+        setUpdatedRoles([]);
+        fetchDiaryUsers(); // Refresh the list to show updated roles
+      } else {
+        console.error('Failed to update roles:', response.status);
+      }
+    } catch (error) {
+      console.error('Error updating roles:', error);
+    }
+  };
+
   return (
     <DiaryEditPageContainer>
       <DiaryEditLeftContent>
@@ -199,7 +249,7 @@ const DiaryEditPage = () => {
           <div>
             <span>{diaryData?.diaryName} </span>
           </div>
-          <div>{diaryData.diaryDescription}</div>
+          <div>{diaryData?.diaryDescription}</div>
         </UserInfo>
         <DiaryEditLeftNav>
           <div onClick={onMoveToTop}>다이어리 프로필</div>
@@ -250,10 +300,18 @@ const DiaryEditPage = () => {
                 text="저장"
                 backgroundColor="blue"
                 disabled={false}
-                onClick={handleUsersAllow}
+                onClick={handleSaveRoles}
               />
             </ButtonContent>
           </UserLeft>
+          <div>
+            <UserList
+              diaryUserList={diaryUserList}
+              onRoleChange={handleRoleChange}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          </div>
           <h2 onClick={handleUserAdd}>
             <span>
               <AiFillPlusCircle />

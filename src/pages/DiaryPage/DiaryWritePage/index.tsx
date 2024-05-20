@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import CustomButton from '../../../components/CustomButton';
 import {
@@ -12,13 +12,13 @@ import {
 } from './DiaryWritePage.styles';
 import imgSrc from '../../../assets/testImage/suggestedPostImage.png';
 
-const CreateDiaryModal = ({ isOpen, onClose, onSubmit }) => {
+const CreateDiaryModal = ({ isOpen, onClose, onSubmit }: any) => {
   const [diaryName, setDiaryName] = useState('');
   const [diaryDescription, setDiaryDescription] = useState('');
   const [diaryProfileImage, setDiaryProfileImage] = useState(null);
   const defaultImage = imgSrc;
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: any) => {
     const file = e.target.files[0];
     setDiaryProfileImage(file);
   };
