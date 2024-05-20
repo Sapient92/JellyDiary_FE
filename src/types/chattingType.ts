@@ -18,8 +18,8 @@ export interface MessageListType {
   userProfileImg: null | string;
 }
 
-export interface MessageType {
-  chatMessageList: MessageListType[];
-  hasNext: boolean;
-  hasPrevious: boolean;
-}
+// export interface MessageType {
+//   chatMessageList: MessageListType[];
+//   hasNext: boolean;
+//   hasPrevious: boolean;
+// }

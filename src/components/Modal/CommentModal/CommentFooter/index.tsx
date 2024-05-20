@@ -44,7 +44,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const parseMentions = (text: string) => {
     return text.replace(/@\[([^\]]+)]\((\d+)\)/g, "@$1");
   };
-  // 댓글 게시하기
+
   const handlePostClick = (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault();
     if (commentContent.trim() === "") {

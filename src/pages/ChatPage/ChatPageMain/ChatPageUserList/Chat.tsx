@@ -38,6 +38,7 @@ const Chat: React.FC<ChatProps> = ({ chat }) => {
       <ChatImgContainer>
         <img
           src={chat.chatRoomProfileImg ? chat.chatRoomProfileImg : userAvatar}
+          alt={"chatRoomProfileImg"}
         />
       </ChatImgContainer>
       <ChatInfoContainer>

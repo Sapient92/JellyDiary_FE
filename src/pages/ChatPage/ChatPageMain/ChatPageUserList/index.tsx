@@ -4,15 +4,13 @@ import { useParams } from "react-router-dom";
 import Chat from "./Chat.tsx";
 
 import { ChatType } from "../../../../types/chattingType.ts";
+import { useFetchChatList } from "../../../../hooks/useChatting.ts";
 
 import { ChatUserListContainer } from "./ChatPageUserList.styles.ts";
 
-interface ChatPageUserList {
-  chatList: ChatType[];
-}
-
-const ChatPageUserList: React.FC<ChatPageUserList> = ({ chatList }) => {
+const ChatPageUserList: React.FC = () => {
   const { userId, diaryId } = useParams();
+  const { data: chatList } = useFetchChatList();
   const sortedChatList = chatList?.sort(
     (a: ChatType, b: ChatType) =>
       new Date(b.createdAt ? b.createdAt : 0).getTime() -
@@ -24,7 +22,7 @@ const ChatPageUserList: React.FC<ChatPageUserList> = ({ chatList }) => {
   } else {
     return (
       <ChatUserListContainer $isChatting={!!userId || !!diaryId}>
-        {sortedChatList?.map((chat) => (
+        {sortedChatList?.map((chat: ChatType) => (
           <Chat key={chat.chatRoomId} chat={chat} />
         ))}
       </ChatUserListContainer>

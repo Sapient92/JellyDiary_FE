@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Client } from "@stomp/stompjs";
 
 import ChatMessage from "./ChatMessage.tsx";
 
@@ -11,6 +10,7 @@ import {
   useFetchChatHistory,
 } from "../../../../hooks/useChatting.ts";
 import { MessageListType } from "../../../../types/chattingType.ts";
+import { useChattingStore } from "../../../../store/chattingStore/chattingStore.ts";
 
 import {
   ChatContainer,
@@ -23,29 +23,18 @@ import {
 
 import sendBtn from "../../../../assets/button/SendBtn.png";
 
-interface ChatPageChat {
-  chatId: number | null;
-  stompClient: Client | null;
-  setMessages: React.Dispatch<React.SetStateAction<MessageListType[]>>;
-  messages: MessageListType[];
-}
-
-const ChatPageChat: React.FC<ChatPageChat> = ({
-  chatId,
-  stompClient,
-  setMessages,
-  messages,
-}) => {
-  const [message, setMessage] = useState("");
+const ChatPageChat: React.FC = () => {
   const [scrollHeight, setScrollHeight] = useState(0);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
-  const { userData } = useLoginUser();
   const [searchParams] = useSearchParams();
   const roomName = searchParams.get("roomName");
   const messageEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement | null>(null);
-  const { mutate } = useChatListMutation();
+
+  const { messages, fetchMessages, chatRoomId } = useChattingStore(
+    (state) => state,
+  );
 
   const {
     isLoading,
@@ -54,7 +43,7 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
     error,
     hasNextPage,
     fetchNextPage,
-  } = useFetchChatHistory(20, Number(chatId));
+  } = useFetchChatHistory(20, Number(chatRoomId));
 
   useEffect(() => {
     setInitialLoadComplete(false);
@@ -75,10 +64,10 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
 
       if (isDifferent) {
         if (!initialLoadComplete) {
-          setMessages(() => [...sortedMessage]);
+          fetchMessages(sortedMessage);
           setInitialLoadComplete(true);
         } else {
-          setMessages(() => [...sortedMessage]);
+          fetchMessages(sortedMessage);
         }
       }
     }
@@ -138,32 +127,13 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
         }
       };
     }
-  }, [topRef?.current, hasNextPage]);
+  }, [topRef?.current, hasNextPage, initialLoadComplete]);
 
   useEffect(() => {
     if (initialLoadComplete) {
       messageEndRef.current?.scrollIntoView({ behavior: "instant" });
     }
   }, [initialLoadComplete]);
-
-  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(e.target.value);
-  };
-
-  const handleSendMessage = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (stompClient && stompClient?.connected) {
-      client.publish({
-        destination: `/app/${chatId}`,
-        body: JSON.stringify({
-          chatMessage: message,
-          userId: userData?.userId,
-        }),
-      });
-    }
-    setMessage("");
-    mutate();
-  };
 
   if (isLoading) return <>채팅을 불러오는 중 입니다...</>;
   if (isError) return <>{error?.message}</>;
@@ -185,19 +155,48 @@ const ChatPageChat: React.FC<ChatPageChat> = ({
           ))}
         <div ref={messageEndRef}></div>
       </ChatMessagesContainer>
-      <ChatFooter>
-        <input
-          type={"text"}
-          value={message}
-          onChange={handleMessageChange}
-          placeholder={"대화를 나눠보세요."}
-        />
-        <button onClick={handleSendMessage}>
-          <img src={sendBtn} alt={"message_send_button"} />
-        </button>
-      </ChatFooter>
+      <ChatFooterForm />
     </ChatContainer>
   );
 };
 
 export default ChatPageChat;
+
+const ChatFooterForm: React.FC = () => {
+  const [message, setMessage] = useState("");
+  const { userData } = useLoginUser();
+  const { chatRoomId, stompClient } = useChattingStore((state) => state);
+  const { mutate } = useChatListMutation();
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const handleSendMessage = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (stompClient && stompClient?.connected) {
+      client.publish({
+        destination: `/app/${chatRoomId}`,
+        body: JSON.stringify({
+          chatMessage: message,
+          userId: userData?.userId,
+        }),
+      });
+    }
+    setMessage("");
+    mutate();
+  };
+  return (
+    <ChatFooter>
+      <input
+        type={"text"}
+        value={message}
+        onChange={handleMessageChange}
+        placeholder={"대화를 나눠보세요."}
+      />
+      <button onClick={handleSendMessage}>
+        <img src={sendBtn} alt={"message_send_button"} />
+      </button>
+    </ChatFooter>
+  );
+};

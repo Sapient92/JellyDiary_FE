@@ -1,41 +1,34 @@
-import { useEffect, useState } from "react";
-import { Client } from "@stomp/stompjs";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import ChatPageHeader from "./ChatPageHeader";
 import ChatPageMain from "./ChatPageMain";
 import api from "../../api";
 
+import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
 import { client } from "../../utils/StompClient.ts";
+import { ChatType } from "../../types/chattingType.ts";
 import {
   useChatListMutation,
   useFetchChatList,
 } from "../../hooks/useChatting.ts";
-import { ChatType, MessageListType } from "../../types/chattingType.ts";
-
-import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
-
-export interface Content {
-  chatMessage: string;
-  userId?: number;
-}
+import { useChattingStore } from "../../store/chattingStore/chattingStore.ts";
 
 const ChatPage = () => {
-  const { userId } = useParams();
-  const { diaryId } = useParams();
-  const [chatId, setChatId] = useState<number | null>(null);
-  const [messages, setMessages] = useState<MessageListType[]>([]);
-  const [stompClient, setStompClient] = useState<Client | null>(null);
+  const { userId, diaryId } = useParams();
+
+  const { chatRoomId, setChatRoomId, setMessages, setStompClient } =
+    useChattingStore((state) => state);
   const { data: chatList } = useFetchChatList();
   const { mutate } = useChatListMutation();
 
   useEffect(() => {
     const chatRoomId = chatList?.map((chat: ChatType) => chat.chatRoomId);
-    const existedChatRoom = chatRoomId?.includes(Number(chatId));
+    const existedChatRoom = chatRoomId?.includes(Number(chatRoomId));
     if (!existedChatRoom) {
       mutate();
     }
-  }, [chatId]);
+  }, [chatRoomId]);
 
   useEffect(() => {
     if (!diaryId && !userId) {
@@ -52,7 +45,7 @@ const ChatPage = () => {
               userId: userId,
               chatRoomType: "PRIVATE",
             });
-        setChatId(response.data.data);
+        setChatRoomId(response.data.data);
       } catch (e) {
         console.error("채팅방 생성 실패: ", e);
       }
@@ -61,17 +54,17 @@ const ChatPage = () => {
   }, [userId, diaryId]);
 
   useEffect(() => {
-    if (chatId) {
+    if (chatRoomId) {
       setStompClient(client);
       client.activate();
       client.onConnect = () => {
         const address = diaryId
-          ? `/topic/group/${chatId}`
-          : `/queue/private/${chatId}`;
+          ? `/topic/group/${chatRoomId}`
+          : `/queue/private/${chatRoomId}`;
         client.subscribe(address, (frame) => {
           try {
             const parsedMessage = JSON.parse(frame.body);
-            setMessages((prev) => [...prev, parsedMessage]);
+            setMessages(parsedMessage);
           } catch (error) {
             console.error("오류가 발생했습니다: ", error);
           }
@@ -82,19 +75,13 @@ const ChatPage = () => {
       console.log("채팅방 종료");
       client.deactivate?.();
     };
-  }, [chatId]);
+  }, [chatRoomId]);
 
   return (
     <ChatPageContainer>
       <ChatPageContent>
         <ChatPageHeader />
-        <ChatPageMain
-          messages={messages}
-          setMessages={setMessages}
-          chatId={chatId}
-          stompClient={stompClient}
-          chatList={chatList}
-        />
+        <ChatPageMain />
       </ChatPageContent>
     </ChatPageContainer>
   );
