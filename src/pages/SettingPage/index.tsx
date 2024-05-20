@@ -23,10 +23,12 @@ import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 import useUser from '../../hooks/useUser';
 import api from '../../api';
 import { useNotificationStore } from '../../store/notificationStore/notificationStore';
+import { useNavigate } from 'react-router-dom';
 
 const SettingPage = () => {
   const scrollView = useRef<HTMLInputElement>(null);
   const { user } = useUser();
+  const navigate = useNavigate();
   const [uploadedImage, setUploadedImage] = useState(imgSrc);
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
   const [userName, setUserName] = useState('');
@@ -206,7 +208,13 @@ const SettingPage = () => {
   if (!user) {
     return <div>...</div>;
   }
-
+  const handleUserDelete = async () => {
+    const response = await api.delete('/api/users');
+    if (response.status === 200) {
+      console.log('회원 탈퇴 완료');
+      navigate('/login');
+    }
+  };
   return (
     <SettingPageContainer>
       <SettingLeftContent>
@@ -348,7 +356,7 @@ const SettingPage = () => {
                 text="회원 탈퇴"
                 backgroundColor="red"
                 disabled={false}
-                onClick={() => console.log('회원탈퇴되었습니다..')}
+                onClick={() => handleUserDelete()}
               />
             </ButtonContent>
           </UserLeft>
