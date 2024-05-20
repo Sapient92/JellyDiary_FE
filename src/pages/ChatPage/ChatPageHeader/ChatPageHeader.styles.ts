@@ -7,7 +7,7 @@ export const ChatHeaderContainer = styled.div`
   margin-left: 20px;
 
   p {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
   }
 `;
