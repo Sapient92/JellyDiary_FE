@@ -52,16 +52,8 @@ export const CommentReplyWriterContainer = styled.div`
 `;
 
 export const CommentFormContainer = styled.form`
-  input {
-    width: 230px;
-    height: 20px;
-    border: none;
-    border-bottom: 1px solid gray;
+  display: flex;
 
-    &:focus {
-      outline: none;
-    }
-  }
   button {
     border: none;
     background: none;
