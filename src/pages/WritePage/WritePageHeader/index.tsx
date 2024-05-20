@@ -46,7 +46,8 @@ const WritePageHeader: FC<WritePageHeaderProps> = ({ title, data }) => {
     <WritePageHeaderContainer>
       <WritePageTitle>
         <span onClick={handleGoBackClick}>{"<"}</span>
-        <p>📝 {title}</p>
+        <p>📝 </p>
+        <p>{title}</p>
       </WritePageTitle>
       <WritePageWeatherContainer>
         <SunnyBtn

@@ -39,10 +39,10 @@ export const useLikeMutation = (id: string) => {
   const { mutate } = useMutation({
     mutationFn: changeLike,
     onSuccess: () => {
-      queryClient.invalidateQueries({
+      queryClient.invalidateQueries?.({
         queryKey: [queryKeys.postLikeState, id],
       });
-      queryClient.invalidateQueries({ queryKey: [queryKeys.post, id] });
+      queryClient.invalidateQueries?.({ queryKey: [queryKeys.post, id] });
     },
   });
 
