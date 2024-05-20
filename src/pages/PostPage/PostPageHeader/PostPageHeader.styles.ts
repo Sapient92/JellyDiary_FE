@@ -24,13 +24,13 @@ export const UserProfileContainer = styled.div`
 `;
 
 export const LinkTag = styled(Link)`
-  margin: 0 0 0 14px;
+  margin: 0 0 0 18px;
   text-decoration: none;
   color: black;
   p {
     margin: 0;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 20px;
 
     &:hover {
       cursor: pointer;

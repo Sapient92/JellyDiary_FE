@@ -16,8 +16,12 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ chat }) => {
   const { userId, diaryId } = useParams();
+
   const navigate = useNavigate();
   const handleChatRoomClick = () => {
+    if (chat?.userId === Number(userId)) {
+      return;
+    }
     if (chat?.userId) {
       navigate(`/chat/${chat.userId}?roomName=${chat.chatRoomName}`);
     } else {

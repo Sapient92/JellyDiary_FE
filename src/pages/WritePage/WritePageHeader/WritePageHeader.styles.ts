@@ -28,11 +28,19 @@ export const WritePageTitle = styled.div`
     }
   }
 
-  p {
-    margin-left: 60px;
+  p:nth-child(2) {
+    margin-left: 42px;
     color: black;
     font-weight: bold;
     cursor: default;
+  }
+
+  p:nth-child(3) {
+    margin-left: 30px;
+    color: black;
+    font-weight: bold;
+    cursor: default;
+    font-size: 20px;
   }
 `;
 

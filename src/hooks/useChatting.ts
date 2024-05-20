@@ -1,6 +1,7 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { queryKeys } from "../react-query/constants.ts";
 import api from "../api";
+import { queryClient } from "../react-query/queryClient.ts";
 
 export const useFetchChatList = () =>
   useQuery({
@@ -8,6 +9,18 @@ export const useFetchChatList = () =>
     queryFn: () => api.get(`/api/chat/roomList`),
     select: (data) => data.data.data,
   });
+
+export const useChatListMutation = () => {
+  const { mutate } = useMutation({
+    mutationFn: () => api.get(`/api/chat/roomList`),
+    onSuccess: () => {
+      queryClient.invalidateQueries?.({
+        queryKey: [queryKeys.chatList],
+      });
+    },
+  });
+  return { mutate };
+};
 
 export const useFetchChatHistory = (size: number, chatRoomId: number) => {
   const { isLoading, data, ...rest } = useInfiniteQuery({

@@ -7,8 +7,11 @@ import ChatPageMain from "./ChatPageMain";
 import api from "../../api";
 
 import { client } from "../../utils/StompClient.ts";
-import { useFetchChatList } from "../../hooks/useChatting.ts";
-import { MessageListType } from "../../types/chattingType.ts";
+import {
+  useChatListMutation,
+  useFetchChatList,
+} from "../../hooks/useChatting.ts";
+import { ChatType, MessageListType } from "../../types/chattingType.ts";
 
 import { ChatPageContainer, ChatPageContent } from "./ChatPage.styles.ts";
 
@@ -24,6 +27,15 @@ const ChatPage = () => {
   const [messages, setMessages] = useState<MessageListType[]>([]);
   const [stompClient, setStompClient] = useState<Client | null>(null);
   const { data: chatList } = useFetchChatList();
+  const { mutate } = useChatListMutation();
+
+  useEffect(() => {
+    const chatRoomId = chatList?.map((chat: ChatType) => chat.chatRoomId);
+    const existedChatRoom = chatRoomId?.includes(Number(chatId));
+    if (!existedChatRoom) {
+      mutate();
+    }
+  }, [chatId]);
 
   useEffect(() => {
     if (!diaryId && !userId) {
