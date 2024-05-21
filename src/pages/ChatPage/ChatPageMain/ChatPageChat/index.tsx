@@ -47,14 +47,20 @@ const ChatPageChat: React.FC = () => {
     fetchNextPage,
   } = useFetchChatHistory(20, Number(chatRoomId));
 
-  console.log("messages: ", messages);
-  console.log("messageHistory", messageHistory);
-
   useEffect(() => {
     fetchMessages([]);
     queryClient.invalidateQueries?.({
       queryKey: [queryKeys.chatPaginated, 20, chatRoomId],
     });
+    if (!messagesContainerRef) return;
+    if (
+      messagesContainerRef.current &&
+      messages.length === messageHistory?.length
+    ) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight - scrollHeight;
+      setScrollHeight(messagesContainerRef.current.scrollHeight);
+    }
   }, [chatRoomId]);
 
   useEffect(() => {
@@ -91,7 +97,6 @@ const ChatPageChat: React.FC = () => {
       messagesContainerRef.current &&
       messages.length === messageHistory?.length
     ) {
-      console.log("123");
       messagesContainerRef.current.scrollTop =
         messagesContainerRef.current.scrollHeight - scrollHeight;
       setScrollHeight(messagesContainerRef.current.scrollHeight);
