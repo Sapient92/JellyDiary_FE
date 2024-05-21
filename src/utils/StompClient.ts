@@ -1,7 +1,7 @@
 import { Client } from "@stomp/stompjs";
 
 export const client = new Client({
-  brokerURL: "wss://jellydiary.life/ws/chat",
+  brokerURL: "wss://api.jellydiary.life/ws/chat'",
   debug: (string) => {
     console.log(string);
   },
