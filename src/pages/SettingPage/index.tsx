@@ -33,14 +33,25 @@ const SettingPage = () => {
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
   const [userName, setUserName] = useState('');
   const [userDesc, setUserDesc] = useState('');
-  const { notificationSetting, postLike, postComment, post, commentTag, newFollower, dm } =
-    useNotificationStore((state) => state);
-
-  const [settings, setSettings] = useState({
+  const {
     notificationSetting,
+    subscribe,
     postLike,
     postComment,
     post,
+    diary,
+    commentTag,
+    newFollower,
+    dm,
+  } = useNotificationStore((state) => state);
+
+  const [settings, setSettings] = useState({
+    notificationSetting,
+    subscribe,
+    postLike,
+    postComment,
+    post,
+    diary,
     commentTag,
     newFollower,
     dm,
@@ -49,9 +60,11 @@ const SettingPage = () => {
     if (user) {
       setSettings({
         notificationSetting: user.notificationSetting,
+        subscribe: user.subscribe,
         postLike: user.postLike,
         postComment: user.postComment,
         post: user.post,
+        diary: user.diary,
         commentTag: user.commentTag,
         newFollower: user.newFollower,
         dm: user.dm,
@@ -61,14 +74,26 @@ const SettingPage = () => {
   useEffect(() => {
     setSettings({
       notificationSetting,
+      subscribe,
       postLike,
       postComment,
       post,
+      diary,
       commentTag,
       newFollower,
       dm,
     });
-  }, [notificationSetting, postLike, postComment, post, commentTag, newFollower, dm]);
+  }, [
+    notificationSetting,
+    subscribe,
+    postLike,
+    postComment,
+    post,
+    diary,
+    commentTag,
+    newFollower,
+    dm,
+  ]);
 
   const onMoveToSelect = () => {
     if (scrollView.current !== undefined && scrollView.current !== null) {
@@ -181,12 +206,14 @@ const SettingPage = () => {
     }
   };
   const handleToggle = (settingName: string) => {
-    if (settingName === 'notificationSetting' && !settings.notificationSetting) {
+    if (settingName === 'notificationSetting' && settings.notificationSetting == false) {
       setSettings({
         notificationSetting: false,
+        subscribe: false,
         postLike: false,
         postComment: false,
         post: false,
+        diary: false,
         commentTag: false,
         newFollower: false,
         dm: false,
@@ -288,13 +315,19 @@ const SettingPage = () => {
             </ButtonContent>
           </ToggleTitle>
           <ToggleContent>
+            <div>구독</div>
+            <ButtonContent>
+              <ToggleButton state={settings.subscribe} toggle={() => handleToggle('subscribe')} />
+            </ButtonContent>
+          </ToggleContent>
+          <ToggleContent>
             <div>게시물 좋아요</div>
             <ButtonContent>
               <ToggleButton state={settings.postLike} toggle={() => handleToggle('postLike')} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
-            <div>게시물 댓글</div>
+            <div>댓글</div>
             <ButtonContent>
               <ToggleButton
                 state={settings.postComment}
@@ -306,6 +339,12 @@ const SettingPage = () => {
             <div>게시물 생성</div>
             <ButtonContent>
               <ToggleButton state={settings.post} toggle={() => handleToggle('post')} />
+            </ButtonContent>
+          </ToggleContent>
+          <ToggleContent>
+            <div>다이어리</div>
+            <ButtonContent>
+              <ToggleButton state={settings.diary} toggle={() => handleToggle('diary')} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
@@ -324,7 +363,7 @@ const SettingPage = () => {
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>
-            <div>메시지 요청(DM)</div>
+            <div>메시지</div>
             <ButtonContent>
               <ToggleButton state={settings.dm} toggle={() => handleToggle('dm')} />
             </ButtonContent>

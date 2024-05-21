@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
+
 import styled from 'styled-components';
 import { IoNotifications } from 'react-icons/io5';
 import NotificationModal from './NotificationModal';
@@ -11,19 +13,26 @@ const Notification = () => {
   const [messages, setMessages] = useState<any>([]);
 
   useEffect(() => {
-    const eventSource = new EventSource('http://localhost:8080/api/subscribe');
+    const EventSource = EventSourcePolyfill || NativeEventSource;
 
-    eventSource.onmessage = function (event) {
+    const eventSource = new EventSource('https://api.jellydiary.life/api/subscribe', {
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+      withCredentials: true,
+    });
+
+    eventSource.onmessage = function (event: any) {
       const newMessage = event.data;
       setMessages((prevMessages: any) => [...prevMessages, newMessage]);
     };
 
-    eventSource.addEventListener('welcome', function (event) {
+    eventSource.addEventListener('welcome', function (event: any) {
       const welcomeMessage = event.data;
       setMessages((prevMessages: any) => [...prevMessages, welcomeMessage]);
     });
 
-    eventSource.onerror = function (error) {
+    eventSource.onerror = function (error: any) {
       console.error('EventSource failed:', error);
       eventSource.close();
     };

@@ -27,13 +27,10 @@ const Header = () => {
         // Clear JWT token stored in local storage
         localStorage.removeItem('Authorization');
 
-        // Call the logout API
         const response = await api.post('/api/logout');
-        console.log(response);
-
-        // Redirect to the login page
-        window.location.reload();
-        navigate('/login');
+        if (response.status === 200) {
+          window.location.href = '/';
+        }
       } catch (error) {
         console.error('Error occurred during logout:', error);
       }
