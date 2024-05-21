@@ -3,7 +3,6 @@ export default {
     fontSize: 14,
     fontWeight: "normal",
     height: 20,
-    borderBottom: "1px solid gray",
     zIndex: 10,
   },
 
@@ -12,7 +11,6 @@ export default {
     control: {
       fontFamily: "monospace",
       borderRadius: "35px",
-      borderBottom: "1px solid gray;",
     },
 
     highlighter: {
@@ -20,11 +18,11 @@ export default {
       border: "1px solid transparent",
     },
 
-    borderBottom: "1px solid gray",
     input: {
       padding: "0 6px 0 0",
       border: "none",
       outline: "none",
+      borderBottom: "1px solid gray",
     },
   },
 
