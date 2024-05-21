@@ -35,7 +35,6 @@ const SettingPage = () => {
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
   const [userName, setUserName] = useState('');
   const [userDesc, setUserDesc] = useState('');
-  const [message, setMessage] = useState('');
 
   const {
     notificationSetting,
@@ -197,7 +196,7 @@ const SettingPage = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage('사용할 수 없는 이름입니다.');
+      toast('사용할 수 없는 이름입니다.');
       setIsButtonDisabled(true); // Disable the button
     }
   };
