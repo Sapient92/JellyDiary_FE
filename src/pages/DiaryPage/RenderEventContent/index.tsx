@@ -1,31 +1,37 @@
 import { MdLockOutline, MdLockOpen } from 'react-icons/md';
 import { EventContentArg } from '@fullcalendar/core';
 import styled, { css } from 'styled-components';
-
-const ListContent = styled.div`
+interface props {
+  isPublic: boolean;
+}
+const ListContent = styled.div<props>`
   display: flex;
   align-items: center;
   gap: 5px;
+  border: none;
+
   ${(props: any) =>
     props.isPublic
       ? css`
-          color: #6b7a99; /* 공개 이벤트의 색상 */
+          b {
+            background-color: #3ea9e5;
+          }
         `
       : css`
-          color: #6b7a99; /* 비공개 이벤트의 색상 */
+          b {
+            background-color: #ff6633;
+          }
         `}
 `;
 
 function renderEventContent(eventInfo: EventContentArg) {
   const { title, extendedProps } = eventInfo.event;
   const isPublic = extendedProps.isPublic;
-
   return (
-    <ListContent>
+    <ListContent isPublic={isPublic}>
       <b>{isPublic === false ? <MdLockOutline /> : <MdLockOpen />}</b>
       <a>{title.length > 5 ? `${title.slice(0, 5)}...` : title}</a>
     </ListContent>
   );
 }
-
 export default renderEventContent;

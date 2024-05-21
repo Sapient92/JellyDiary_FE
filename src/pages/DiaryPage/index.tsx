@@ -108,12 +108,15 @@ const DiaryPage = () => {
     return apiData.map((event: any) => ({
       title: event.postTitle,
       date: event.postDate,
+      borderColor: event.isPublic ? '#3EA9E5' : '#FF6633',
+      backgroundColor: event.isPublic ? '#F5F5F5' : '#FFF7F5',
       extendedProps: {
         postId: event.postId,
         weather: event.weather,
         writer: event.userId,
         diaryId: event.diaryId,
         isPublic: event.isPublic,
+        borderColor: event.isPublic ? '#3EA9E5' : '#FF6633',
       },
     }));
   };
@@ -233,7 +236,9 @@ const DiaryPage = () => {
                 },
               },
             }}
+            eventBackgroundColor={isModalOpen ? 'red' : 'blue'}
             events={events}
+            dayMaxEventRows={3}
             eventContent={renderEventContent}
             eventClick={handleEventClick}
             locales={allLocales}
@@ -322,6 +327,8 @@ const DiaryPage = () => {
               right: '',
             }}
             events={events}
+            dayMaxEvents={true}
+            dayMaxEventRows={true}
             eventContent={renderEventContent}
             eventClick={handleEventClick}
             locales={allLocales}
