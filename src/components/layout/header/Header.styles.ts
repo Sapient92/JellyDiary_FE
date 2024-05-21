@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { MdAccountCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.header`
@@ -37,12 +36,36 @@ export const RightButtonContainer = styled.div`
   padding-right: 104px;
 `;
 
-export const AccountButton = styled(MdAccountCircle)`
-  width: 52px;
-  height: 52px;
-  color: gray;
+export const AccountButton = styled.div`
+  width: 34px;
+  height: 34px;
+  background-color: gray; /* Set background color for the circular container */
+  border-radius: 50%; /* Make the container circular */
+  display: flex;
+
+  img {
+    width: 100%; /* Adjust the image size as needed */
+    border-radius: 50%; /* Make the image circular */
+  }
 
   &:hover {
     cursor: pointer;
   }
+`;
+
+export const Noti = styled.div`
+  color: #717d96;
+  font-size: x-large;
+  display: flex;
+  padding-right: 30px;
+`;
+
+export const LogoutContent = styled.div`
+  color: #717d96;
+  padding-left: 20px;
+
+  display: flex;
+  font-size: small;
+  font-weight: 400;
+  vertical-align: middle;
 `;
