@@ -95,7 +95,7 @@ const ChatPageChat: React.FC = () => {
     if (messages.length > (messageHistory ? messageHistory?.length : 0)) {
       messageEndRef.current?.scrollIntoView({ behavior: "instant" });
     }
-  }, [messages?.length]);
+  }, [messages?.length, chatRoomId]);
 
   useEffect(() => {
     if (initialLoadComplete && hasNextPage) {
