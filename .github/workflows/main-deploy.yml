@@ -27,7 +27,6 @@ jobs:
         
       - name: Build
         env:
-          CI: false
           VITE_BASE_URL: ${{secrets.VITE_BASE_URL}}
         run: npm run build
         
