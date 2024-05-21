@@ -90,7 +90,6 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const handleEnterPrevent = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      e.stopPropagation();
       handlePostClick();
     }
   };
@@ -115,7 +114,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
         value={commentContent}
         onChange={handleCommentChange}
         placeholder={`${userData.userName}님에게 댓글 추가`}
-        onKeyDown={handleEnterPrevent}
+        onKeyUp={handleEnterPrevent}
       >
         <Mention
           style={{
