@@ -50,7 +50,7 @@ const ChatPageChat: React.FC = () => {
   useEffect(() => {
     fetchMessages([]);
     queryClient.invalidateQueries?.({
-      queryKey: [queryKeys.chatPaginated, "20", String(chatRoomId)],
+      queryKey: [queryKeys.chatPaginated, 20, chatRoomId],
     });
   }, [chatRoomId]);
 
