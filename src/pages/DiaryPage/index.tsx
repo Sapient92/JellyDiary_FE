@@ -18,6 +18,7 @@ import {
   AddUser,
   DiaryRightNav,
   GroupIcon,
+  UserImageContainer,
 } from './DiaryPage.styles';
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 import api from '../../api';
@@ -440,11 +441,17 @@ const DiaryPage = () => {
       <DiaryPageContent>{renderContentByAuth()}</DiaryPageContent>
       {diaryAuth === 'CREATOR' || diaryAuth === 'READ' || diaryAuth === 'WRITE' ? (
         <DiaryRightNav>
-          <GroupIcon onClick={() => handleClickGroupChat(diaryData?.diaryId, diaryData?.diaryName)}>
-            <MdGroup />
-            <span>Group</span>
-          </GroupIcon>
-          <UserImageList userIds={chatList} />
+          <div>
+            <GroupIcon
+              onClick={() => handleClickGroupChat(diaryData?.diaryId, diaryData?.diaryName)}
+            >
+              <MdGroup />
+              <span>Group</span>
+            </GroupIcon>
+          </div>
+          <UserImageContainer>
+            <UserImageList userIds={chatList} />
+          </UserImageContainer>
         </DiaryRightNav>
       ) : null}
       <CreateDiaryModal

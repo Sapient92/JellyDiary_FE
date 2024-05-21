@@ -36,9 +36,7 @@ export const DiaryPageContent = styled.div`
     padding-left: 2px;
     border-radius: 1px;
     border-width: 2px;
-    color: #6b7a99;
     b {
-      border-radius: 2px;
       padding-top: 3px;
       padding-left: 3px;
       padding-right: 3px;
@@ -95,7 +93,7 @@ export const DiaryLeftContent = styled.div`
 
 export const UserImage = styled.div`
   width: 10vw;
-  height: 10vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,7 +128,6 @@ export const UserInfo = styled.div`
   align-items: center;
   gap: 0.5vh;
   padding: 0.5vh;
-  margin-top: 4vh;
   div > span {
     color: #6b7a99;
     font-size: 16px;
@@ -219,6 +216,7 @@ export const DiaryRightNav = styled.div`
   top: 40%;
   right: 10px;
   padding: 10px;
+  border-radius: 1px;
   background-color: #fff;
   height: 200px;
   width: 30px;
@@ -227,17 +225,19 @@ export const DiaryRightNav = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
+`;
 
-  div {
-    overflow-y: auto;
-    scrollbar-width: none;
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
+export const UserImageContainer = styled.div`
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 `;
+
 export const GroupIcon = styled.div`
   width: 40px;
   height: 40px;
@@ -251,6 +251,7 @@ export const GroupIcon = styled.div`
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+
   span {
     font-size: x-small;
   }

@@ -27,7 +27,7 @@ export const LogoContainer = styled(Link)`
     font-size: 20px;
   }
   img {
-    height: 100px;
+    height: 2.5rem;
   }
 `;
 export const RightButtonContainer = styled.div`
