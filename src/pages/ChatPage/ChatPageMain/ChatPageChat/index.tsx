@@ -22,6 +22,8 @@ import {
 } from "./ChatPageChat.styles.ts";
 
 import sendBtn from "../../../../assets/button/SendBtn.png";
+import { queryClient } from "../../../../react-query/queryClient.ts";
+import { queryKeys } from "../../../../react-query/constants.ts";
 
 const ChatPageChat: React.FC = () => {
   const [scrollHeight, setScrollHeight] = useState(0);
@@ -47,6 +49,9 @@ const ChatPageChat: React.FC = () => {
 
   useEffect(() => {
     fetchMessages([]);
+    queryClient.invalidateQueries?.({
+      queryKey: [queryKeys.chatPaginated, "20", String(chatRoomId)],
+    });
   }, [chatRoomId]);
 
   useEffect(() => {
