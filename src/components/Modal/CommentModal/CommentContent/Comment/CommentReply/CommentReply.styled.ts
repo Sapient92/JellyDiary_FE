@@ -22,6 +22,7 @@ export const CommentReplyContent = styled.div`
   img {
     width: 30px;
     height: 30px;
+    border-radius: 50%;
   }
   &:hover ${DeleteCommentButton} {
     visibility: visible;
@@ -32,7 +33,7 @@ export const CommentReplyDesc = styled.div`
   margin-left: 6px;
 
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 600;
 `;
 
 export const CommentReplyWriterContainer = styled.div`
