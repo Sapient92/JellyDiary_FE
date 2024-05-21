@@ -47,6 +47,9 @@ const ChatPageChat: React.FC = () => {
     fetchNextPage,
   } = useFetchChatHistory(20, Number(chatRoomId));
 
+  console.log("messages: ", messages);
+  console.log("messageHistory", messageHistory);
+
   useEffect(() => {
     fetchMessages([]);
     queryClient.invalidateQueries?.({
