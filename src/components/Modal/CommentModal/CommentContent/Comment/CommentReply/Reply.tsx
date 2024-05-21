@@ -34,6 +34,19 @@ const Reply: React.FC<ReplyProps> = ({
     showReplyDeleteModal(true);
   };
 
+  const regex = /(@\S+)/g;
+  const splitContent = reply?.commentContent.split(regex).map((part, index) => {
+    if (part.match(regex)) {
+      return (
+        <span key={index} style={{ color: "lightcoral" }}>
+          {part}
+        </span>
+      );
+    } else {
+      return part;
+    }
+  });
+
   return (
     <CommentReplyContent key={reply.commentId}>
       <img
@@ -45,7 +58,7 @@ const Reply: React.FC<ReplyProps> = ({
           <p>{reply.userName}</p>
           <p>{TransformDate(reply.createdAt)}</p>
         </CommentReplyWriterContainer>
-        <p>{reply.commentContent}</p>
+        <p>{splitContent}</p>
       </CommentReplyDesc>
       {isLoginUser && (
         <DeleteCommentButton

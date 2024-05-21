@@ -36,6 +36,21 @@ const Comment: React.FC<CommentProps> = ({
     (state) => state.showCommentDeleteModal,
   );
 
+  const regex = /(@\S+)/g;
+  const splitContent = comment?.commentContent
+    .split(regex)
+    .map((part, index) => {
+      if (part.match(regex)) {
+        return (
+          <span key={index} style={{ color: "lightcoral" }}>
+            {part}
+          </span>
+        );
+      } else {
+        return part;
+      }
+    });
+
   const handleReplyClick = () => {
     setReplyClick(!replyClick);
   };
@@ -63,7 +78,7 @@ const Comment: React.FC<CommentProps> = ({
               <p>{useWrittenAt(comment.createdAt)}</p>
             </CommentInfoContainer>
             <CommentDescription>
-              <p>{comment.commentContent}</p>
+              <p>{splitContent}</p>
               {!replyClick ? (
                 <p onClick={handleReplyClick}>
                   {comment?.replyCount === 0
