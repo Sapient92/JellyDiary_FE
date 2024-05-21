@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react';
-import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
 import styled from 'styled-components';
 import { IoNotifications } from 'react-icons/io5';
 import NotificationModal from './NotificationModal';
 import api from '../../../../api';
+import useUser from '../../../../hooks/useUser';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
 const Notification = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasNewNotifications, setHasNewNotifications] = useState(false);
   const [notificationData, setNotificationData] = useState<any[]>([]);
   const [messages, setMessages] = useState<any>([]);
-
+  const { user } = useUser();
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;
 
     const eventSource = new EventSource('https://api.jellydiary.life/api/subscribe', {
       headers: {
-        Authorization: localStorage.getItem('Authorization'),
+        Authorization: localStorage.getItem('Authorization') || '',
       },
       withCredentials: true,
     });
@@ -41,12 +42,13 @@ const Notification = () => {
       eventSource.close();
     };
   }, []);
-  console.log(messages);
+
   useEffect(() => {
     const fetchNotificationData = async () => {
       try {
         const response = await api.get('/api/notification');
         setNotificationData(response.data.data.notificationResponseDtos);
+        console.log(messages);
         if (response.data.data.count > 0) {
           setHasNewNotifications(true); // Assuming the data indicates new notifications
         }
@@ -62,7 +64,12 @@ const Notification = () => {
     setIsModalOpen(true);
     setHasNewNotifications(false); // After opening modal, reset the new notifications flag
   };
-
+  const handleDeleteNotification = async () => {
+    const response = await api.delete(`/api/notification/${user?.userId}`);
+    console.log(response.data.data);
+    setNotificationData([]);
+    setIsModalOpen(false);
+  };
   return (
     <>
       <Noti onClick={handleNotificationClick}>
@@ -71,7 +78,7 @@ const Notification = () => {
       </Noti>
       {isModalOpen && (
         <NotificationModal
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => handleDeleteNotification()}
           notificationData={notificationData}
         />
       )}
