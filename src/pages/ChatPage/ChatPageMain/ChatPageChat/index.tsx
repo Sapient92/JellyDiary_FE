@@ -46,6 +46,10 @@ const ChatPageChat: React.FC = () => {
   } = useFetchChatHistory(20, Number(chatRoomId));
 
   useEffect(() => {
+    fetchMessages([]);
+  }, [chatRoomId]);
+
+  useEffect(() => {
     setInitialLoadComplete(false);
   }, []);
 
