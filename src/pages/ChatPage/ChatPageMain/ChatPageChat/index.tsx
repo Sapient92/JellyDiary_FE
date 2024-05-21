@@ -176,6 +176,7 @@ const ChatFooterForm: React.FC = () => {
   const { userData } = useLoginUser();
   const { chatRoomId, stompClient } = useChattingStore((state) => state);
   const { mutate } = useChatListMutation();
+  const messageRef = useRef<HTMLInputElement>(null);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -183,6 +184,10 @@ const ChatFooterForm: React.FC = () => {
 
   const handleSendMessage = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (message.trim() === "") {
+      messageRef.current?.focus();
+      return;
+    }
     if (stompClient && stompClient?.connected) {
       client.publish({
         destination: `/app/${chatRoomId}`,
@@ -198,6 +203,7 @@ const ChatFooterForm: React.FC = () => {
   return (
     <ChatFooter>
       <input
+        ref={messageRef}
         type={"text"}
         value={message}
         onChange={handleMessageChange}
