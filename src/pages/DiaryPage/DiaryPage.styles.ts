@@ -29,19 +29,17 @@ export const DiaryPageContent = styled.div`
   .fc .fc-daygrid-day-top {
     flex-direction: row;
   }
+
   .fc-h-event .fc-event-main {
     height: 2rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #3ea9e5;
-    border-radius: 2px;
-    background-color: white;
+    padding-left: 2px;
+    border-radius: 1px;
+    border-width: 2px;
     color: #6b7a99;
     b {
-      background-color: #3ea9e5;
-      padding-top: 3px;
       border-radius: 2px;
+      padding-top: 3px;
       padding-left: 3px;
       padding-right: 3px;
       color: #fff;
