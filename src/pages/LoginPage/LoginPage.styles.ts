@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LogoContainer = styled.div`
   height: 100px;
   img {
-    height: 100px;
+    height: 3rem;
   }
 `;
 export const LoginPageContainer = styled.div`

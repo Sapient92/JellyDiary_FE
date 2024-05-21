@@ -33,12 +33,12 @@ const fetchJellyDiaries = async ({ pageParam = 0 }) => {
 };
 
 const SuggestedPostsSection = () => {
-  const { data, error, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage, status } =
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage, status } =
     useInfiniteQuery({
       queryKey: ['jellyDiaries'],
       queryFn: fetchJellyDiaries,
       initialPageParam: 0,
-      getNextPageParam: (lastPage, pages) => lastPage.nextPageParam,
+      getNextPageParam: (lastPage) => lastPage.nextPageParam,
     });
 
   const { ref, inView } = useInView();

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SettingPageContainer = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ export const SettingLeftContent = styled.div`
 
 export const UserImage = styled.div`
   width: 10vw;
-  height: 10vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,7 +73,6 @@ export const UserInfo = styled.div`
   align-items: center;
   gap: 0.5vh;
   padding: 0.5vh;
-  margin-top: 4vh;
   div > span {
     color: #6b7a99;
     font-size: 16px;
@@ -88,7 +87,6 @@ export const UserInfo = styled.div`
 
 export const SettingLeftNav = styled.div`
   width: 200px;
-  height: 400px;
   flex-direction: column;
   align-items: center;
   background-color: white;
