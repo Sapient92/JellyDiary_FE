@@ -300,7 +300,7 @@ const DiaryEditPage = () => {
               diaryUserList={diaryUserList}
               onRoleChange={handleRoleChange}
               onEdit={handleSaveRoles}
-              onDelete={handleDelete}
+              onDelete={() => handleDelete}
             />
           </div>
           <h2 onClick={handleUserAdd}>

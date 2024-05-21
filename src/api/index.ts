@@ -77,6 +77,8 @@ api.interceptors.response.use(
               },
             });
 
+      
+
             if (response.status === 200) {
               const newToken = response.data.authorization;
               localStorage.setItem("Authorization", newToken);
