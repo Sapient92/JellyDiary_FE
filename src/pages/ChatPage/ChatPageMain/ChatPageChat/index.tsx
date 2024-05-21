@@ -52,13 +52,6 @@ const ChatPageChat: React.FC = () => {
     queryClient.invalidateQueries?.({
       queryKey: [queryKeys.chatPaginated, 20, chatRoomId],
     });
-    if (!messagesContainerRef) return;
-    if (
-      messagesContainerRef.current &&
-      messages.length === messageHistory?.length
-    ) {
-      messageEndRef.current?.scrollIntoView({ behavior: "instant" });
-    }
   }, [chatRoomId]);
 
   useEffect(() => {
