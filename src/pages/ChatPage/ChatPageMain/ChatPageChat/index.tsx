@@ -57,9 +57,7 @@ const ChatPageChat: React.FC = () => {
       messagesContainerRef.current &&
       messages.length === messageHistory?.length
     ) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight - scrollHeight;
-      setScrollHeight(messagesContainerRef.current.scrollHeight);
+      messageEndRef.current?.scrollIntoView({ behavior: "instant" });
     }
   }, [chatRoomId]);
 
