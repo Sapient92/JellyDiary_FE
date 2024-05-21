@@ -33,14 +33,14 @@ const SettingPage = () => {
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
   const [userName, setUserName] = useState('');
   const [userDesc, setUserDesc] = useState('');
-  const { notificationSetting, postLike, postComment, postCreated, commentTag, newFollower, dm } =
+  const { notificationSetting, postLike, postComment, post, commentTag, newFollower, dm } =
     useNotificationStore((state) => state);
 
   const [settings, setSettings] = useState({
     notificationSetting,
     postLike,
     postComment,
-    postCreated,
+    post,
     commentTag,
     newFollower,
     dm,
@@ -51,7 +51,7 @@ const SettingPage = () => {
         notificationSetting: user.notificationSetting,
         postLike: user.postLike,
         postComment: user.postComment,
-        postCreated: user.postCreated,
+        post: user.post,
         commentTag: user.commentTag,
         newFollower: user.newFollower,
         dm: user.dm,
@@ -63,12 +63,12 @@ const SettingPage = () => {
       notificationSetting,
       postLike,
       postComment,
-      postCreated,
+      post,
       commentTag,
       newFollower,
       dm,
     });
-  }, [notificationSetting, postLike, postComment, postCreated, commentTag, newFollower, dm]);
+  }, [notificationSetting, postLike, postComment, post, commentTag, newFollower, dm]);
 
   const onMoveToSelect = () => {
     if (scrollView.current !== undefined && scrollView.current !== null) {
@@ -186,7 +186,7 @@ const SettingPage = () => {
         notificationSetting: false,
         postLike: false,
         postComment: false,
-        postCreated: false,
+        post: false,
         commentTag: false,
         newFollower: false,
         dm: false,
@@ -305,10 +305,7 @@ const SettingPage = () => {
           <ToggleContent>
             <div>게시물 생성</div>
             <ButtonContent>
-              <ToggleButton
-                state={settings.postCreated}
-                toggle={() => handleToggle('postCreated')}
-              />
+              <ToggleButton state={settings.post} toggle={() => handleToggle('post')} />
             </ButtonContent>
           </ToggleContent>
           <ToggleContent>

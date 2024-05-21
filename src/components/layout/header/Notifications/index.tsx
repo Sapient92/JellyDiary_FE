@@ -8,7 +8,31 @@ const Notification = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasNewNotifications, setHasNewNotifications] = useState(false);
   const [notificationData, setNotificationData] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any>([]);
 
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:8080/api/subscribe');
+
+    eventSource.onmessage = function (event) {
+      const newMessage = event.data;
+      setMessages((prevMessages: any) => [...prevMessages, newMessage]);
+    };
+
+    eventSource.addEventListener('welcome', function (event) {
+      const welcomeMessage = event.data;
+      setMessages((prevMessages: any) => [...prevMessages, welcomeMessage]);
+    });
+
+    eventSource.onerror = function (error) {
+      console.error('EventSource failed:', error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+  console.log(messages);
   useEffect(() => {
     const fetchNotificationData = async () => {
       try {

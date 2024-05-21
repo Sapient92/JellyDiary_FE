@@ -12,12 +12,14 @@ import login_N from '../../assets/button/Login_N.png';
 import login_G from '../../assets/button/Login_G.png';
 import login_Line from '../../assets/button/Login_Line.png';
 
-const BaseURL = import.meta.env.VITE_BASE_URL;
+const BaseURL = 'https://api.jellydiary.life';
 
 const LoginPage = () => {
   // const navigate = useNavigate();
+
   const handleLogin = (prop: string) => {
-    const newLink = BaseURL + `/oauth2/authorization/${prop}`;
+    const newLink = `${BaseURL}/oauth2/authorization/${prop}`;
+    console.log('Redirecting to:', newLink);
     window.location.href = newLink;
   };
 

@@ -5,7 +5,7 @@ type NotificationState = {
   notificationSetting: boolean;
   postLike: boolean;
   postComment: boolean;
-  postCreated: boolean;
+  post: boolean;
   commentTag: boolean;
   newFollower: boolean;
   dm: boolean;
@@ -25,7 +25,7 @@ export const useNotificationStore = create<UseNotificationStore>((set) => ({
   notificationSetting: false, // default values
   postLike: false,
   postComment: false,
-  postCreated: false,
+  post: false,
   commentTag: false,
   newFollower: false,
   dm: false,
@@ -37,7 +37,7 @@ export const useNotificationStore = create<UseNotificationStore>((set) => ({
         ? {
             postLike: false,
             postComment: false,
-            postCreated: false,
+            post: false,
             commentTag: false,
             newFollower: false,
             dm: false,
