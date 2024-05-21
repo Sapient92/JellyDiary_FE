@@ -20,6 +20,7 @@ interface ChatMessageProps {
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const loginUserId = useUserStore((state) => state.loginUserId);
+  console.log(UseWrittenAt(message.createdAt));
 
   if (loginUserId === Number(message.userId)) {
     return (

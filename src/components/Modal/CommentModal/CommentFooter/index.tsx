@@ -90,6 +90,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const handleEnterPrevent = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
+      e.stopPropagation();
       handlePostClick();
     }
   };
