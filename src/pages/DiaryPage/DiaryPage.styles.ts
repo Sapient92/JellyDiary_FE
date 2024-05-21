@@ -229,14 +229,31 @@ export const DiaryRightNav = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
+
   div {
     overflow-y: auto;
-    height: 90%;
     scrollbar-width: none;
     img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
     }
+  }
+`;
+export const GroupIcon = styled.div`
+  width: 40px;
+  height: 40px;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: #3797ef;
+  box-shadow: 1px 1px 1px 0.1px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  span {
+    font-size: x-small;
   }
 `;
