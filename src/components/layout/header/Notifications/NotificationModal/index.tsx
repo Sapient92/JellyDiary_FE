@@ -62,6 +62,8 @@ const ModalContent = styled.div`
   background-color: white;
   border-radius: 8px;
   padding: 20px;
+  height: 50%;
+  overflow-y: auto;
   max-width: 600px;
   width: 90%;
 `;
