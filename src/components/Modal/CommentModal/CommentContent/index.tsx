@@ -27,7 +27,7 @@ const CommentContent: React.FC<CommentContentProps> = ({ id }) => {
   if (isError) return <>{error?.message}</>;
 
   return (
-    <CommentContentContainer>
+    <CommentContentContainer $comment={!!data?.comments.length}>
       {commentAlertModal && (
         <AlertModal type={"commentAlert"}>댓글을 작성해 주세요.</AlertModal>
       )}

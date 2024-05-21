@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useModalStore } from "../../../../store/modalStore/modalStore.ts";
 import { useCommentMutation } from "../../../../hooks/useComment.ts";
@@ -27,6 +27,7 @@ interface tagUserProps {
 const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const [commentContent, setCommentContent] = useState("");
   const [searchWord, setSearchWord] = useState("");
+  const [searchUsers, setSearchUsers] = useState<tagUserProps[] | []>([]);
   const { mutate } = useCommentMutation(id as string, setCommentContent);
   const { data: userData } = useFetchWriterInfo(userId);
   const commentRef = useRef<HTMLInputElement>(null);
@@ -40,6 +41,12 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
     String(postData.diaryId),
     debouncedWord,
   );
+
+  useEffect(() => {
+    if (searchUser?.length > 1) {
+      setSearchUsers([...searchUser]);
+    }
+  }, [searchUser?.length]);
 
   const parseMentions = (text: string) => {
     return text.replace(/@\[([^\]]+)]\((\d+)\)/g, "@$1");
@@ -67,10 +74,15 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
     mentions: MentionItem[],
   ) => {
     setCommentContent(newValue);
-    const match = newValue.match(/@(\s*[\w가-힣ㄱ-ㅎㅏ-ㅣ]+)/g);
-    if (match) {
-      const searchWord = match.map((m) => m.replace(/@\s*/, ""));
-      setSearchWord(searchWord[0]);
+    const matches = newValue.match(/@(\s*[\w가-힣ㄱ-ㅎㅏ-ㅣ]+)/g);
+    if (matches && matches.length) {
+      // const lastMatch = matches.map((m) => m.replace(/@\s*/, ""));
+      const lastMatch = matches[matches.length - 1];
+      const searchWord = lastMatch.slice(1).trim();
+      // setSearchWord(searchWord[0]);
+      setSearchWord(searchWord);
+    } else {
+      setSearchWord("");
     }
     setUserTag(mentions);
   };
@@ -81,6 +93,14 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
       handlePostClick();
     }
   };
+
+  // const mentionData = () =>
+  //   searchUser?.map((user: tagUserProps) => {
+  //     return {
+  //       id: String(user.userId),
+  //       display: user.userName,
+  //     };
+  //   }) || [];
 
   return (
     <CommentFooterContainer>
@@ -103,7 +123,8 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
           }}
           trigger={"@"}
           data={
-            searchUser?.map((user: tagUserProps) => ({
+            // mentionData
+            searchUsers?.map((user: tagUserProps) => ({
               id: String(user.userId),
               display: user.userName,
             })) || []
