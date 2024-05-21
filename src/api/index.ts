@@ -65,11 +65,7 @@ api.interceptors.response.use(
           }
 
           try {
-            const response = await api.post('/api/reissue', null, {
-              headers: {
-                refresh: refreshToken,
-              },
-            });
+            const response = await api.post('/api/reissue', null, {});
 
             if (response.status === 200) {
               const newToken = response.data.authorization;
