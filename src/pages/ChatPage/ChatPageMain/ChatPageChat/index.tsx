@@ -91,6 +91,7 @@ const ChatPageChat: React.FC = () => {
       messagesContainerRef.current &&
       messages.length === messageHistory?.length
     ) {
+      console.log("123");
       messagesContainerRef.current.scrollTop =
         messagesContainerRef.current.scrollHeight - scrollHeight;
       setScrollHeight(messagesContainerRef.current.scrollHeight);
