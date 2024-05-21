@@ -16,11 +16,11 @@ export default {
       border: "1px solid transparent",
     },
     input: {
-      padding: "8px 6px 4px 9px",
+      padding: "8px 12px 4px 9px",
       border: "2px solid silver",
       borderRadius: "35px",
       height: 35,
-      fontSize: 16,
+      fontSize: 14,
     },
   },
 
