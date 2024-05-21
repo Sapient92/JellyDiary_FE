@@ -14,6 +14,8 @@ import DemoApp from './pages/DiaryPage/DiaryTestPage.tsx';
 import LoginPage from './pages/LoginPage/index.tsx';
 import SignInPage from './pages/LoginPage/SigninPage/index.tsx';
 import DiaryEditPage from './pages/DiaryPage/DiaryEditPage/index.tsx';
+import MainPage from './pages/MainPage/index.tsx';
+import PrivateRoute from './auth/PrivateRoute.tsx';
 
 function App() {
   return (
@@ -21,21 +23,113 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Layout />}>
           <Route path={'/login'} element={<LoginPage />} />
-          {/* <Route path={'/'} element={<LoginPage />} /> */}
+          <Route path={'/'} element={<MainPage />} />
           <Route path={'/signin'} element={<SignInPage />} />
-          <Route path={'/userfeed/:userId'} element={<UserFeedPage />} />
-          <Route path={'/post/:id'} element={<PostPage />} />
-          <Route path={'/write/:diaryId'} element={<WritePage />} />
-          <Route path={'/edit/:id'} element={<WritePage />} />
-          <Route path={'/setting'} element={<SettingPage />} />
-          <Route path={'/diary/:id'} element={<DiaryPage />} />
-          <Route path={'/diary'} element={<DiaryPage />} />
-          <Route path={'/diary/edit/:id'} element={<DiaryEditPage />} />
-          <Route path={'/'} element={<SuggestedPage />} />
-          <Route path={'/chat'} element={<ChatPage />} />
-          <Route path={'/chat/:userId'} element={<ChatPage />} />
-          <Route path={'/chat/group/:diaryId'} element={<ChatPage />} />
-          <Route path={'/test'} element={<DemoApp />} />
+
+          <Route
+            path={'/userfeed/:userId'}
+            element={
+              <PrivateRoute>
+                <UserFeedPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/post/:id'}
+            element={
+              <PrivateRoute>
+                <PostPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/write/:diaryId'}
+            element={
+              <PrivateRoute>
+                <WritePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/edit/:id'}
+            element={
+              <PrivateRoute>
+                <WritePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/setting'}
+            element={
+              <PrivateRoute>
+                <SettingPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/diary/:id'}
+            element={
+              <PrivateRoute>
+                <DiaryPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/diary'}
+            element={
+              <PrivateRoute>
+                <DiaryPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/diary/edit/:id'}
+            element={
+              <PrivateRoute>
+                <DiaryEditPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/sns'}
+            element={
+              <PrivateRoute>
+                <SuggestedPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/chat'}
+            element={
+              <PrivateRoute>
+                <ChatPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/chat/:userId'}
+            element={
+              <PrivateRoute>
+                <ChatPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/chat/group/:diaryId'}
+            element={
+              <PrivateRoute>
+                <ChatPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/test'}
+            element={
+              <PrivateRoute>
+                <DemoApp />
+              </PrivateRoute>
+            }
+          />
           <Route path={'*'} element={<NotFoundPage />} />
         </Route>
       </Routes>

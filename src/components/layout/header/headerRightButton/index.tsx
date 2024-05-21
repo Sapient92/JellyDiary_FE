@@ -15,7 +15,7 @@ type HeaderRightButtonProps = {
 };
 
 const categryToRoute = {
-  bigSns: '',
+  bigSns: 'sns',
   smallSns: 'diary',
   myFeed: 'userfeed',
   dm: 'chat',

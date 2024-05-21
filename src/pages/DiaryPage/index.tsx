@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { BiChat } from 'react-icons/bi';
 import { AiFillPlusCircle } from 'react-icons/ai';
-import { MdEdit } from 'react-icons/md';
+import { MdEdit, MdGroup } from 'react-icons/md';
 import { EventClickArg } from '@fullcalendar/core';
 import allLocales from '@fullcalendar/core/locales-all';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -18,6 +17,7 @@ import {
   UserList,
   AddUser,
   DiaryRightNav,
+  GroupIcon,
 } from './DiaryPage.styles';
 import imgSrc from '../../assets/testImage/suggestedPostImage.png';
 import api from '../../api';
@@ -52,7 +52,6 @@ const DiaryPage = () => {
       const response = await api.get('/api/diary/mydiaryList');
       if (!id) {
         navigate(`/diary/${response.data.data[0].diaryId}`);
-        window.location.reload();
       }
       const data = await api.get(`/api/diary/profile/${id}`);
       const auth = await api.get(`/api/diary/user/${id}`).catch(() => {
@@ -434,7 +433,10 @@ const DiaryPage = () => {
       <DiaryPageContent>{renderContentByAuth()}</DiaryPageContent>
       {diaryAuth === 'CREATOR' || diaryAuth === 'READ' || diaryAuth === 'WRITE' ? (
         <DiaryRightNav>
-          <BiChat onClick={() => handleClickGroupChat(diaryData?.diaryId, diaryData?.diaryName)} />
+          <GroupIcon onClick={() => handleClickGroupChat(diaryData?.diaryId, diaryData?.diaryName)}>
+            <MdGroup />
+            <span>Group</span>
+          </GroupIcon>
           <UserImageList userIds={chatList} />
         </DiaryRightNav>
       ) : null}
