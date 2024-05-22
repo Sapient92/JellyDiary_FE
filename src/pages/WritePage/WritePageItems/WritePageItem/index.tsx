@@ -51,7 +51,9 @@ const WritePageItem: FC<WritePageItemProps> = ({
           onChange={handleChangeChecked}
         />
         <WritePageTitle>
-          <p>{title}</p>
+          <div>
+            <p>{title}</p>
+          </div>
         </WritePageTitle>
       </WritePageItemTitleContainer>
       <WritePageInput

@@ -1,34 +1,26 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface NotificationModalProps {
   onClose: () => void;
+  onDelete: () => void;
   notificationData: any[]; // Replace 'any[]' with the actual type of your notification data
 }
+const NotificationModal: React.FC<NotificationModalProps> = ({
+  onClose,
+  notificationData,
+  onDelete,
+}) => {
+  // const basePath = notificationPaths[notificationType];
 
-const NotificationModal: React.FC<NotificationModalProps> = ({ onClose, notificationData }) => {
-  const navigate = useNavigate();
-  const handleNavigation = (notificationType: string, returnId: string) => {
-    if (notificationType === '게시물') {
-      navigate(`/post/${returnId}`);
-      onClose();
-    } else {
-      navigate(`/diary/${returnId}`);
-      onClose();
-    }
-  };
   return (
     <ModalOverlay>
       <ModalContent>
-        <CloseButton onClick={onClose}>X</CloseButton>
+        <Close onClick={onClose}>X</Close>
         <Title>Notifications</Title>
         <NotificationList>
           {notificationData.map((notification, index) => (
-            <NotificationItem
-              key={index}
-              onClick={() => handleNavigation(notification.notificationType, notification.returnId)}
-            >
+            <NotificationItem key={index}>
               🔗
               {notification.content.split('@').map((part: any, index: number) => (
                 <React.Fragment key={index}>
@@ -39,6 +31,11 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose, notifica
             </NotificationItem>
           ))}
         </NotificationList>
+        {notificationData.length > 0 ? (
+          <DleteButton onClick={onDelete}>알림 전체 삭제</DleteButton>
+        ) : (
+          <div>알림이 없어요</div>
+        )}
       </ModalContent>
     </ModalOverlay>
   );
@@ -68,10 +65,7 @@ const ModalContent = styled.div`
   width: 90%;
 `;
 
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
+const DleteButton = styled.button`
   background: none;
   border: none;
   font-size: 20px;
@@ -81,6 +75,12 @@ const CloseButton = styled.button`
 const Title = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
+`;
+
+const Close = styled.h2`
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: end;
 `;
 
 const NotificationList = styled.ul`

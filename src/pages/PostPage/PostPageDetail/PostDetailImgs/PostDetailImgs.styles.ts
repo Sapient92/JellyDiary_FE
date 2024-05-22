@@ -48,9 +48,10 @@ export const PostImgContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-height: 580px;
 
   img {
-    max-height: 600px;
+    max-height: 580px;
   }
 `;
 
@@ -69,4 +70,5 @@ export const PostImgNavigator = styled.div<{ $isView: boolean }>`
   height: 8px;
   background-color: ${(props) => (props.$isView ? "gray" : "white")};
   border-radius: 50%;
+  z-index: 5;
 `;
