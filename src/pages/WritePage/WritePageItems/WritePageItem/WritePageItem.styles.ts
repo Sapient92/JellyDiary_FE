@@ -23,16 +23,21 @@ export const WritePageItemTitleContainer = styled.div`
 `;
 
 export const WritePageTitle = styled.div`
-  width: 56px;
+  width: 70px;
   display: flex;
   justify-content: center;
 
-  p {
-    white-space: pre-wrap;
-    font-size: 14px;
-    font-weight: bold;
-    color: #7d8fb3;
-    cursor: default;
+  div {
+    display: flex;
+    justify-content: center;
+
+    p {
+      white-space: pre-wrap;
+      font-size: 14px;
+      font-weight: bold;
+      color: #7d8fb3;
+      cursor: default;
+    }
   }
 `;
 
