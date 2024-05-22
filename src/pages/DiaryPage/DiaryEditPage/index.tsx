@@ -169,6 +169,7 @@ const DiaryEditPage = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    fetchDiaryUsers();
   };
 
   const fetchDiaryUsers = async () => {
@@ -176,9 +177,11 @@ const DiaryEditPage = () => {
     setDiaryUserList(response.data.data);
   };
 
-  const handleDelete = async (userId: number) => {
+  const handleDelete = async (userId: any) => {
     try {
-      await api.delete(`/api/diary/user/${userId}`);
+      const response = await api.delete(`/api/diary/user/${userId}`);
+      console.log(response.data);
+      toast(response.data.message);
       setDiaryUserList(diaryUserList.filter((user: any) => user?.diaryUserId !== userId));
     } catch (error) {
       console.error('Failed to delete user:', error);
@@ -200,7 +203,7 @@ const DiaryEditPage = () => {
 
     try {
       const response = await api.patch(`/api/diary/user/list/${id}`, rolesToUpdate);
-
+      console.log(response);
       if (response.status === 200) {
         toast(response.data.data);
         setUpdatedRoles([]);
@@ -315,13 +318,18 @@ const DiaryEditPage = () => {
         <ProfileInfo>
           <UserLeft>
             <h3>참여자 관리</h3>
+            <CustomButton
+              text="저장"
+              backgroundColor="blue"
+              disabled={false}
+              onClick={handleSaveRoles}
+            />
           </UserLeft>
           <div>
             <UserList
               diaryUserList={diaryUserList}
               onRoleChange={handleRoleChange}
-              onEdit={handleSaveRoles}
-              onDelete={() => handleDelete}
+              onDelete={handleDelete}
             />
           </div>
           <h2 onClick={handleUserAdd}>
@@ -330,7 +338,7 @@ const DiaryEditPage = () => {
             </span>
             참여자 추가
           </h2>
-          <Modal id={id} isOpen={isModalOpen} onClose={handleCloseModal} />
+          {isModalOpen && <Modal id={id} isOpen={isModalOpen} onClose={handleCloseModal} />}
         </ProfileInfo>
 
         <ProfileInfo>
