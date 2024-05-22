@@ -36,6 +36,33 @@ export const ChatMessagesContainer = styled.div`
   padding: 0 0 10px 0;
 `;
 
+export const ChatMessageContent = styled.div``;
+
+export const ChatContentDateContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+
+  p {
+    margin: 6px 0;
+    min-width: 64px;
+    max-width: 220px;
+    color: slategray;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    padding: 2px 4px;
+  }
+
+  div {
+    border-bottom: 1px solid lightgray;
+    width: 100%;
+  }
+`;
+
 export const ChatFooter = styled.form`
   padding: 0 26px 10px 26px;
   position: relative;
