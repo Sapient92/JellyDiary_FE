@@ -176,8 +176,6 @@ const ChatPageChat: React.FC = () => {
     return inputDate.getFullYear() === currentYear;
   };
 
-  console.log(new Date("2023-05-22T16:11:02.767656").getFullYear());
-
   if (isLoading) return <>채팅을 불러오는 중 입니다...</>;
   if (isError) return <>{error?.message}</>;
 
