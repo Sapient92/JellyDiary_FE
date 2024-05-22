@@ -48,9 +48,10 @@ export const PostImgContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-height: 580px;
 
   img {
-    max-height: 600px;
+    max-height: 580px;
   }
 `;
 
