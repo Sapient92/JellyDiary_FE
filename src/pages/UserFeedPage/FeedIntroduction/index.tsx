@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Button from "../../../components/Button";
 import { UserFeedInfo } from "../../../types/userType.ts";
@@ -17,6 +17,8 @@ import {
 
 import userAvatar from "../../../assets/images/UserAvatar.png";
 import { useNavigate } from "react-router-dom";
+import { queryClient } from "../../../react-query/queryClient.ts";
+import { queryKeys } from "../../../react-query/constants.ts";
 
 interface FeedIntroductionProps {
   setToggleFollowerModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,6 +37,13 @@ const FeedIntroduction: React.FC<FeedIntroductionProps> = ({
 }) => {
   const navigate = useNavigate();
   const { mutate } = useFollowMutation(data.userId);
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: [queryKeys.userFeed, String(data.userId)],
+    });
+  }, [data.userId]);
+
   const handleFollowModalClick = () => {
     setToggleFollowModal(true);
   };
