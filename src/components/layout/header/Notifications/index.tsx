@@ -25,8 +25,8 @@ const Notification = () => {
     });
 
     eventSource.onmessage = function (event: any) {
-      const newMessage = event.data;
       console.log(event.data.content);
+      toast(event.data.content);
     };
 
     eventSource.addEventListener('welcome', function (event: any) {
@@ -42,7 +42,6 @@ const Notification = () => {
 
     return () => {
       eventSource.close();
-      console.log('let');
     };
   }, []);
 
@@ -51,8 +50,8 @@ const Notification = () => {
       try {
         const response = await api.get('/api/notification');
         setNotificationData(response.data.data.notificationResponseDtos);
-        console.log(response.data.data.notificationResponseDtos);
-        toast(response.data.data.notificationResponse[0].content);
+        console.log(response.data.data.notificationResponseDtos.content);
+        toast(response.data.data.notificationResponseDtos[0].content);
         if (response.data.data.count > 0) {
           setHasNewNotifications(true); // Assuming the data indicates new notifications
         }

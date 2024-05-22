@@ -406,7 +406,7 @@ const DiaryPage = () => {
                   onClick={handleInviteUser}
                 />
               ) : (
-                <div>{authData?.diaryRole}</div>
+                <div></div>
               )}
               {diaryList &&
               (diaryAuth === 'SUBSCRIBE' ||
