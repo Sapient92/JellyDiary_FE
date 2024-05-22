@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface NotificationModalProps {
@@ -7,33 +6,12 @@ interface NotificationModalProps {
   onDelete: () => void;
   notificationData: any[]; // Replace 'any[]' with the actual type of your notification data
 }
-const notificationPaths = {
-  구독: 'diary',
-  '게시물 좋아요': 'post',
-  다이어리: 'diary',
-  '게시물 댓글': 'post',
-  언급: 'post',
-  '새로운 팔로워': 'diary',
-  '메시지(DM)': 'dm',
-};
 const NotificationModal: React.FC<NotificationModalProps> = ({
   onClose,
   notificationData,
   onDelete,
 }) => {
-  const navigate = useNavigate();
   // const basePath = notificationPaths[notificationType];
-
-  const handleNavigation = (notificationType: string, returnId: string) => {
-    if (basePath) {
-      // Navigate to the appropriate path
-      navigate(`/${basePath}/${returnId}`);
-      // Close the modal or perform any other necessary actions
-      onClose();
-    } else {
-      console.error('Unknown notification type:', notificationType);
-    }
-  };
 
   return (
     <ModalOverlay>
@@ -87,15 +65,6 @@ const ModalContent = styled.div`
   width: 90%;
 `;
 
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-`;
 const DleteButton = styled.button`
   background: none;
   border: none;
