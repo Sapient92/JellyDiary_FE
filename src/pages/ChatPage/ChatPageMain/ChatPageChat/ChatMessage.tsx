@@ -24,10 +24,13 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     const date = new Date(messageDate);
     const getHour = date.getHours();
     const getMinute = date.getMinutes();
+
     if (getHour >= 12) {
-      return `오후 ${getHour - 12}:${getMinute}`;
+      return `오후 ${getHour - 12}:${getMinute < 10 ? `0${getMinute}` : getMinute === 0 ? "00" : getMinute}`;
+    } else if (getHour === 0) {
+      return `오전 12:${getMinute < 10 ? `0${getMinute}` : getMinute === 0 ? "00" : getMinute}`;
     } else {
-      return `오전 ${getHour}:${getMinute}`;
+      return `오전 ${getHour}:${getMinute < 10 ? `0${getMinute}` : getMinute === 0 ? "00" : getMinute}`;
     }
   };
 
