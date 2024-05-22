@@ -39,6 +39,7 @@ export const UserProfileDesc = styled.div`
 `;
 
 export const FollowButton = styled.button<{ $status: boolean }>`
+  padding: 0;
   color: ${(props) => (!props.$status ? "#0095f6" : "rgb(100,100,100)")};
   font-size: 14px;
   font-weight: 600;

@@ -11,6 +11,7 @@ import { useFetchSearchUser } from "../../../../hooks/useSearchUser.ts";
 import { useDebounce } from "../../../../hooks/useDebounce.ts";
 import mentionStyle from "./defaultStyle.ts";
 import { useTagsStore } from "../../../../store/tagStore/tagStore.ts";
+import useLoginUser from "../../../../hooks/useLoginUser.ts";
 
 interface CommentFooterProps {
   id?: string;
@@ -30,6 +31,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   const [searchUsers, setSearchUsers] = useState<tagUserProps[] | []>([]);
   const { mutate } = useCommentMutation(id as string, setCommentContent);
   const { data: userData } = useFetchWriterInfo(userId);
+  const { userData: loginUserData } = useLoginUser();
   const commentRef = useRef<HTMLInputElement>(null);
   const showCommentAlertModal = useModalStore(
     (state) => state.showCommentAlertModal,
@@ -105,7 +107,7 @@ const CommentFooter: React.FC<CommentFooterProps> = ({ id, userId }) => {
   return (
     <CommentFooterContainer>
       <img
-        src={userData?.profileImg ? userData?.profileImg : userAvatar}
+        src={loginUserData?.profileImg ? loginUserData?.profileImg : userAvatar}
         alt={"user_image"}
       />
       <MentionsInput
