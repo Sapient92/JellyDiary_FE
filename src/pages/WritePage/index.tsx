@@ -10,6 +10,8 @@ import { useModalStore } from "../../store/modalStore/modalStore.ts";
 
 import { WritePageContainer, WritePageContent } from "./WritePage.styles.ts";
 import { useImgsStore } from "../../store/imgsStore/imgsStore.ts";
+import { useEffect } from "react";
+import { usePostInputStore } from "../../store/postStore/postStore.ts";
 
 const WritePage = () => {
   const { imageAlertModal, imgDupliAlertModal, titleAlertModal } =
@@ -18,9 +20,32 @@ const WritePage = () => {
     writeImgs: { postImgs },
     addedImgs: { addedImgs },
     deleteImgIds,
+    changeAddedImgs,
+    changeImgs,
   } = useImgsStore((state) => state);
+  const { resetValue } = usePostInputStore((state) => state);
   const { id } = useParams();
   const { isLoading, data, isError, error } = useFetchPost(id as string);
+
+  useEffect(() => {
+    changeAddedImgs([]);
+    changeImgs([], true);
+    resetValue({
+      postTitle: "",
+      postDate: new Date().toISOString().split("T")[0],
+      postContent: "",
+      isPublic: true,
+      weather: null,
+      meal: null,
+      snack: null,
+      water: null,
+      walk: null,
+      toiletRecord: null,
+      shower: null,
+      weight: null,
+      specialNote: null,
+    });
+  }, []);
 
   if (isLoading) return <>Loading...</>;
   if (isError) return <>{error?.message}</>;
