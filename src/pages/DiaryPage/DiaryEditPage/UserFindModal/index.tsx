@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LuSearch } from 'react-icons/lu';
 import styled from 'styled-components';
 import api from '../../../../api';
 import fakeImg from '../../../../assets/images/UserAvatar.png';
 import { toast, ToastContainer } from 'react-toastify';
-// 모달 스타일링
+
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -24,6 +24,10 @@ const ModalContent = styled.div`
   max-width: 500px;
   width: 100%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const CloseButton = styled.div`
+  text-align: end;
 `;
 
 const SearchInput = styled.input`
@@ -84,6 +88,22 @@ const ResultItem = styled.div`
 const Modal = ({ id, isOpen, onClose }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
+  const [diaryUsers, setDiaryUsers] = useState([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchDiaryUsers();
+    }
+  }, [isOpen]);
+
+  const fetchDiaryUsers = async () => {
+    try {
+      const response = await api.get(`/api/diary/user/list/${id}`);
+      setDiaryUsers(response.data.data); // Adjust based on the actual response structure
+    } catch (error) {
+      console.error('Error fetching diary users:', error);
+    }
+  };
 
   const handleSearch = async (e: any) => {
     const value = e.target.value;
@@ -94,7 +114,7 @@ const Modal = ({ id, isOpen, onClose }: any) => {
         const response = await api.get(`/api/diary/user/${id}/search`, {
           params: { searchWord: value },
         });
-        setResults(response.data.data); // 서버에서 반환된 데이터 형식에 따라 조정 필요
+        setResults(response.data.data); // Adjust based on the actual response structure
       } catch (error) {
         console.error('참여자 검색 실패:', error);
         setResults([]);
@@ -105,12 +125,10 @@ const Modal = ({ id, isOpen, onClose }: any) => {
   };
 
   const handleResultClick = () => {
-    onClose();
+    setTimeout(() => {
+      onClose();
+    }, 2000);
   };
-
-  if (!isOpen) {
-    return null;
-  }
 
   const inviteUser = async (participant: any) => {
     try {
@@ -120,38 +138,41 @@ const Modal = ({ id, isOpen, onClose }: any) => {
       });
 
       if (response.data.statusCode === 201) {
-        console.log('다이어리 유저 생성 완료:', response.data.message);
         toast(response.data.message);
+
+        console.log('다이어리 유저 생성 완료:', response.data.message);
+        // Immediately update the local state
+        setResults((prevResults: any) =>
+          prevResults.map((p: any) =>
+            p.userId === participant.userId ? { ...p, isInvited: true } : p,
+          ),
+        );
+        fetchDiaryUsers(); // Refresh diary user list
       } else {
         console.error('다이어리 유저 생성 실패:', response.data);
       }
     } catch (error: any) {
-      toast(error?.response?.data.data);
+      toast(error.response.data.data);
     }
   };
 
-  const handleInviteClick = async (participant: any) => {
-    try {
-      const response = await api.get(`/api/feed/userInfo/${participant.userId}`);
-      const userRole = response.data.role; // Assuming the API response contains the user's role
-
-      // Invite user based on their role
-      if (userRole === 'READ') {
-        console.log(userRole);
-        toast('이미 초대된 사용자입니다.');
-      } else {
-        // Proceed with inviting the user
-        inviteUser(participant);
-      }
-    } catch (error) {
-      console.error('Error fetching user role:', error);
-      toast('사용자 정보를 가져오는 동안 오류가 발생했습니다.');
-    }
+  const handleInviteClick = (participant: any) => {
+    inviteUser(participant);
   };
+
+  const isUserInDiary = (userId: any) => {
+    return diaryUsers.some((user: any) => user.userId === userId);
+  };
+
   return (
     <ModalBackground onClick={onClose}>
+      <ToastContainer />
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        <h2>참여자 검색</h2>
+        <div>
+          <CloseButton onClick={handleResultClick}>X</CloseButton>
+
+          <h2>참여자 검색</h2>
+        </div>
         <div>
           <SearchInput
             type="text"
@@ -165,27 +186,26 @@ const Modal = ({ id, isOpen, onClose }: any) => {
           {results
             .filter(
               (participant: any) =>
-                participant.isInvited === null || participant.isInvited === false,
+                !isUserInDiary(participant.userId) &&
+                (participant.isInvited === null || participant.isInvited === false),
             )
             .map((participant: any) => (
-              <ResultItem key={participant.userId} onClick={() => handleResultClick(participant)}>
+              <ResultItem key={participant.userId} onClick={() => handleResultClick()}>
                 <div>
                   <img src={participant.profileImg || fakeImg} alt={participant.userId} />
                   {participant.userName}
-                  {participant.isInvited}
                 </div>
                 <button
                   onClick={() => handleInviteClick(participant)}
-                  disabled={false}
-                  style={{ background: participant.isInvited === false ? 'gray' : 'blue' }}
+                  disabled={participant.isInvited}
+                  style={{ background: participant.isInvited ? 'gray' : 'blue' }}
                 >
-                  {participant.isInvited ? '초대 완료' : '초대하기'}
+                  초대하기
                 </button>
               </ResultItem>
             ))}
         </SearchResult>
       </ModalContent>
-      <ToastContainer />
     </ModalBackground>
   );
 };
