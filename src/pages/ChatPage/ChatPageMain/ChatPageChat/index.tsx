@@ -14,9 +14,11 @@ import { useChattingStore } from "../../../../store/chattingStore/chattingStore.
 
 import {
   ChatContainer,
+  ChatContentDateContainer,
   ChatFlexContainer,
   ChatFooter,
   ChatHeader,
+  ChatMessageContent,
   ChatMessagesContainer,
   NextFetchTarget,
 } from "./ChatPageChat.styles.ts";
@@ -24,6 +26,10 @@ import {
 import sendBtn from "../../../../assets/button/SendBtn.png";
 import { queryClient } from "../../../../react-query/queryClient.ts";
 import { queryKeys } from "../../../../react-query/constants.ts";
+
+interface AccMessage {
+  [key: string]: MessageListType[];
+}
 
 const ChatPageChat: React.FC = () => {
   const [scrollHeight, setScrollHeight] = useState(0);
@@ -144,6 +150,32 @@ const ChatPageChat: React.FC = () => {
     }
   }, [initialLoadComplete]);
 
+  const groupedByDate = messages.reduce((acc: AccMessage, message) => {
+    const date = message.createdAt.split("T")[0];
+
+    if (!acc[date]) {
+      acc[date] = [];
+    }
+    acc[date].push(message);
+    return acc;
+  }, {});
+
+  const nestedArray = Object.values(groupedByDate ? groupedByDate : []);
+
+  const writtenDate = (messageDate: string) => {
+    const date = new Date(messageDate);
+    const getMonth = date.getMonth() + 1;
+    const getDay = date.getDate();
+    return `${getMonth}월 ${getDay}일`;
+  };
+
+  const isThisYear = (createdDate: string) => {
+    const inputDate = new Date(createdDate);
+    const currentYear = new Date().getFullYear();
+
+    return inputDate.getFullYear() === currentYear;
+  };
+
   if (isLoading) return <>채팅을 불러오는 중 입니다...</>;
   if (isError) return <>{error?.message}</>;
 
@@ -156,11 +188,24 @@ const ChatPageChat: React.FC = () => {
       </ChatFlexContainer>
       <ChatMessagesContainer ref={messagesContainerRef}>
         {hasNextPage && <NextFetchTarget ref={topRef}></NextFetchTarget>}
-        {messages?.length !== 0 &&
-          messages?.map((message) => (
-            <div key={message?.chatMessageId}>
-              <ChatMessage message={message} />
-            </div>
+        {nestedArray.length !== 0 &&
+          nestedArray.map((array, index) => (
+            <ChatMessageContent key={index}>
+              <ChatContentDateContainer>
+                <div />
+                <p>
+                  {isThisYear(array[0].createdAt)
+                    ? writtenDate(array[0].createdAt)
+                    : `${new Date(array[0].createdAt).getFullYear()}년 ${writtenDate(array[0].createdAt)}`}
+                </p>
+                <div />
+              </ChatContentDateContainer>
+              {array?.map((message) => (
+                <div key={message?.chatMessageId}>
+                  <ChatMessage message={message} />
+                </div>
+              ))}
+            </ChatMessageContent>
           ))}
         <div ref={messageEndRef}></div>
       </ChatMessagesContainer>
