@@ -6,9 +6,11 @@ export interface User {
   authority: string;
   userState: string;
   notificationSetting: boolean;
+  subscribe: boolean;
   postLike: boolean;
   postComment: boolean;
-  postCreated: boolean;
+  post: boolean;
+  diary: boolean;
   commentTag: boolean;
   newFollower: boolean;
   dm: boolean;

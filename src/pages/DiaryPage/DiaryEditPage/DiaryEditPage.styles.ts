@@ -53,7 +53,7 @@ export const DiaryEditLeftContent = styled.div`
 
 export const UserImage = styled.div`
   width: 10vw;
-  height: 10vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,7 +88,6 @@ export const UserInfo = styled.div`
   align-items: center;
   gap: 0.5vh;
   padding: 0.5vh;
-  margin-top: 4vh;
   div > span {
     color: #6b7a99;
     font-size: 16px;

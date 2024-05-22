@@ -9,6 +9,7 @@ export const FollowContainer = styled.div`
 
 export const UserContent = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 export const UserProfileImg = styled.div`
@@ -19,6 +20,7 @@ export const UserProfileImg = styled.div`
   img {
     width: 45px;
     height: 45px;
+    border-radius: 50%;
   }
 `;
 
@@ -37,6 +39,7 @@ export const UserProfileDesc = styled.div`
 `;
 
 export const FollowButton = styled.button<{ $status: boolean }>`
+  padding: 0;
   color: ${(props) => (!props.$status ? "#0095f6" : "rgb(100,100,100)")};
   font-size: 14px;
   font-weight: 600;

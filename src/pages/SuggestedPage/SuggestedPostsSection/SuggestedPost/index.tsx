@@ -53,9 +53,11 @@ const SuggestedPost = (item: Props) => {
     setShowModal(false);
     navigate(`/userfeed/${item.item.userId}`); // navigate to the user page
   };
+
   const handlePostImg = () => {
     navigate(`/post/${item.item.postId}`);
   };
+
   return (
     <SuggestedPostContainer>
       <SuggestedPostHeader>
@@ -73,7 +75,6 @@ const SuggestedPost = (item: Props) => {
       <div>
         <img src={item.item.postImg} alt={'feed_img'} onClick={handlePostImg} />
         <PawButton>
-          {/* <LikeButton like={item.item.like} onClick={toggleLike} /> */}
           {!likeState ? (
             <NotLikeButton onClick={handleLikeClick} />
           ) : (

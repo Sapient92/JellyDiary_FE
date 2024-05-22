@@ -14,6 +14,7 @@ import login_Line from '../../assets/button/Login_Line.png';
 
 const BaseURL = import.meta.env.VITE_BASE_URL;
 
+// const BaseURL = 'https://api.jellydiary.life';
 const LoginPage = () => {
   // const navigate = useNavigate();
   const handleLogin = (prop: string) => {

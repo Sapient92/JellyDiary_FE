@@ -38,7 +38,7 @@ const FollowModal: FC<FollowModalProps> = ({ title, closeModal, userId }) => {
             {data.length} {title}
           </p>
         </TitleContainer>
-        <FollowList data={data} title={title} />
+        <FollowList closeModal={closeModal} data={data} title={title} />
       </FollowModalContent>
     </FollowModalContainer>
   );

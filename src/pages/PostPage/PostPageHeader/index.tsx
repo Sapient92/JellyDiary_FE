@@ -2,10 +2,7 @@ import React, { useState } from "react";
 
 import PostPageEditModal from "./PostPageEditModal";
 
-import {
-  useFetchDiaryMember,
-  useFetchWriterInfo,
-} from "../../../hooks/usePost.ts";
+import { useFetchWriterInfo } from "../../../hooks/usePost.ts";
 import useLoginUser from "../../../hooks/useLoginUser.ts";
 import { PostType } from "../../../types/postType.ts";
 
@@ -22,7 +19,6 @@ import {
 
 import userAvatar from "../../../assets/images/UserAvatar.png";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../../../store/userStore/userStore.ts";
 
 interface PostPageHeaderProps {
   data: PostType;
@@ -34,9 +30,8 @@ const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
   const handleEditClick = () => {
     setToggleEditModal(true);
   };
-  const { data: diaryMember } = useFetchDiaryMember(data?.diaryId);
+
   const { isLoginUser, loading } = useLoginUser(String(data.userId));
-  const loginUserId = useUserStore((state) => state.loginUserId);
   const navigate = useNavigate();
   if (loading) return <>로딩중...</>;
 
@@ -56,11 +51,9 @@ const PostPageHeader: React.FC<PostPageHeaderProps> = ({ data }) => {
         </LinkTag>
       </UserProfileContainer>
       <HeaderButtonContainer>
-        {diaryMember?.includes(loginUserId) && (
-          <PostMenuButton>
-            <DiaryButton onClick={handleDiaryClick} />
-          </PostMenuButton>
-        )}
+        <PostMenuButton>
+          <DiaryButton onClick={handleDiaryClick} />
+        </PostMenuButton>
         <EditButtonContainer>
           {isLoginUser && (
             <>
