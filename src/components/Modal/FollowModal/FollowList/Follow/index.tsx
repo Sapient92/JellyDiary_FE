@@ -28,6 +28,7 @@ const Follow: React.FC<FollowProps> = ({ title, data, closeModal }) => {
 
   const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     mutate(followStatus);
   };
 

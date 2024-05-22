@@ -112,7 +112,7 @@ const api = axios.create(config);
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("Authorization");
-    if (token && config.url !== "/reissue" && config.url !== "/login") {
+    if (token && config.url !== "/api/reissue" && config.url !== "/api/login") {
       config.headers["Authorization"] = token;
     }
     return config;
