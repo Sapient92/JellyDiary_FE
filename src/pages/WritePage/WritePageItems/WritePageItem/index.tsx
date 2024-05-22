@@ -35,7 +35,7 @@ const WritePageItem: FC<WritePageItemProps> = ({
 
   const handleChangeChecked = () => {
     setCheckboxChecked(!checkboxChecked);
-    changeValue({ [name]: "" });
+    changeValue({ [name]: null });
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
