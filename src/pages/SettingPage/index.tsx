@@ -123,7 +123,7 @@ const SettingPage = () => {
       });
 
       if (response.status === 200) {
-        console.log('다이어리 프로필 수정 완료:', response.data.message);
+        toast(response.data.message);
       } else {
         console.error('프로필 이미지 업데이트 실패:', response.data.message);
       }
@@ -209,7 +209,7 @@ const SettingPage = () => {
     try {
       const response = await api.patch('/api/users/profile/notifications', settings);
       if (response.status === 200) {
-        console.log('Settings updated successfully.');
+        toast('알람이 설정되었습니다.');
       } else {
         console.error('Failed to update settings:', response.data.message);
       }
