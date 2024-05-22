@@ -70,4 +70,5 @@ export const PostImgNavigator = styled.div<{ $isView: boolean }>`
   height: 8px;
   background-color: ${(props) => (props.$isView ? "gray" : "white")};
   border-radius: 50%;
+  z-index: 5;
 `;
