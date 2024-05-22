@@ -28,23 +28,25 @@ const WritePage = () => {
   const { isLoading, data, isError, error } = useFetchPost(id as string);
 
   useEffect(() => {
-    changeAddedImgs([]);
-    changeImgs([], true);
-    resetValue({
-      postTitle: "",
-      postDate: new Date().toISOString().split("T")[0],
-      postContent: "",
-      isPublic: true,
-      weather: null,
-      meal: null,
-      snack: null,
-      water: null,
-      walk: null,
-      toiletRecord: null,
-      shower: null,
-      weight: null,
-      specialNote: null,
-    });
+    if (!id) {
+      changeAddedImgs([]);
+      changeImgs([], true);
+      resetValue({
+        postTitle: "",
+        postDate: new Date().toISOString().split("T")[0],
+        postContent: "",
+        isPublic: true,
+        weather: null,
+        meal: null,
+        snack: null,
+        water: null,
+        walk: null,
+        toiletRecord: null,
+        shower: null,
+        weight: null,
+        specialNote: null,
+      });
+    }
   }, []);
 
   if (isLoading) return <>Loading...</>;
