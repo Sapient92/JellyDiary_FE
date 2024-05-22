@@ -184,8 +184,9 @@ const DiaryPage = () => {
         navigate(`/diary/${response.data.data.diaryId}`);
         console.log(response.data.data);
         toast('📘 새로운 ' + response.data.data.diaryName + ', 환영해요.');
-      } else {
+      } else if (response.status === 400) {
         console.error('Failed to create diary:', response.data.message);
+        console.log(response.data.message);
       }
     } catch (error) {
       console.error('Error creating diary:', error);
@@ -384,7 +385,6 @@ const DiaryPage = () => {
             </UserImage>
             <UserInfo>
               <div>
-                <span>Hello, </span>
                 <span>{diaryData?.diaryName} </span>
               </div>
               <div>{diaryData?.diaryDescription} </div>
