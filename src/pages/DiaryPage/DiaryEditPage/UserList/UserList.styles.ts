@@ -2,11 +2,9 @@ import styled from 'styled-components';
 
 export const UserListContainer = styled.div`
   padding: 20px;
-  max-width: 600px;
+  max-width: 100%;
   margin: 0 auto;
-  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const UserItem = styled.div`
@@ -18,6 +16,9 @@ export const UserItem = styled.div`
   padding: 10px;
   border-bottom: 1px solid #eee;
   text-align: left;
+  :first-child {
+    padding-right: 10px;
+  }
   &:last-child {
     border-bottom: none;
   }
@@ -26,10 +27,14 @@ export const UserItem = styled.div`
   }
 `;
 
-export const UserInfo = styled.span`
+export const UserInfo = styled.div`
   flex: 1;
   font-size: 16px;
   color: #333;
+  border: 1px solid transparent;
+  img {
+    border-radius: 50%;
+  }
   b {
     font-weight: 600;
     margin-right: 8px;
@@ -54,7 +59,6 @@ export const Button = styled.button`
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
   color: #fff;
   font-size: 14px;
   cursor: pointer;
@@ -64,7 +68,7 @@ export const Button = styled.button`
   }
 
   &:last-child {
-    background-color: #dc3545;
+    background-color: #fa6650;
     &:hover {
       background-color: #c82333;
     }

@@ -27,6 +27,7 @@ import CreateDiaryModal from './DiaryWritePage/index';
 import UserImageList from './UserImageList';
 import renderEventContent from './RenderEventContent';
 import useUser from '../../hooks/useUser';
+import { toast, ToastContainer } from 'react-toastify';
 
 const DiaryPage = () => {
   const { id } = useParams();
@@ -84,8 +85,7 @@ const DiaryPage = () => {
       });
 
       if (response.status === 200) {
-        console.log('다이어리 프로필 수정 완료:', response.data.message);
-        window.location.reload();
+        toast(response.data.message);
       } else {
         console.error('프로필 이미지 업데이트 실패:', response.data.message);
       }
@@ -182,6 +182,8 @@ const DiaryPage = () => {
         setDiaryList([...diaryList, response.data.data]);
         setIsModalOpen(false);
         navigate(`/diary/${response.data.data.diaryId}`);
+        console.log(response.data.data);
+        toast('📘 새로운 ' + response.data.data.diaryName + ', 환영해요.');
       } else {
         console.error('Failed to create diary:', response.data.message);
       }
@@ -237,7 +239,6 @@ const DiaryPage = () => {
                 },
               },
             }}
-            eventBackgroundColor={isModalOpen ? 'red' : 'blue'}
             events={events}
             dayMaxEventRows={3}
             eventContent={renderEventContent}
@@ -356,61 +357,72 @@ const DiaryPage = () => {
   return (
     <DiaryPageContainer>
       <DiaryLeftContent>
-        <UserImage>
-          <img src={uploadedImage || imgSrc} alt="userImage" />
-          <div>
-            <label htmlFor="file">
-              <MdEdit />
-            </label>
-            <input
-              type="file"
-              name="file"
-              id="file"
-              accept="image/*"
-              multiple={false}
-              onChange={onChangeImage}
-              style={{ display: 'none' }}
-            />
-          </div>
-        </UserImage>
-        <UserInfo>
-          <div>
-            <span>Hello, </span>
-            <span>{diaryData?.diaryName} </span>
-          </div>
-          <div>{diaryData?.diaryDescription} </div>
-          {diaryAuth === 'CREATOR' ? (
-            <CustomButton
-              text="다이어리 수정"
-              backgroundColor="blue"
-              disabled={false}
-              onClick={handleEditProfile}
-            />
-          ) : (
-            <div></div>
-          )}
-          {authData?.isInvited === false ? (
-            <CustomButton
-              text="초대 승인"
-              backgroundColor="green"
-              disabled={false}
-              onClick={handleInviteUser}
-            />
-          ) : (
-            <div>{authData?.diaryRole}</div>
-          )}
-          {diaryAuth === 'SUBSCRIBE' ||
-          diaryAuth === 'CREATOR' ||
-          diaryAuth === 'READ' ||
-          diaryAuth === 'WRITE' ? null : (
-            <CustomButton
-              text="구독 하기"
-              backgroundColor="blue"
-              disabled={false}
-              onClick={handleSubscribe}
-            />
-          )}
-        </UserInfo>
+        {diaryList.length <= 0 ? (
+          <></>
+        ) : (
+          <>
+            <UserImage>
+              <img src={uploadedImage || imgSrc} alt="userImage" />
+              {diaryAuth === 'CREATOR' ? (
+                <div>
+                  <label htmlFor="file">
+                    <MdEdit />
+                  </label>
+                  <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    accept="image/*"
+                    multiple={false}
+                    onChange={onChangeImage}
+                    style={{ display: 'none' }}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+            </UserImage>
+            <UserInfo>
+              <div>
+                <span>Hello, </span>
+                <span>{diaryData?.diaryName} </span>
+              </div>
+              <div>{diaryData?.diaryDescription} </div>
+              {diaryAuth === 'CREATOR' ? (
+                <CustomButton
+                  text="다이어리 수정"
+                  backgroundColor="blue"
+                  disabled={false}
+                  onClick={handleEditProfile}
+                />
+              ) : (
+                <div></div>
+              )}
+              {authData?.isInvited === false ? (
+                <CustomButton
+                  text="초대 승인"
+                  backgroundColor="green"
+                  disabled={false}
+                  onClick={handleInviteUser}
+                />
+              ) : (
+                <div>{authData?.diaryRole}</div>
+              )}
+              {diaryList &&
+              (diaryAuth === 'SUBSCRIBE' ||
+                diaryAuth === 'CREATOR' ||
+                diaryAuth === 'READ' ||
+                diaryAuth === 'WRITE') ? null : (
+                <CustomButton
+                  text="구독 하기"
+                  backgroundColor="blue"
+                  disabled={false}
+                  onClick={handleSubscribe}
+                />
+              )}
+            </UserInfo>
+          </>
+        )}
         <DiaryLeftNav>
           <div>
             <span>다이어리 리스트</span>
@@ -459,6 +471,7 @@ const DiaryPage = () => {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleCreateDiary}
       />
+      <ToastContainer />
     </DiaryPageContainer>
   );
 };

@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { MdEdit } from 'react-icons/md';
-
 import CustomButton from '../../../components/CustomButton';
-
 import {
   AccountName,
   ButtonContent,
@@ -17,12 +14,13 @@ import {
   UserInfo,
   UserLeft,
 } from './DiaryEditPage.styles';
-
 import imgSrc from '../../../assets/testImage/suggestedPostImage.png';
 import api from '../../../api';
 import { AiFillPlusCircle } from 'react-icons/ai';
-import Modal from './UserFindModal'; // 위에서 만든 모달 컴포넌트를 import
+import Modal from './UserFindModal';
 import UserList from './UserList';
+import { toast, ToastContainer } from 'react-toastify';
+
 interface DiaryProps {
   chatRoomId: number;
   diaryDescription: string;
@@ -31,6 +29,7 @@ interface DiaryProps {
   diaryProfileImage: string;
   isDiaryDeleted: boolean;
 }
+
 const DiaryEditPage = () => {
   const { id } = useParams();
   const scrollView = useRef<HTMLInputElement>(null);
@@ -42,6 +41,7 @@ const DiaryEditPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [diaryUserList, setDiaryUserList] = useState([]);
   const [updatedRoles, setUpdatedRoles] = useState([]);
+  const [userNameMessage, setUserNameMessage] = useState('');
 
   const navigate = useNavigate();
 
@@ -71,7 +71,7 @@ const DiaryEditPage = () => {
 
       if (response.status === 200) {
         console.log('다이어리 프로필 수정 완료:', response.data.message);
-        window.location.reload();
+        toast(response.data.message);
       } else {
         console.error('프로필 이미지 업데이트 실패:', response.data.message);
       }
@@ -88,13 +88,13 @@ const DiaryEditPage = () => {
         },
       });
       if (status === 200) {
-        console.log('다이어리 정보 조회 완료');
         setDiaryData(data.data);
       }
     } catch (error) {
       console.error('Error fetching diary profile:', error);
     }
   };
+
   useEffect(() => {
     fetchDiaryProfile();
     fetchDiaryUsers();
@@ -103,6 +103,7 @@ const DiaryEditPage = () => {
   const isValidString = (str: any) => {
     return str && str.trim() !== '';
   };
+
   const updateProfileDesc = async (diaryName: string, diaryDescription: string) => {
     if (!isValidString(diaryName) || !isValidString(diaryDescription)) {
       console.error('Diary name and description must not be empty.');
@@ -116,22 +117,17 @@ const DiaryEditPage = () => {
       });
 
       if (response.status === 200) {
-        console.log('Profile description updated successfully.');
-        window.location.reload();
+        toast(response.data.message);
       } else {
         console.log('Failed to update profile description:', response.status);
       }
     } catch (error: any) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         console.error('Error response:', error.response.data);
         console.error('Error status:', error.response.status);
       } else if (error.request) {
-        // The request was made but no response was received
         console.error('Error request:', error.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error('Error message:', error.message);
       }
       console.error('Error config:', error.config);
@@ -148,7 +144,7 @@ const DiaryEditPage = () => {
   const handleInputChange = (e: any) => {
     const { value } = e.target;
     setUserName(value);
-    setIsButtonDisabled(!isValidString(value));
+    checkUserName(value);
   };
 
   const handleDescriptionChange = (e: any) => {
@@ -160,9 +156,13 @@ const DiaryEditPage = () => {
   const handleDiaryDelete = async () => {
     const response = await api.delete(`/api/diary/profile/${id}`);
     if (response.status === 200) {
-      navigate('/diary');
+      toast(response.data.message);
+      setTimeout(() => {
+        navigate('/diary');
+      }, 2000);
     }
   };
+
   const handleUserAdd = () => {
     setIsModalOpen(true);
   };
@@ -170,6 +170,7 @@ const DiaryEditPage = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
   const fetchDiaryUsers = async () => {
     const response = await api.get(`/api/diary/user/list/${id}`);
     setDiaryUserList(response.data.data);
@@ -184,7 +185,7 @@ const DiaryEditPage = () => {
     }
   };
 
-  const handleRoleChange = (diaryUserId: any, newRole: any) => {
+  const handleRoleChange = async (diaryUserId: any, newRole: any) => {
     setUpdatedRoles((prevRoles: any) => ({
       ...prevRoles,
       [diaryUserId]: newRole,
@@ -197,19 +198,46 @@ const DiaryEditPage = () => {
       diaryRole: updatedRoles[diaryUserId],
     }));
 
-    console.log(rolesToUpdate);
     try {
       const response = await api.patch(`/api/diary/user/list/${id}`, rolesToUpdate);
 
       if (response.status === 200) {
-        console.log('Roles updated successfully');
+        toast(response.data.data);
         setUpdatedRoles([]);
-        fetchDiaryUsers(); // Refresh the list to show updated roles
+        fetchDiaryUsers();
       } else {
         console.error('Failed to update roles:', response.status);
       }
     } catch (error) {
       console.error('Error updating roles:', error);
+    }
+  };
+
+  const checkUserName = async (userName: string) => {
+    try {
+      const response = await api.post(
+        '/api/users/profile/checkUserName',
+        {
+          userName,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      if (response.data.statusCode === 200) {
+        setUserNameMessage(response.data.message);
+        setIsButtonDisabled(false); // Enable the button
+      } else if (response.data.statusCode === 409) {
+        setUserNameMessage(response.data.message);
+        setIsButtonDisabled(true); // Disable the button
+      }
+    } catch (error) {
+      console.log(error);
+      setUserNameMessage('사용할 수 없는 이름입니다.');
+      setIsButtonDisabled(true); // Disable the button
     }
   };
 
@@ -260,6 +288,7 @@ const DiaryEditPage = () => {
                 placeholder={diaryData?.diaryName}
                 onChange={handleInputChange}
               />
+              <div>{userNameMessage}</div>
               <div>
                 <div>* 2 ~ 15 글자 대/소문자 가능, 한글 가능, 숫자 가능</div>
                 <div>특수문자(언더바(_),점(.))만 가능</div>
@@ -286,14 +315,6 @@ const DiaryEditPage = () => {
         <ProfileInfo>
           <UserLeft>
             <h3>참여자 관리</h3>
-            <ButtonContent>
-              <CustomButton
-                text="저장"
-                backgroundColor="blue"
-                disabled={false}
-                onClick={handleSaveRoles}
-              />
-            </ButtonContent>
           </UserLeft>
           <div>
             <UserList
@@ -326,6 +347,7 @@ const DiaryEditPage = () => {
           </UserLeft>
         </ProfileInfo>
       </DiaryEditPageContent>
+      <ToastContainer />
     </DiaryEditPageContainer>
   );
 };

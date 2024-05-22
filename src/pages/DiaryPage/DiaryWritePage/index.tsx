@@ -30,6 +30,9 @@ const CreateDiaryModal = ({ isOpen, onClose, onSubmit }: any) => {
       diaryProfileImage: diaryProfileImage || defaultImage,
     };
     onSubmit(diaryData);
+    setDiaryName('');
+    setDiaryDescription('');
+    setDiaryProfileImage(null);
   };
 
   if (!isOpen) {
@@ -40,18 +43,18 @@ const CreateDiaryModal = ({ isOpen, onClose, onSubmit }: any) => {
     <ModalContainer>
       <ModalContent>
         <ModalHeader>
-          <h2>Create New Diary</h2>
+          <h2>새로운 다이어리를 만들어요</h2>
           <MdClose onClick={onClose} />
         </ModalHeader>
         <ModalBody>
           <Input
             type="text"
-            placeholder="Diary Name"
+            placeholder="다이어리 이름"
             value={diaryName}
             onChange={(e) => setDiaryName(e.target.value)}
           />
           <TextArea
-            placeholder="Diary Description"
+            placeholder="다이어리 소개"
             value={diaryDescription}
             onChange={(e) => setDiaryDescription(e.target.value)}
           />

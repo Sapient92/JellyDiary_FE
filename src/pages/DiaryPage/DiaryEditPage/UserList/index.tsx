@@ -16,7 +16,7 @@ interface DiaryUser {
 }
 
 interface UserProfile {
-  userProfileImg: string;
+  profileImg: string;
   userName: string;
 }
 
@@ -27,7 +27,7 @@ interface UserListProps {
   onDelete: (diaryUserId: string) => void;
 }
 
-const UserList: React.FC<UserListProps> = ({ diaryUserList, onRoleChange, onEdit, onDelete }) => {
+const UserList: React.FC<UserListProps> = ({ diaryUserList, onEdit, onRoleChange, onDelete }) => {
   const [userProfiles, setUserProfiles] = useState<{ [key: string]: UserProfile }>({});
 
   const handleRoleChange = (diaryUserId: string, newRole: 'READ' | 'WRITE') => {
@@ -52,53 +52,50 @@ const UserList: React.FC<UserListProps> = ({ diaryUserList, onRoleChange, onEdit
 
   return (
     <UserListContainer>
-      {diaryUserList?.map((user) => {
-        const profile = userProfiles[user.diaryUserId];
-        return (
-          <UserItem key={user.diaryUserId}>
-            {profile ? (
-              <UserInfo>
-                <img
-                  src={profile.userProfileImg || fakeImg}
-                  alt={`${profile.userName}'s profile`}
-                />
-                <b>{profile.userName}</b>
-              </UserInfo>
-            ) : (
-              <UserInfo>
-                <b>ID:</b> {user.diaryUserId}
-              </UserInfo>
-            )}
-            {user.diaryRole !== 'CREATOR' && (
-              <UserActions>
-                <Select
-                  onChange={(e) =>
-                    handleRoleChange(user.diaryUserId, e.target.value as 'READ' | 'WRITE')
-                  }
-                >
-                  {user.diaryRole === 'READ' ? (
-                    <>
-                      <option value="READ" selected>
-                        읽기
-                      </option>
-                      <option value="WRITE">읽기 쓰기</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value="READ">읽기</option>
-                      <option value="WRITE" selected>
-                        읽기 쓰기
-                      </option>
-                    </>
-                  )}
-                </Select>
-                <Button onClick={() => onEdit(user.diaryUserId)}>수정</Button>
-                <Button onClick={() => onDelete(user.diaryUserId)}>삭제</Button>
-              </UserActions>
-            )}
-          </UserItem>
-        );
-      })}
+      {diaryUserList
+        ?.filter((user: any) => user.isInvited === null || user.isInvited === false)
+        .map((user: any) => {
+          const profile = userProfiles[user.diaryUserId];
+          console.log(user);
+          return (
+            <UserItem key={user.diaryUserId}>
+              {profile ? (
+                <UserInfo>
+                  <img src={profile.profileImg || fakeImg} alt={`${profile.userName}'s profile`} />
+                  <b>{profile.userName}</b>
+                  <b>{user.diaryRole}</b>
+                </UserInfo>
+              ) : (
+                <UserInfo>
+                  <b>ID:</b> {user.diaryUserId}
+                </UserInfo>
+              )}
+              {user.diaryRole !== 'CREATOR' && (
+                <UserActions>
+                  <Select
+                    onChange={(e) =>
+                      handleRoleChange(user.diaryUserId, e.target.value as 'READ' | 'WRITE')
+                    }
+                  >
+                    {user.diaryRole === 'READ' ? (
+                      <>
+                        <option defaultValue="READ">읽기</option>
+                        <option value="WRITE">읽기 쓰기</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="READ">읽기</option>
+                        <option defaultValue="WRITE">읽기 쓰기</option>
+                      </>
+                    )}
+                  </Select>
+                  <Button onClick={() => onEdit(user.diaryUserId)}>수정</Button>
+                  <Button onClick={() => onDelete(user.diaryUserId)}>삭제</Button>
+                </UserActions>
+              )}
+            </UserItem>
+          );
+        })}
     </UserListContainer>
   );
 };

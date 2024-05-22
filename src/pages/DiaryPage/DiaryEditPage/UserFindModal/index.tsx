@@ -3,6 +3,7 @@ import { LuSearch } from 'react-icons/lu';
 import styled from 'styled-components';
 import api from '../../../../api';
 import fakeImg from '../../../../assets/images/UserAvatar.png';
+import { toast, ToastContainer } from 'react-toastify';
 // 모달 스타일링
 const ModalBackground = styled.div`
   position: fixed;
@@ -105,8 +106,6 @@ const Modal = ({ id, isOpen, onClose }: any) => {
   };
 
   const handleResultClick = (participant: any) => {
-    console.log(`참여자 추가: ${participant.name}`);
-    // 여기에 참여자 추가 로직을 추가합니다.
     onClose();
   };
 
@@ -121,21 +120,35 @@ const Modal = ({ id, isOpen, onClose }: any) => {
         userId: participant?.userId,
       });
 
-      if (response.status === 201) {
-        console.log('다이어리 유저 생성 완료:', response.data);
+      if (response.data.statusCode === 201) {
+        console.log('다이어리 유저 생성 완료:', response.data.message);
+        toast(response.data.message);
       } else {
-        console.error('다이어리 유저 생성 실패:', response.status);
+        console.error('다이어리 유저 생성 실패:', response.data);
       }
-    } catch (error) {
-      console.error('서버와의 통신 중 오류 발생:', error);
+    } catch (error: any) {
+      toast(error?.response?.data.data);
     }
   };
 
-  const handleInviteClick = (participant: any) => {
-    console.log(participant.isInvited);
-    inviteUser(participant);
-  };
+  const handleInviteClick = async (participant: any) => {
+    try {
+      const response = await api.get(`/api/feed/userInfo/${participant.userId}`);
+      const userRole = response.data.role; // Assuming the API response contains the user's role
 
+      // Invite user based on their role
+      if (userRole === 'READ') {
+        console.log(userRole);
+        toast('이미 초대된 사용자입니다.');
+      } else {
+        // Proceed with inviting the user
+        inviteUser(participant);
+      }
+    } catch (error) {
+      console.error('Error fetching user role:', error);
+      toast('사용자 정보를 가져오는 동안 오류가 발생했습니다.');
+    }
+  };
   return (
     <ModalBackground onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
@@ -150,23 +163,30 @@ const Modal = ({ id, isOpen, onClose }: any) => {
           <LuSearch size={20} />
         </div>
         <SearchResult>
-          {results.map((participant: any) => (
-            <ResultItem key={participant.userId} onClick={() => handleResultClick(participant)}>
-              <div>
-                <img src={participant.profileImg || fakeImg} alt={participant.userId} />
-                {participant.userName}
-                {participant.isInvited}
-              </div>
-              <button
-                onClick={() => handleInviteClick(participant)}
-                disabled={participant.isInvited === true}
-              >
-                {participant.isInvited == true ? '초대 완료' : '초대하기'}
-              </button>
-            </ResultItem>
-          ))}
+          {results
+            .filter(
+              (participant: any) =>
+                participant.isInvited === null || participant.isInvited === false,
+            )
+            .map((participant: any) => (
+              <ResultItem key={participant.userId} onClick={() => handleResultClick(participant)}>
+                <div>
+                  <img src={participant.profileImg || fakeImg} alt={participant.userId} />
+                  {participant.userName}
+                  {participant.isInvited}
+                </div>
+                <button
+                  onClick={() => handleInviteClick(participant)}
+                  disabled={false}
+                  style={{ background: participant.isInvited === false ? 'gray' : 'blue' }}
+                >
+                  {participant.isInvited ? '초대 완료' : '초대하기'}
+                </button>
+              </ResultItem>
+            ))}
         </SearchResult>
       </ModalContent>
+      <ToastContainer />
     </ModalBackground>
   );
 };
