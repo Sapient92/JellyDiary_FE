@@ -25,8 +25,8 @@ const Notification = () => {
     });
 
     eventSource.onmessage = function (event: any) {
-      console.log(event.data.content);
-      toast(event.data.content);
+      const notification = event.data.content;
+      toast(notification);
     };
 
     eventSource.addEventListener('welcome', function (event: any) {
@@ -51,7 +51,6 @@ const Notification = () => {
         const response = await api.get('/api/notification');
         setNotificationData(response.data.data.notificationResponseDtos);
         console.log(response.data.data.notificationResponseDtos.content);
-        toast(response.data.data.notificationResponseDtos[0].content);
         if (response.data.data.count > 0) {
           setHasNewNotifications(true); // Assuming the data indicates new notifications
         }
@@ -69,9 +68,11 @@ const Notification = () => {
   };
   const handleDeleteNotification = async () => {
     const response = await api.delete(`/api/notification/${user?.userId}`);
-    console.log(response.data.data);
     toast(response.data.data);
     setNotificationData([]);
+    setIsModalOpen(false);
+  };
+  const handleNotificationModal = () => {
     setIsModalOpen(false);
   };
   return (
@@ -83,7 +84,8 @@ const Notification = () => {
       </Noti>
       {isModalOpen && (
         <NotificationModal
-          onClose={() => handleDeleteNotification()}
+          onClose={() => handleNotificationModal()}
+          onDelete={() => handleDeleteNotification()}
           notificationData={notificationData}
         />
       )}
