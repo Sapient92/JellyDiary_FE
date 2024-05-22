@@ -5,6 +5,7 @@ import { WriteInputType } from "../../types/postType.ts";
 export type DiaryStoreProps = {
   post: WriteInputType;
   changeValue: (el: object) => void;
+  resetValue: (reset: WriteInputType) => void;
 };
 
 export const usePostInputStore = create<DiaryStoreProps>((set) => ({
@@ -29,5 +30,9 @@ export const usePostInputStore = create<DiaryStoreProps>((set) => ({
         ...prev.post,
         ...el,
       },
+    })),
+  resetValue: (reset: WriteInputType) =>
+    set(() => ({
+      post: reset,
     })),
 }));

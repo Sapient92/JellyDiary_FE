@@ -29,6 +29,13 @@ export const useImgsStore = create<useImgsStoreProps>((set) => ({
           },
         };
       } else if (isDelete) {
+        if (imgs.length === 0) {
+          return {
+            writeImgs: {
+              postImgs: [],
+            },
+          };
+        }
         return {
           writeImgs: {
             postImgs: imgs,
