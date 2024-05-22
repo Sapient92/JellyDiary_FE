@@ -6,5 +6,7 @@ export const ChatUserListContainer = styled.div<{ $isChatting: boolean }>`
       ? css`
           width: 100%;
         `
-      : css``}
+      : css`
+          width: 329px;
+        `}
 `;
