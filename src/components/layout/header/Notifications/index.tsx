@@ -12,7 +12,6 @@ const Notification = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasNewNotifications, setHasNewNotifications] = useState(false);
   const [notificationData, setNotificationData] = useState<any[]>([]);
-  const [messages, setMessages] = useState<any>([]);
   const { user } = useUser();
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;
@@ -27,14 +26,12 @@ const Notification = () => {
 
     eventSource.onmessage = function (event: any) {
       const newMessage = event.data;
-      setMessages((prevMessages: any) => [...prevMessages, newMessage]);
       console.log(event.data.content);
     };
 
     eventSource.addEventListener('welcome', function (event: any) {
       const welcomeMessage = event.data;
       console.log(welcomeMessage);
-      setMessages((prevMessages: any) => [...prevMessages, welcomeMessage]);
       toast(welcomeMessage);
     });
 

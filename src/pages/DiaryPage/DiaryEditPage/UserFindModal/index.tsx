@@ -95,7 +95,6 @@ const Modal = ({ id, isOpen, onClose }: any) => {
           params: { searchWord: value },
         });
         setResults(response.data.data); // 서버에서 반환된 데이터 형식에 따라 조정 필요
-        console.log(response.data.data);
       } catch (error) {
         console.error('참여자 검색 실패:', error);
         setResults([]);
@@ -105,7 +104,7 @@ const Modal = ({ id, isOpen, onClose }: any) => {
     }
   };
 
-  const handleResultClick = (participant: any) => {
+  const handleResultClick = () => {
     onClose();
   };
 
