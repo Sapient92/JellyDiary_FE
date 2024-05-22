@@ -9,6 +9,7 @@ export const FollowContainer = styled.div`
 
 export const UserContent = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 export const UserProfileImg = styled.div`
@@ -19,6 +20,7 @@ export const UserProfileImg = styled.div`
   img {
     width: 45px;
     height: 45px;
+    border-radius: 50%;
   }
 `;
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { FollowType } from "../../../../../types/feedType.ts";
 
@@ -12,25 +12,37 @@ import {
 
 import userAvatar from "../../../../../assets/images/UserAvatar.png";
 import { useFollowMutation } from "../../../../../hooks/useUserFeed.ts";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface FollowProps {
   data: FollowType;
   title?: string;
+  closeModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const Follow: React.FC<FollowProps> = ({ title, data }) => {
+const Follow: React.FC<FollowProps> = ({ title, data, closeModal }) => {
   const { userId: id } = useParams();
   const { profileImg, userDesc, userName, followStatus, userId } = data;
   const { mutate } = useFollowMutation(userId, id as string, title);
+  const navigate = useNavigate();
+
   const handleFollowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(followStatus);
   };
 
+  const handleFollowUserClick = () => {
+    navigate(`../../../../../userfeed/${data.userId}`);
+    closeModal(false);
+  };
+
+  const truncate = (str: string | null, n: number) => {
+    return str ?? length > n ? str?.substring(0, n - 1) + "..." : str;
+  };
+
   return (
     <>
-      <FollowContainer>
+      <FollowContainer onClick={handleFollowUserClick}>
         <UserContent>
           <UserProfileImg>
             <img
@@ -40,7 +52,7 @@ const Follow: React.FC<FollowProps> = ({ title, data }) => {
           </UserProfileImg>
           <UserProfileDesc>
             <p>{userName}</p>
-            <p>{userDesc}</p>
+            <p>{truncate(userDesc, 20)}</p>
           </UserProfileDesc>
         </UserContent>
         <FollowButton $status={followStatus} onClick={handleFollowClick}>

@@ -12,7 +12,6 @@ import {
 } from "./ChatMessage.styles.ts";
 
 import userAvatar from "../../../../assets/images/UserAvatar.png";
-import UseWrittenAt from "../../../../hooks/useWrittenAt.ts";
 
 interface ChatMessageProps {
   message: MessageListType;
@@ -20,11 +19,21 @@ interface ChatMessageProps {
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const loginUserId = useUserStore((state) => state.loginUserId);
+  const WrittenAt = (createdComment: string) => {
+    const date = new Date(createdComment);
+    const getHour = date.getHours();
+    const getMinute = date.getMinutes();
+    if (getHour >= 12) {
+      return `오후 ${getHour - 12}:${getMinute}`;
+    } else {
+      return `오전 ${getHour}:${getMinute}`;
+    }
+  };
 
   if (loginUserId === Number(message.userId)) {
     return (
       <SenderMessageContainer>
-        <p>{UseWrittenAt(message.createdAt)}</p>
+        <p>{WrittenAt(message.createdAt)}</p>
         <SenderMessageContent>
           <p>{message.chatMessage}</p>
           <img
@@ -47,7 +56,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           <p>{message.userName}</p>
           <p>{message.chatMessage}</p>
         </ReceiverMessageContent>
-        <p>{UseWrittenAt(message.createdAt)}</p>
+        <p>{WrittenAt(message.createdAt)}</p>
       </ReceiverMessageContainer>
     );
   }
