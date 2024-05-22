@@ -18,7 +18,7 @@ export const EditModalContainer = styled.div`
     font-size: 16px;
     color: #717171;
     margin: 0;
-    width: 30px;
+    width: 70px;
 
     &:hover {
       text-decoration: underline;
@@ -36,7 +36,7 @@ export const LinkStyled = styled(Link)`
     font-size: 16px;
     color: #717171;
     margin: 0;
-    width: 30px;
+    width: 70px;
 
     &:hover {
       text-decoration: underline;
