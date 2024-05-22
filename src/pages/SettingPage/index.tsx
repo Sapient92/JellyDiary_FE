@@ -31,7 +31,7 @@ const SettingPage = () => {
   const scrollView = useRef<HTMLInputElement>(null);
   const { user } = useUser();
   const navigate = useNavigate();
-  const [uploadedImage, setUploadedImage] = useState(imgSrc);
+  const [uploadedImage, setUploadedImage] = useState('');
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
   const [userName, setUserName] = useState('');
   const [userDesc, setUserDesc] = useState('');
@@ -72,6 +72,9 @@ const SettingPage = () => {
         newFollower: user.newFollower,
         dm: user.dm,
       });
+      setUploadedImage(user.profileImg);
+      setUserName(user.userName);
+      setUserDesc(user.userDesc);
     }
   }, [user]);
   useEffect(() => {
@@ -180,24 +183,19 @@ const SettingPage = () => {
   const checkUserName = async (userName: string) => {
     try {
       const response = await api.post('/api/users/profile/ckeckUserName', {
-        headers: {
-          'Content-Type': 'json',
-        },
-        body: {
-          userName: userName,
-        },
+        userName,
       });
       if (response.data.statusCode === 200) {
         toast(response.data.message);
-        setIsButtonDisabled(false); // Enable the button
+        setIsButtonDisabled(false);
       } else if (response.data.statusCode === 409) {
         toast(response.data.data);
-        setIsButtonDisabled(false); // Disable the button
+        setIsButtonDisabled(false);
       }
     } catch (error) {
       console.log(error);
       toast('사용할 수 없는 이름입니다.');
-      setIsButtonDisabled(true); // Disable the button
+      setIsButtonDisabled(true);
     }
   };
 
@@ -253,8 +251,7 @@ const SettingPage = () => {
     <SettingPageContainer>
       <SettingLeftContent>
         <UserImage>
-          {user.profileImg && <img src={user.profileImg} alt="userImage" />}
-          {!user.profileImg && <img src={uploadedImage} alt="userImage" />}
+          <img src={uploadedImage || imgSrc} alt="userImage" />
           <div>
             <label htmlFor="file">
               <MdEdit />
@@ -272,7 +269,6 @@ const SettingPage = () => {
         </UserImage>
         <UserInfo>
           <div>
-            <span>Hello, </span>
             <span>{user?.userName} </span>
           </div>
           <div>{user?.userDesc}</div>
@@ -311,6 +307,7 @@ const SettingPage = () => {
               <div>계정 소개</div>
               <textarea
                 placeholder={user?.userDesc}
+                value={userDesc}
                 onChange={(e) => setUserDesc(e.target.value)}
               />
             </AccountName>
