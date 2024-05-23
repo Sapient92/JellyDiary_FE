@@ -46,29 +46,31 @@ const DiaryPage = () => {
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     const postId = clickInfo.event._def.extendedProps.postId;
+    setIsNotFound(false);
     navigate(`/post/${postId}`);
   };
 
   useEffect(() => {
+    console.log('id ' + id);
     const fetchData = async () => {
       const response = await api.get('/api/diary/mydiaryList');
       if (!id) {
         navigate(`/diary/${response.data.data[0].diaryId}`);
       }
       const data = await api.get(`/api/diary/profile/${id}`);
-      const auth = await api.get(`/api/diary/user/${id}`).catch(() => {
-        setIsNotFound(true);
-      });
+      // const auth = await api.get(`/api/diary/user/${id}`).catch(() => {
+      //   setIsNotFound(true);
+      // });
       const events = await updateEvents(id);
-      const test = await fetchGroupChat(id);
-      setChatList(filterNonSubscribers(test));
-      setDiaryData(response.data.data);
-      setDiaryAuth(auth?.data.data.diaryRole);
-      setAuthData(auth?.data.data);
+      // const test = await fetchGroupChat(id);
+      // setChatList(filterNonSubscribers(test));
+      setDiaryData(response?.data.data);
+      // setDiaryAuth(auth?.data.data.diaryRole);
+      // setAuthData(auth?.data.data);
       setEvents(transformEventData(events));
-      setDiaryList(response.data.data);
-      setDiaryData(data.data.data);
-      setUploadedImage(data.data.data.diaryProfileImage);
+      setDiaryList(response?.data.data);
+      setDiaryData(data?.data.data);
+      setUploadedImage(data?.data.data.diaryProfileImage);
     };
     fetchData();
   }, [id]);
@@ -96,6 +98,7 @@ const DiaryPage = () => {
 
   const updateEvents = async (id: any) => {
     const response = await api.get(`/api/post/postList/${id}`);
+    console.log(response);
     const publicEvents = await response.data.data.filter((event: any) => event.isPublic);
 
     if (diaryAuth === 'CREATOR' || diaryAuth === 'READ' || diaryAuth === 'WRITE') {
