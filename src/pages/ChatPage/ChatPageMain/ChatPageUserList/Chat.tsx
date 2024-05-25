@@ -41,8 +41,12 @@ const Chat: React.FC<ChatProps> = ({ chat }) => {
           alt={"chatRoomProfileImg"}
         />
       </ChatImgContainer>
-      <ChatInfoContainer>
-        <p>{truncate(chat?.chatRoomName, 12)}</p>
+      <ChatInfoContainer $diaryId={chat?.diaryId}>
+        {userId || diaryId ? (
+          <p>{truncate(chat?.chatRoomName, 12)}</p>
+        ) : (
+          <p>{truncate(chat?.chatRoomName, 50)}</p>
+        )}
         {userId || diaryId ? (
           <p>{truncate(chat?.chatMessagePreview, 17)}</p>
         ) : (
