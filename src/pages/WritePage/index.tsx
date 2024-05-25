@@ -23,15 +23,13 @@ const WritePage = () => {
     changeAddedImgs,
     changeImgs,
   } = useImgsStore((state) => state);
-  const { resetValue } = usePostInputStore((state) => state);
+  const changeValue = usePostInputStore((state) => state.changeValue);
   const { id } = useParams();
   const { isLoading, data, isError, error } = useFetchPost(id as string);
 
   useEffect(() => {
     if (!id) {
-      changeAddedImgs([]);
-      changeImgs([], true);
-      resetValue({
+      const initialValue = {
         postTitle: "",
         postDate: new Date().toISOString().split("T")[0],
         postContent: "",
@@ -45,7 +43,10 @@ const WritePage = () => {
         shower: null,
         weight: null,
         specialNote: null,
-      });
+      };
+      changeValue(initialValue);
+      changeAddedImgs([]);
+      changeImgs([], true);
     }
   }, []);
 
