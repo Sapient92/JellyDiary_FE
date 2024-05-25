@@ -29,11 +29,12 @@ export const ChatImgContainer = styled.div`
   }
 `;
 
-export const ChatInfoContainer = styled.div`
+export const ChatInfoContainer = styled.div<{ $diaryId: number | null }>`
   margin: 0 8px 0 20px;
   p:nth-child(1) {
     margin: 0;
     font-weight: 600;
+    color: ${(props) => (props.$diaryId ? "#8A2BE2" : "black")};
   }
   p:nth-child(2) {
     margin: 0;
