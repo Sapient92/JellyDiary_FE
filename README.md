@@ -27,6 +27,8 @@
 
 - [피그마 바로가기](https://www.figma.com/design/AqnBhfIMPg8Nm3iLiSKzom/JellyDiary?node-id=0-1&t=OtDgu7gJ80RQttD8-0)
 
+<br>
+
 <h2>프로젝트 기간</h2>
   <p>2024.04.01 ~ 진행중</p>
 
