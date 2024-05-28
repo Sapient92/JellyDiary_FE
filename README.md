@@ -6,8 +6,10 @@
 > :two_women_holding_hands: 반려인들을 위한 반려 동물과 나의 SNS, JEllY DIARY
 
   반려 동물과의 일상을 공유하고, 다른 멤버를 초대해 공동 육아를 할 수 있습니다!
+  
 
   <br>
+  
 
 ![main](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/b061bf17-0e1a-4441-98ac-25f8190694f7)
 ![diary](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/854ce910-75e6-4e98-aac1-c6ce4065db4b)
