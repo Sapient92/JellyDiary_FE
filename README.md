@@ -38,4 +38,19 @@
     <th>포지션</th>
     <th>Github</th>
   </tr>
+
+  <tr>
+    <th>김용식</th>
+    <th>박현민</th>
+  </tr>
+
+  <tr>
+    <th>프론트엔드</th>
+    <th>프론트엔드</th>
+  </tr>
+
+  <tr>
+    <th>https://github.com/sapient92</th>
+    <th>https://github.com/AuroraPark</th>
+  </tr>
 </table>
