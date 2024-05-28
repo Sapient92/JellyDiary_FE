@@ -1,2 +1,1 @@
-![JellyDiary Logo](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/89ae9133-734e-488e-80e7-e6173a609470)
-<img src="https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/89ae9133-734e-488e-80e7-e6173a609470" width="400" />
+![334061535-f142244d-c200-4318-94a9-93258809f9ae](https://github.com/JellyDiary/JellyDiary_BE/assets/94800969/779f6699-bb18-4e62-8e73-ec8b8f9b8dab)
