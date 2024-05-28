@@ -3,6 +3,8 @@
 <div>
   <h1>프로젝트 소개 및 개요</h1>
   
-> :two_women_holding_hands: 반려인들을 위한 반려동물과 나의 SNS, JEllY DIARY!
+> :two_women_holding_hands: 반려인들을 위한 반려 동물과 나의 SNS, JEllY DIARY
+
+  반려 동물과의 일상을 공유하고, 다른 멤버를 초대해 공동 육아를 할 수 있습니다!
 
 </div>
