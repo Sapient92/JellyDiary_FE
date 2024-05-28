@@ -14,3 +14,11 @@
 ![chatting](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/51c1d23e-fd25-414b-8772-fdda3a2ae1e3)
 
 </div><br/>
+
+<h2>노션 링크</h2>
+- [프로젝트 노션 바로가기](https://sinyoung-siny.notion.site/f8dc9aa278f74c989193af6fcb755a8e?pvs=4)
+
+<br/>
+
+<h2>디자인 기획</h2>
+- [피그마 바로가기](https://www.figma.com/design/AqnBhfIMPg8Nm3iLiSKzom/JellyDiary?node-id=0-1&t=OtDgu7gJ80RQttD8-0)
