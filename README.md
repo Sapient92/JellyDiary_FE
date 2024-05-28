@@ -7,4 +7,10 @@
 
   반려 동물과의 일상을 공유하고, 다른 멤버를 초대해 공동 육아를 할 수 있습니다!
 
-</div>
+  <br/>
+
+![main](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/b061bf17-0e1a-4441-98ac-25f8190694f7)
+![diary](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/854ce910-75e6-4e98-aac1-c6ce4065db4b)
+![chatting](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/51c1d23e-fd25-414b-8772-fdda3a2ae1e3)
+
+</div><br/>
