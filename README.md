@@ -7,19 +7,19 @@
 
   반려 동물과의 일상을 공유하고, 다른 멤버를 초대해 공동 육아를 할 수 있습니다!
 
-  <br/>
+  <br>
 
 ![main](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/b061bf17-0e1a-4441-98ac-25f8190694f7)
 ![diary](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/854ce910-75e6-4e98-aac1-c6ce4065db4b)
 ![chatting](https://github.com/JellyDiary/JellyDiary_FE/assets/151002897/51c1d23e-fd25-414b-8772-fdda3a2ae1e3)
 
-</div><br/>
+</div><br>
 
 <h2>노션 링크</h2>
 
 - [프로젝트 노션 바로가기](https://sinyoung-siny.notion.site/f8dc9aa278f74c989193af6fcb755a8e?pvs=4)
 
-<br/>
+<br>
 
 <h2>디자인 기획</h2>
 
@@ -27,3 +27,15 @@
 
 <h2>프로젝트 기간</h2>
   <p>2024.04.01 ~ 진행중</p>
+
+
+<br>
+<h2>팀원</h2>
+
+<table>
+  <tr>
+    <th>이름</th>
+    <th>포지션</th>
+    <th>Github</th>
+  </tr>
+</table>
