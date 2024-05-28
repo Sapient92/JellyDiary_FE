@@ -64,3 +64,19 @@
   <img src="https://img.shields.io/badge/webSocket-90E59A?style=for-the-badge&logo=webSocket&logoColor=white">
   <img src="https://img.shields.io/badge/STOMP-EB508D?style=for-the-badge&logo=STOMP&logoColor=white">
 </div>
+
+<br>
+
+<h2>커밋 컨벤션</h2>
+
+|   Type   | Description                   |
+| :------: | ----------------------------- |
+|   feat   | 새로운 기능 추가               |
+|   fix    | 버그 수정                      |
+|   build    | 빌드 관련 파일 수정           |
+|   util    | config 관련 파일 수정         |
+|  design  | UI 변경 (CSS 작업)             |
+|  style   | 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없는 경우)              |
+| refactor | 코드 리팩토링          |
+|   docs   | 문서 (문서 추가, 수정, 삭제)          |
+|  chore   | 기타 변경사항 (빌드 스크립트 수정 등)         |
