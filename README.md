@@ -41,8 +41,8 @@
 
   <tr>
     <th>김용식</th>
+     <th>프론트엔드</th>
     <th>https://github.com/sapient92</th>
-    <th>프론트엔드</th>
     <th/>
   </tr>
 
