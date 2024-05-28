@@ -59,7 +59,7 @@
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/zustand-%2320232a.svg?style=for-the-badge&color=brightgreen" />
   <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" />
-  <img src="https://img.shields.io/badge/TanStack%20Query-white?style=for-the-badge&color=purple" />
+  <img src="https://img.shields.io/badge/TanStack--Query-white?style=for-the-badge&color=purple" />
   <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" />
   <img src="https://img.shields.io/badge/webSocket-90E59A?style=for-the-badge&logo=webSocket&logoColor=white">
   <img src="https://img.shields.io/badge/STOMP-EB508D?style=for-the-badge&logo=STOMP&logoColor=white">
