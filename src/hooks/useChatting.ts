@@ -41,7 +41,7 @@ export const useFetchChatHistory = (size: number, chatRoomId: number) => {
       }
     },
     select: (r) => {
-      return r.pages.flatMap((r) => r.data.data.chatMessageList);
+      return r.pages.flatMap((r) => r.data.data);
     },
   });
   return { data, isLoading, ...rest };
