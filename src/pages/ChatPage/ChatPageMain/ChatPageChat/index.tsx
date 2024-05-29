@@ -66,7 +66,8 @@ const ChatPageChat: React.FC = () => {
 
   useEffect(() => {
     if (messageHistory) {
-      const sortedMessage = [...messageHistory].sort(
+      const messageList = messageHistory.flatMap((r) => r.chatMessageList);
+      const sortedMessage = [...messageList].sort(
         (a: MessageListType, b: MessageListType) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       );
@@ -209,14 +210,20 @@ const ChatPageChat: React.FC = () => {
           ))}
         <div ref={messageEndRef}></div>
       </ChatMessagesContainer>
-      <ChatFooterForm />
+      <ChatFooterForm
+        isDiaryDeleted={messageHistory && messageHistory[0].isDiaryDeleted}
+      />
     </ChatContainer>
   );
 };
 
 export default ChatPageChat;
 
-const ChatFooterForm: React.FC = () => {
+interface ChatFooterFormProps {
+  isDiaryDeleted: boolean;
+}
+
+const ChatFooterForm: React.FC<ChatFooterFormProps> = ({ isDiaryDeleted }) => {
   const [message, setMessage] = useState("");
   const { userData } = useLoginUser();
   const { chatRoomId, stompClient } = useChattingStore((state) => state);
@@ -245,6 +252,7 @@ const ChatFooterForm: React.FC = () => {
     setMessage("");
     mutate();
   };
+
   return (
     <ChatFooter>
       <input
@@ -252,7 +260,10 @@ const ChatFooterForm: React.FC = () => {
         type={"text"}
         value={message}
         onChange={handleMessageChange}
-        placeholder={"대화를 나눠보세요."}
+        placeholder={
+          isDiaryDeleted ? "삭제된 다이어리 입니다." : "대화를 나눠보세요."
+        }
+        disabled={isDiaryDeleted}
       />
       <button onClick={handleSendMessage}>
         <img src={sendBtn} alt={"message_send_button"} />
